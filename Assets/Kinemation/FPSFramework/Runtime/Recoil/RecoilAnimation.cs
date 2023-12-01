@@ -1,8 +1,9 @@
 // Designed by KINEMATION, 2023
 
+using Kinemation.FPSFramework.Runtime.Core.Types;
+
 using System;
 using System.Collections.Generic;
-using Kinemation.FPSFramework.Runtime.Core.Types;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -116,8 +117,13 @@ namespace Kinemation.FPSFramework.Runtime.Recoil
             OutRot = Vector3.zero;
             OutLoc = Vector3.zero;
 
-            _fireRate = fireRate;
+            if (Mathf.Approximately(fireRate, 0f))
+            {
+                _fireRate = 0.001f;
+                Debug.LogWarning("RecoilAnimation: FireRate is zero!");
+            }
 
+            _fireRate = fireRate;
             _targetRot = Vector3.zero;
             _targetLoc = Vector3.zero;
 
@@ -162,6 +168,7 @@ namespace Kinemation.FPSFramework.Runtime.Recoil
                 UpdateSolver();
                 UpdateTimeline();
             }
+            
             ApplySmoothing();
         
             Vector3 finalLoc = _smoothLocOut;

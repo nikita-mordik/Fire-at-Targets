@@ -1,16 +1,17 @@
 // Designed by KINEMATION, 2023
 
-using System;
 using Kinemation.FPSFramework.Runtime.Core.Types;
+
+using System;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 
 #if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
 #endif
 
-namespace Kinemation.FPSFramework.Runtime.Core.Components
+namespace Kinemation.FPSFramework.Runtime.Core.Playables
 {
     // Unity Animator sub-system
     [ExecuteInEditMode, Serializable]
@@ -28,8 +29,9 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         //private CoreOverlayMixer _overlayMixer;
         private CoreAnimMixer _overlayPoseMixer;
         private CoreAnimMixer _slotAnimMixer;
+        private CoreAnimMixer _overrideMixer;
         private AnimationLayerMixerPlayable _masterMixer;
-        
+
         private float _poseProgress = 0f;
 
         private Quaternion outSpineRot = Quaternion.identity;
@@ -60,25 +62,27 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             _playableGraph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
             
             _masterMixer = AnimationLayerMixerPlayable.Create(_playableGraph, 2);
+            
             _slotAnimMixer = new CoreAnimMixer(_playableGraph, 1 + maxAnimCount, true);
+            _overrideMixer = new CoreAnimMixer(_playableGraph, 1 + maxAnimCount, true);
             var output = AnimationPlayableOutput.Create(_playableGraph, "FPSAnimator", _animator);
 
             _overlayPoseMixer = new CoreAnimMixer(_playableGraph, 1 + maxPoseCount, false);
-            //_overlayMixer = new CoreOverlayMixer(_playableGraph, 1 + maxPoseCount);
 
             var controllerPlayable = AnimatorControllerPlayable.Create(_playableGraph, _animator.runtimeAnimatorController);
             
             _playableGraph.Connect(controllerPlayable, 0, _overlayPoseMixer.mixer, 0);
             _playableGraph.Connect(_overlayPoseMixer.mixer, 0, _slotAnimMixer.mixer,0);
-            _playableGraph.Connect(_slotAnimMixer.mixer, 0, _masterMixer, 0);
-
-            // Enable Animator layer by default
+            _playableGraph.Connect(_slotAnimMixer.mixer, 0, _overrideMixer.mixer, 0);
+            _playableGraph.Connect(_overrideMixer.mixer, 0, _masterMixer, 0);
+            
             _overlayPoseMixer.mixer.SetInputWeight(0,1f);
             _slotAnimMixer.mixer.SetInputWeight(0 ,1f);
+            _overrideMixer.mixer.SetInputWeight(0 ,1f);
             _masterMixer.SetInputWeight(0, 1f);
             
             output.SetSourcePlayable(_masterMixer);
-            
+
             _playableGraph.Play();
             return true;
         }
@@ -89,6 +93,7 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             {
                 _poseProgress = _overlayPoseMixer.Update();
                 _slotAnimMixer.Update();
+                _overrideMixer.Update();
                 outSpineRot = Quaternion.Slerp(cacheSpineRot, targetSpineRot, _slotAnimMixer.blendInWeight);
                 outSpineRot = Quaternion.Slerp(outSpineRot, Quaternion.identity, _slotAnimMixer.blendOutWeight);
             }
@@ -119,6 +124,7 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             graphWeight = weight;
             _overlayPoseMixer.SetMixerWeight(weight);
             _slotAnimMixer.SetMixerWeight(weight);
+            _overrideMixer.SetMixerWeight(weight);
         }
         
         //todo: implement custom animator controllers
@@ -140,44 +146,64 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             SamplePose(clip);
         }
         
-        public void PlayPose(AnimationClip clip, float blendIn, float playRate = 1f)
+        public void PlayPose(AnimSequence motion)
         {
-            if (clip == null)
+            if (motion.clip == null)
             {
                 return;
             }
             
-            CoreAnimPlayable animPlayable = new CoreAnimPlayable(_playableGraph, clip)
+            CoreAnimPlayable animPlayable = new CoreAnimPlayable(_playableGraph, motion.clip)
             {
-                blendTime = new BlendTime(blendIn, 0f)
+                animTime = new AnimTime(motion.blendTime.blendInTime, 0f)
             };
 
             animPlayable.playableClip.SetTime(0f);
-            animPlayable.playableClip.SetSpeed(playRate);
+            animPlayable.playableClip.SetSpeed(1f);
             _overlayPoseMixer.AddClip(animPlayable, upperBodyMask);
-
-            SamplePose(clip);
+            
+            SamplePose(motion.clip);
         }
         
-        public void PlayAnimation(AnimationClip clip, BlendTime blendTime, Quaternion spineRot, 
-            AnimCurve[] curves = null)
+        public void PlayAnimation(AnimSequence animData, float startTime)
         {
-            if (clip == null)
+            if (animData.clip == null)
             {
                 return;
             }
 
             cacheSpineRot = outSpineRot;
-            targetSpineRot = spineRot;
+            targetSpineRot = animData.spineRotation;
 
-            CoreAnimPlayable animPlayable = new CoreAnimPlayable(_playableGraph, clip)
+            AnimTime time = new AnimTime()
             {
-                blendTime = blendTime,
+                blendTime = animData.blendTime,
+                startTime = startTime,
             };
 
-            animPlayable.playableClip.SetTime(0f);
-            animPlayable.playableClip.SetSpeed(1f);
-            _slotAnimMixer.AddClip(animPlayable, upperBodyMask, curves);
+            CoreAnimPlayable animPlayable = new CoreAnimPlayable(_playableGraph, animData.clip)
+            {
+                animTime = time
+            };
+
+            animPlayable.playableClip.SetTime(startTime);
+            animPlayable.playableClip.SetSpeed(time.blendTime.rateScale);
+
+            _slotAnimMixer.AddClip(animPlayable, animData.mask == null ? upperBodyMask : animData.mask,
+                animData.isAdditive, animData.curves.ToArray());
+            
+            CoreAnimPlayable overridePlayable = new CoreAnimPlayable(_playableGraph, animData.clip)
+            {
+                animTime = time
+            };
+
+            overridePlayable.playableClip.SetTime(startTime);
+            overridePlayable.playableClip.SetSpeed(time.blendTime.rateScale);
+
+            if (animData.overrideMask != null)
+            {
+                _overrideMixer.AddClip(overridePlayable, animData.overrideMask);
+            }
         }
 
         public void StopAnimation(float blendTime)
@@ -194,27 +220,9 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         {
             _overlayPoseMixer.UpdateMixerWeight();
             _slotAnimMixer.UpdateMixerWeight();
+            _overrideMixer.UpdateMixerWeight();
         }
         
-        public void BeginSample()
-        {
-            _overlayPoseMixer.mixer.SetInputWeight(0, -1f);
-            // Make sure the overlay pose is applied to the whole body
-            _overlayPoseMixer.OnSampleUpdate(new AvatarMask());
-            _slotAnimMixer.OnSampleUpdate(new AvatarMask());
-            // Apply graph
-            _playableGraph.Evaluate();
-        }
-
-        public void EndSample()
-        {
-            // Restore original avatar mask
-            // Update graph weights. We need to keep the weights as is before the IK bone retargeting
-            _overlayPoseMixer.mixer.SetInputWeight(0, 1f);
-            _overlayPoseMixer.OnSampleUpdate(upperBodyMask, false);
-            _slotAnimMixer.OnSampleUpdate(upperBodyMask, false);
-        }
-
         // Samples overlay static pose, must be called during Update()
         public void SamplePose(AnimationClip clip)
         {

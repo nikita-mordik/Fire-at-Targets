@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 
-namespace Kinemation.FPSFramework.Runtime.Core.Types
+namespace Kinemation.FPSFramework.Runtime.Core.Playables
 {
     public struct CoreOverlayController
     {

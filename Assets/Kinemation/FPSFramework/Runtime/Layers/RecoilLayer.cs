@@ -9,13 +9,14 @@ namespace Kinemation.FPSFramework.Runtime.Layers
     public class RecoilLayer : AnimLayer
     {
         [SerializeField] private bool useMeshSpace;
-        
         public override void OnAnimUpdate()
         {
             var masterDynamic = GetMasterPivot();
             var recoilAnim = core.characterData.recoilAnim;
             
             LocRot baseT = new LocRot(masterDynamic.position, masterDynamic.rotation);
+            
+            OffsetMasterPivot(GetGunAsset().adsRecoilOffset, GetRigData().aimWeight);
 
             if (useMeshSpace)
             {
@@ -31,6 +32,8 @@ namespace Kinemation.FPSFramework.Runtime.Layers
                 CoreToolkitLib.RotateInBoneSpace(masterDynamic.rotation, masterDynamic,
                     recoilAnim.rotation, 1f);
             }
+            
+            OffsetMasterPivot(-GetGunAsset().adsRecoilOffset, GetRigData().aimWeight);
             
             LocRot newT = new LocRot(masterDynamic.position, masterDynamic.rotation);
 

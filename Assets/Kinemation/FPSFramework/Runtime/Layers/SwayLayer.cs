@@ -1,5 +1,6 @@
 // Designed by KINEMATION, 2023
 
+using Kinemation.FPSFramework.Runtime.Attributes;
 using Kinemation.FPSFramework.Runtime.Core.Components;
 using Kinemation.FPSFramework.Runtime.Core.Types;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Kinemation.FPSFramework.Runtime.Layers
         [Header("Deadzone Rotation")]
         [SerializeField] [Bone] protected Transform headBone;
         [SerializeField] protected FreeAimData freeAimData;
-        [SerializeField] protected bool bFreeAim;
+        [SerializeField] protected bool bFreeAim = true;
         [SerializeField] protected bool useCircleMethod;
         
         protected Vector3 smoothMoveSwayRot;
@@ -44,24 +45,28 @@ namespace Kinemation.FPSFramework.Runtime.Layers
         
         public override void OnAnimUpdate()
         {
-            if (Mathf.Approximately(Time.deltaTime, 0f))
+            if (Mathf.Approximately(Time.deltaTime, 0f) || GetGunAsset() == null)
             {
                 return;
             }
             
+            OffsetMasterPivot(GetGunAsset().adsSwayOffset, GetRigData().aimWeight);
+            
             var master = GetMasterPivot();
             LocRot baseT = new LocRot(master.position, master.rotation);
 
-            freeAimData = GetGunAsset() != null ? GetGunAsset().freeAimData : GetGunData().freeAimData;
+            freeAimData = GetGunAsset().freeAimData;
 
             ApplySway();
-            //ApplyFreeAim();
             ApplyMoveSway();
+            ApplyFreeAim();
 
             LocRot newT = new LocRot(GetMasterPivot().position, GetMasterPivot().rotation);
         
             GetMasterPivot().position = Vector3.Lerp(baseT.position, newT.position, smoothLayerAlpha);
             GetMasterPivot().rotation = Quaternion.Slerp(baseT.rotation, newT.rotation, smoothLayerAlpha);
+            
+            OffsetMasterPivot(-GetGunAsset().adsSwayOffset, GetRigData().aimWeight);
         }
 
         protected virtual void ApplyFreeAim()
@@ -97,10 +102,15 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             Quaternion q = Quaternion.Euler(new Vector3(deadZoneRot.x, deadZoneRot.y, 0f));
             q.Normalize();
 
-            smoothFreeAimAlpha = CoreToolkitLib.Glerp(smoothFreeAimAlpha, bFreeAim ? 1f : 0f, 10f);
-            q = Quaternion.Slerp(Quaternion.identity, q, smoothFreeAimAlpha);
+            Vector3 headMS = GetRootBone().InverseTransformPoint(headBone.position);
+            Vector3 masterMS = GetRootBone().InverseTransformPoint(GetMasterPivot().position);
+
+            Vector3 offset = headMS - masterMS;
+            offset = q * offset - offset;
             
-            CoreToolkitLib.RotateInBoneSpace(GetRootBone().rotation, headBone,q, layerAlpha);
+            smoothFreeAimAlpha = CoreToolkitLib.Glerp(smoothFreeAimAlpha, bFreeAim ? 1f : 0f, 5f);
+            GetMasterIK().Move(GetRootBone(), -offset, smoothFreeAimAlpha);
+            GetMasterIK().Rotate(GetRootBone(), q, smoothFreeAimAlpha);
         }
 
         protected virtual void ApplySway()
@@ -112,7 +122,7 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             swayTarget.x = CoreToolkitLib.GlerpLayer(swayTarget.x * 0.01f, 0f, 5f);
             swayTarget.y = CoreToolkitLib.GlerpLayer(swayTarget.y * 0.01f, 0f, 5f);
             
-            var springData = GetGunAsset() != null ? GetGunAsset().springData : core.gunData.springData;
+            var springData = GetGunAsset().springData;
 
             Vector3 targetLoc = new Vector3(swayTarget.x, swayTarget.y,0f);
             Vector3 targetRot = new Vector3(swayTarget.y, swayTarget.x, swayTarget.x);
@@ -135,7 +145,7 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             var moveRotTarget = new Vector3();
             var moveLocTarget = new Vector3();
 
-            var moveSwayData = GetGunAsset() != null ? GetGunAsset().moveSwayData : GetGunData().moveSwayData;
+            var moveSwayData = GetGunAsset().moveSwayData;
             var moveInput = GetCharData().moveInput;
 
             moveRotTarget.x = moveInput.y * moveSwayData.maxMoveRotSway.x;

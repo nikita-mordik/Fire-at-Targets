@@ -17,7 +17,7 @@ namespace Kinemation.FPSFramework.Editor.Layers
             
             if (GUILayout.Button("Calculate Aim Data"))
             {
-                layer.CalculateAimData();
+                layer.OnPoseSampled();//.CalculateAimData();
             }
         }
     }

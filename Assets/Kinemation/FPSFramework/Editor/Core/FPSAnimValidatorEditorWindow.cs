@@ -8,7 +8,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using AnimatorController = UnityEditor.Animations.AnimatorController;
 
-namespace Kinemation.FPSFramework.Editor.Core
+namespace Kinemation.FPSFramework.Editor.FPSAnimator
 {
     public class FPSAnimValidatorEditorWindow : EditorWindow
     {
@@ -450,20 +450,20 @@ namespace Kinemation.FPSFramework.Editor.Core
                     });
                 }
                 
-                if (gun.overlayPose == null)
+                if (gun.weaponAsset.overlayPose == null)
                 {
                     gunLog.log.Add(new LogMessage()
                     {
-                        error = "Has invalid fire rate!",
-                        log = "Make sure it's more than 0!",
+                        error = "Missing OverlayPose!",
+                        log = "Specify the AnimSequence with static pose for your weapon!",
                         verbosity = 2
                     });
                 }
                 else
                 {
-                    string pose = gun.overlayPose.clip.isHumanMotion ? "Humanoid" : "Generic";
+                    string pose = gun.weaponAsset.overlayPose.clip.isHumanMotion ? "Humanoid" : "Generic";
 
-                    if (gun.overlayPose.clip.isHumanMotion != isHuman)
+                    if (gun.weaponAsset.overlayPose.clip.isHumanMotion != isHuman)
                     {
                         gunLog.log.Add(new LogMessage()
                         {
@@ -474,7 +474,7 @@ namespace Kinemation.FPSFramework.Editor.Core
                     }
                 }
 
-                if (gun.recoilData == null)
+                if (gun.weaponAsset.recoilData == null)
                 {
                     gunLog.log.Add(new LogMessage()
                     {
@@ -492,26 +492,6 @@ namespace Kinemation.FPSFramework.Editor.Core
                         log = "Assign the missing reference in your prefab.",
                         verbosity = 1
                     });
-                    
-                    if (gun.weaponAnimData.gunAimData.pivotPoint == null)
-                    {
-                        gunLog.log.Add(new LogMessage()
-                        {
-                            error = "Missing pivot point!",
-                            log = "Assign the missing reference in Your Prefab/WeaponAnimData/GunAimData/PivotPoint.",
-                            verbosity = 2
-                        });
-                    }
-                    
-                    if (gun.weaponAnimData.gunAimData.aimPoint == null)
-                    {
-                        gunLog.log.Add(new LogMessage()
-                        {
-                            error = "Missing aim point!",
-                            log = "Assign the missing reference in Your Prefab/WeaponAnimData/GunAimData/AimPoint.",
-                            verbosity = 2
-                        });
-                    }
                 }
                 else
                 {
@@ -536,7 +516,7 @@ namespace Kinemation.FPSFramework.Editor.Core
                     }
                 }
 
-                if (gun.aimOffsetTable == null)
+                if (gun.weaponAsset.aimOffsetTable == null)
                 {
                     gunLog.log.Add(new LogMessage()
                     {
