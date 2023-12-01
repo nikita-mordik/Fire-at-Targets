@@ -1,0 +1,86 @@
+# Exported from Fuse 1.3.0
+
+newmtl Eyewear
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+map_Kd Female_Eyewear_diffuse.png
+map_Ks Female_Eyewear_specular.png
+bump Female_Eyewear_normal.png
+map_Ns Female_Eyewear_gloss.png
+
+newmtl Bottom
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+map_Kd Female_Bottom_diffuse.png
+map_Ks Female_Bottom_specular.png
+bump Female_Bottom_normal.png
+map_Ns Female_Bottom_gloss.png
+
+newmtl Hat
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+map_Kd Female_Hat_diffuse.png
+map_Ks Female_Hat_specular.png
+bump Female_Hat_normal.png
+map_Ns Female_Hat_gloss.png
+
+newmtl Top
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+map_Kd Female_Top_diffuse.png
+map_Ks Female_Top_specular.png
+bump Female_Top_normal.png
+map_Ns Female_Top_gloss.png
+
+newmtl Body
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+map_Kd Female_Body_diffuse.png
+map_Ks Female_Body_specular.png
+bump Female_Body_normal.png
+map_Ns Female_Body_gloss.png
+
+newmtl Shoes
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+map_Kd Female_Shoes_diffuse.png
+map_Ks Female_Shoes_specular.png
+bump Female_Shoes_normal.png
+map_Ns Female_Shoes_gloss.png
+
+newmtl Glove
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+map_Kd Female_Glove_diffuse.png
+map_Ks Female_Glove_specular.png
+bump Female_Glove_normal.png
+map_Ns Female_Glove_gloss.png
+
