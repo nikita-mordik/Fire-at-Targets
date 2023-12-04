@@ -1,8 +1,10 @@
 // Designed by KINEMATION, 2023
 
+using FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input;
 using Kinemation.FPSFramework.Runtime.FPSAnimator;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 namespace Demo.Scripts.Runtime
 {
@@ -86,6 +88,14 @@ namespace Demo.Scripts.Runtime
         private float _sprintAnimatorInterp = 8f;
 
         private bool _wasMoving = false;
+        
+        private IInputService inputService;
+
+        // [Inject]
+        // private void Construct(IInputService inputService)
+        // {
+        //     this.inputService = inputService;
+        // }
 
         public bool IsInAir()
         {
@@ -274,9 +284,10 @@ namespace Demo.Scripts.Runtime
             // Get the current player input
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
-
             _inputDirection.x = moveX;
             _inputDirection.y = moveY;
+
+            //_inputDirection = inputService.Axis;
 
             if (MovementState == FPSMovementState.Sliding && !Mathf.Approximately(_slideProgress, 1f))
             {

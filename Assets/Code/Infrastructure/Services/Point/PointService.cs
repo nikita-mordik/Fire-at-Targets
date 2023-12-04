@@ -7,43 +7,17 @@ namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Point
     {
         public int CurrentPoints { get; private set; }
         
+        public event Action<int> OnPointsChanged;
+
         public void AddPoint(TargetShootPointType pointType)
         {
-            switch (pointType)
+            if (pointType == TargetShootPointType.None)
             {
-                case TargetShootPointType.None:
-                    throw new Exception("Not valid data!");
-                case TargetShootPointType.One:
-                    CurrentPoints += 1;
-                    break;
-                case TargetShootPointType.Two:
-                    CurrentPoints += 2;
-                    break;
-                case TargetShootPointType.Three:
-                    CurrentPoints += 3;
-                    break;
-                case TargetShootPointType.Four:
-                    CurrentPoints += 4;
-                    break;
-                case TargetShootPointType.Five:
-                    CurrentPoints += 5;
-                    break;
-                case TargetShootPointType.Six:
-                    CurrentPoints += 6;
-                    break;
-                case TargetShootPointType.Seven:
-                    CurrentPoints += 7;
-                    break;
-                case TargetShootPointType.Eight:
-                    CurrentPoints += 8;
-                    break;
-                case TargetShootPointType.Nine:
-                    CurrentPoints += 9;
-                    break;
-                case TargetShootPointType.Ten:
-                    CurrentPoints += 10;
-                    break;
+                throw new Exception("Not valid data!");
             }
+
+            CurrentPoints += (int) pointType;
+            OnPointsChanged?.Invoke(CurrentPoints);
         }
 
         public void Reset()

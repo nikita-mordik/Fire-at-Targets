@@ -8,6 +8,8 @@ using Kinemation.FPSFramework.Runtime.Recoil;
 
 using UnityEngine;
 using System.Collections.Generic;
+using FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Demo.Scripts.Runtime
@@ -118,6 +120,14 @@ namespace Demo.Scripts.Runtime
         private bool _isFiring;
 
         private bool _isUnarmed;
+        
+        private IInputService inputService;
+
+        // [Inject]
+        // private void Construct(IInputService inputService)
+        // {
+        //     this.inputService = inputService;
+        // }
 
         private void InitLayers()
         {
@@ -490,6 +500,11 @@ namespace Demo.Scripts.Runtime
                 TryReload();
             }
 
+            // if (inputService.IsReloadButtonDown())
+            // {
+            //     TryReload();
+            // }
+
             if (Input.GetKeyDown(KeyCode.G))
             {
                 TryGrenadeThrow();
@@ -535,6 +550,23 @@ namespace Demo.Scripts.Runtime
                 {
                     ToggleAim();
                 }
+
+
+                /*if (inputService.IsShootButtonDown())
+                {
+                    OnFirePressed();
+                }
+
+                if (inputService.IsShootButtonUp())
+                {
+                    OnFireReleased();
+                }
+
+                if (inputService.IsScopeButtonDown())
+                {
+                    ToggleAim();
+                }*/
+                
 
                 if (Input.GetKeyDown(KeyCode.V))
                 {
@@ -628,6 +660,9 @@ namespace Demo.Scripts.Runtime
 
             float deltaMouseX = Input.GetAxis("Mouse X") * sensitivity;
             float deltaMouseY = -Input.GetAxis("Mouse Y") * sensitivity;
+            
+            // float deltaMouseX = inputService.RotationAxis.x * sensitivity;
+            // float deltaMouseY = inputService.RotationAxis.y * sensitivity;
             
             if (_freeLook)
             {
