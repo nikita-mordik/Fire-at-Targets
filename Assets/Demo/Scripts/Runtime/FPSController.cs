@@ -123,11 +123,11 @@ namespace Demo.Scripts.Runtime
         
         private IInputService inputService;
 
-        // [Inject]
-        // private void Construct(IInputService inputService)
-        // {
-        //     this.inputService = inputService;
-        // }
+        [Inject]
+        private void Construct(IInputService inputService)
+        {
+            this.inputService = inputService;
+        }
 
         private void InitLayers()
         {
@@ -321,6 +321,8 @@ namespace Demo.Scripts.Runtime
             }
             
             recoilComponent.Play();
+
+            inputService.InvokeOnShoot();
             
             if (recoilComponent.fireMode == FireMode.Burst)
             {
@@ -373,6 +375,8 @@ namespace Demo.Scripts.Runtime
             {
                 recoilComponent.Stop();
             }
+            
+            inputService.InvokeOnShootStop();
 
             _recoilStep = 0f;
             _isFiring = false;
@@ -495,15 +499,15 @@ namespace Demo.Scripts.Runtime
             
             if (_isUnarmed) return;
             
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                TryReload();
-            }
-
-            // if (inputService.IsReloadButtonDown())
+            // if (Input.GetKeyDown(KeyCode.R))
             // {
             //     TryReload();
             // }
+
+            if (inputService.IsReloadButtonDown())
+            {
+                TryReload();
+            }
 
             if (Input.GetKeyDown(KeyCode.G))
             {
@@ -536,7 +540,7 @@ namespace Demo.Scripts.Runtime
                     charAnimData.AddLeanInput(leanValue);
                 }
 
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                /*if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     OnFirePressed();
                 }
@@ -549,10 +553,10 @@ namespace Demo.Scripts.Runtime
                 if (Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     ToggleAim();
-                }
+                }*/
 
 
-                /*if (inputService.IsShootButtonDown())
+                if (inputService.IsShootButtonDown())
                 {
                     OnFirePressed();
                 }
@@ -565,7 +569,7 @@ namespace Demo.Scripts.Runtime
                 if (inputService.IsScopeButtonDown())
                 {
                     ToggleAim();
-                }*/
+                }
                 
 
                 if (Input.GetKeyDown(KeyCode.V))
@@ -658,11 +662,11 @@ namespace Demo.Scripts.Runtime
         {
             _freeLook = Input.GetKey(KeyCode.X);
 
-            float deltaMouseX = Input.GetAxis("Mouse X") * sensitivity;
-            float deltaMouseY = -Input.GetAxis("Mouse Y") * sensitivity;
+            // float deltaMouseX = Input.GetAxis("Mouse X") * sensitivity;
+            // float deltaMouseY = -Input.GetAxis("Mouse Y") * sensitivity;
             
-            // float deltaMouseX = inputService.RotationAxis.x * sensitivity;
-            // float deltaMouseY = inputService.RotationAxis.y * sensitivity;
+            float deltaMouseX = inputService.RotationAxis.x * sensitivity;
+            float deltaMouseY = inputService.RotationAxis.y * sensitivity;
             
             if (_freeLook)
             {

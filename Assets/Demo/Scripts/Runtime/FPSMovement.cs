@@ -91,11 +91,11 @@ namespace Demo.Scripts.Runtime
         
         private IInputService inputService;
 
-        // [Inject]
-        // private void Construct(IInputService inputService)
-        // {
-        //     this.inputService = inputService;
-        // }
+        [Inject]
+        private void Construct(IInputService inputService)
+        {
+            this.inputService = inputService;
+        }
 
         public bool IsInAir()
         {
@@ -282,8 +282,10 @@ namespace Demo.Scripts.Runtime
             }
             
             // Get the current player input
-            float moveX = Input.GetAxisRaw("Horizontal");
-            float moveY = Input.GetAxisRaw("Vertical");
+            // float moveX = Input.GetAxisRaw("Horizontal");
+            // float moveY = Input.GetAxisRaw("Vertical");
+            float moveX = inputService.MovementAxis.x;
+            float moveY = inputService.MovementAxis.y;
             _inputDirection.x = moveX;
             _inputDirection.y = moveY;
 

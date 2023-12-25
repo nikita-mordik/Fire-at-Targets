@@ -14,10 +14,12 @@ namespace FreedLOW.FireAtTergets.Code.Target
         private void Awake()
         {
             targetHealth = root.GetComponent<ITargetHealth>();
+            Debug.LogError(targetHealth!=null);
         }
 
         public void Damage(int damageAmount)
         {
+            Debug.LogError("here hit " + targetShootPointType);
             targetHealth.TakeDamage(damageAmount);
             
             // TODO: send point data using TargetShootPointType

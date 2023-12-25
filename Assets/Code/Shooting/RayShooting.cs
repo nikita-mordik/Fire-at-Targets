@@ -14,6 +14,8 @@ namespace FreedLOW.FireAtTergets.Code.Shooting
         private readonly RaycastHit[] hits = new RaycastHit[1];
         
         private int damageAmount;
+
+        public int DamageAmount { get => damageAmount; set => damageAmount = value; }
         
         private IInputService inputService;
 
@@ -21,12 +23,23 @@ namespace FreedLOW.FireAtTergets.Code.Shooting
         private void Construct(IInputService inputService)
         {
             this.inputService = inputService;
+
+            this.inputService.OnShoot += OnShoot;
         }
 
-        private void FixedUpdate()
+        private void OnDestroy()
         {
-            if (!inputService.IsShootButtonDown()) return;
-            
+            inputService.OnShoot -= OnShoot;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color=Color.magenta;
+            Gizmos.DrawRay(shootPoint.position, shootPoint.forward * maxDistance);
+        }
+
+        private void OnShoot()
+        {
             var hitCount = Physics.RaycastNonAlloc(shootPoint.position, shootPoint.forward, hits, maxDistance, targetLayer);
             if (hitCount > 0)
             {
