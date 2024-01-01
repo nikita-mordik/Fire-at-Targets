@@ -163,3 +163,5 @@ AvatarMask:
     m_Weight: 1
   - m_Path: rootBone/WeaponBone
     m_Weight: 1
+  - m_Path: rootBone/WeaponBoneAdditive
+    m_Weight: 1

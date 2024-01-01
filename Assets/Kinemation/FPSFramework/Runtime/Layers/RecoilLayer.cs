@@ -1,7 +1,6 @@
 // Designed by KINEMATION, 2023
 
 using Kinemation.FPSFramework.Runtime.Core.Components;
-using Kinemation.FPSFramework.Runtime.Core.Types;
 using UnityEngine;
 
 namespace Kinemation.FPSFramework.Runtime.Layers
@@ -9,36 +8,25 @@ namespace Kinemation.FPSFramework.Runtime.Layers
     public class RecoilLayer : AnimLayer
     {
         [SerializeField] private bool useMeshSpace;
-        public override void OnAnimUpdate()
+        
+        public override void UpdateLayer()
         {
-            var masterDynamic = GetMasterPivot();
             var recoilAnim = core.characterData.recoilAnim;
-            
-            LocRot baseT = new LocRot(masterDynamic.position, masterDynamic.rotation);
-            
-            OffsetMasterPivot(GetGunAsset().adsRecoilOffset, GetRigData().aimWeight);
 
+            float aimWeight = GetRigData().aimWeight;
+            Vector3 pivotOffset = GetGunAsset().adsRecoilOffset * aimWeight;
+            pivotOffset = recoilAnim.rotation * pivotOffset - pivotOffset;
+            recoilAnim.position += pivotOffset;
+            
             if (useMeshSpace)
             {
-                CoreToolkitLib.MoveInBoneSpace(GetRootBone(), masterDynamic,
-                    recoilAnim.position, 1f);
-                CoreToolkitLib.RotateInBoneSpace(GetRootBone().rotation, masterDynamic,
-                    recoilAnim.rotation, 1f);
-            }
-            else
-            {
-                CoreToolkitLib.MoveInBoneSpace(masterDynamic, masterDynamic,
-                    recoilAnim.position, 1f);
-                CoreToolkitLib.RotateInBoneSpace(masterDynamic.rotation, masterDynamic,
-                    recoilAnim.rotation, 1f);
+                GetMasterIK().Offset(GetRootBone(), recoilAnim.position, smoothLayerAlpha);
+                GetMasterIK().Offset(GetRootBone(), recoilAnim.rotation, smoothLayerAlpha);
+                return;
             }
             
-            OffsetMasterPivot(-GetGunAsset().adsRecoilOffset, GetRigData().aimWeight);
-            
-            LocRot newT = new LocRot(masterDynamic.position, masterDynamic.rotation);
-
-            masterDynamic.position = Vector3.Lerp(baseT.position, newT.position, smoothLayerAlpha);
-            masterDynamic.rotation = Quaternion.Slerp(baseT.rotation, newT.rotation, smoothLayerAlpha);
+            GetMasterIK().Offset(recoilAnim.position, smoothLayerAlpha);
+            GetMasterIK().Offset(recoilAnim.rotation, smoothLayerAlpha);
         }
     }
 }

@@ -17,44 +17,33 @@ namespace Kinemation.FPSFramework.Runtime.Core.Playables
         [Min(0f)] public float blendInTime;
         [Min(0f)] public float blendOutTime;
         [Min(0f)] public float rateScale;
+        [NonSerialized] public float startTime;
+        [NonSerialized] public float endTime;
 
         public BlendTime(float blendIn, float blendOut)
         {
             blendInTime = blendIn;
             blendOutTime = blendOut;
             rateScale = 1f;
-        }
-
-        public void Validate()
-        {
-            blendInTime = blendInTime < 0f ? 0f : blendInTime;
-            blendOutTime = blendOutTime < 0f ? 0f : blendOutTime;
+            startTime = endTime = 0f;
         }
     }
-
-    public struct AnimTime
-    {
-        public BlendTime blendTime;
-        public float startTime;
-
-        public AnimTime(float blendIn, float blendOut, float startTime = 0f)
-        {
-            blendTime = new BlendTime(blendIn, blendOut);
-            this.startTime = startTime;
-        }
-    }
-
+    
     public struct CoreAnimPlayable
     {
         public AnimationClipPlayable playableClip;
-        public AnimTime animTime;
+        public AnimCurve[] curves;
+        public BlendTime blendTime;
         public float cachedWeight;
+        public bool autoBlendOut;
 
-        public CoreAnimPlayable(PlayableGraph graph, AnimationClip clip)
+        public CoreAnimPlayable(PlayableGraph graph, AnimationClip clip, AnimCurve[] curves)
         {
             playableClip = AnimationClipPlayable.Create(graph, clip);
-            animTime = new AnimTime(0f, 0f);
+            blendTime = new BlendTime(0f, 0f);
+            this.curves = curves;
             cachedWeight = 0f;
+            autoBlendOut = true;
         }
         
         public float GetLength()
@@ -62,435 +51,322 @@ namespace Kinemation.FPSFramework.Runtime.Core.Playables
             return playableClip.IsValid() ? playableClip.GetAnimationClip().length : 0f;
         }
 
+        public bool IsValid()
+        {
+            return playableClip.IsValid();
+        }
+
         public void Release()
         {
-            if (playableClip.IsValid())
-            {
-                animTime = new AnimTime(0f, 0f);
-                playableClip.Destroy();
-            }
+            if (playableClip.IsValid()) playableClip.Destroy();
         }
     }
     
     public struct CoreAnimMixer
     {
         public AnimationLayerMixerPlayable mixer;
-        public float blendInWeight;
-        public float blendOutWeight;
+
+        public float BlendInWeight { get; private set; }
+        public float BlendOutWeight { get; private set; }
+        
+        private BlendTime _blendTime;
+        private int _activeIndex;
         
         private List<CoreAnimPlayable> _playables;
-        private float _mixerWeight;
-        private float _playingWeight;
-        private int _playingIndex;
-        private bool _bBlendOut;
-        private bool _bForceBlendOut;
-        private float _forceBlendTime;
-        private float _forceStartBlendTime;
+        private Dictionary<string, AnimCurve> _blendedCurves;
+
+        private bool _isMixerActive;
+        private bool _blendingIn;
+        private bool _autoBlendOut;
+
+        private int _layerLevel;
         
-        private AnimCurve[] _curves;
-        private Dictionary<string, AnimCurveValue> _curveTable;
-        private List<string> _inActiveCurves;
-        
-        public CoreAnimMixer(PlayableGraph graph, int inputCount, bool bBlendOut)
+        public CoreAnimMixer(PlayableGraph graph, int inputCount, int layerLevel = 0)
         {
-            mixer = AnimationLayerMixerPlayable.Create(graph, inputCount);
+            mixer = AnimationLayerMixerPlayable.Create(graph, inputCount + layerLevel);
             
             _playables = new List<CoreAnimPlayable>();
-            for (int i = 0; i < inputCount - 1; i++)
+            for (int i = 0; i < inputCount; i++)
             {
                 _playables.Add(new CoreAnimPlayable());
             }
             
-            _bBlendOut = bBlendOut;
-            _playingIndex = -1;
-            _mixerWeight = 1f;
-            _playingWeight = blendInWeight = blendOutWeight = 0f;
-            _curves = null;
-            _curveTable = new Dictionary<string, AnimCurveValue>();
-            _inActiveCurves = new List<string>();
-            _bForceBlendOut = false;
-            _forceBlendTime = _forceStartBlendTime = 0f;
-        }
-
-        public void OnSampleUpdate(AvatarMask mask, bool bUpdateWeights = true)
-        {
-            for (int i = 1; i <= _playingIndex; i++)
-            {
-                if (!mixer.GetInput(i).IsValid())
-                {
-                    continue;
-                }
-                
-                mixer.SetLayerMaskFromAvatarMask((uint) i, mask);
-
-                if (bUpdateWeights)
-                {
-                    float weight = mixer.GetInputWeight(i);
-                    mixer.SetInputWeight(i, weight * _mixerWeight);
-                }
-            }
+            _activeIndex = -1;
+            BlendInWeight = BlendOutWeight = 0f;
+            
+            _blendedCurves = new Dictionary<string, AnimCurve>();
+            _blendTime = new BlendTime(0f, 0f);
+            
+            _isMixerActive = _blendingIn = _autoBlendOut = false;
+            _layerLevel = layerLevel;
         }
         
-        public void SetAvatarMask(AvatarMask mask)
+        public void Play(CoreAnimPlayable clip, AvatarMask mask, bool bAdditive = false)
         {
-            for (int i = 1; i <= _playingIndex; i++)
-            {
-                if (mixer.GetInput(i).IsValid())
-                {
-                    mixer.SetLayerMaskFromAvatarMask((uint) i, mask);
-                }
-            }
+            // Prepare the new playable and curves.
+            AddUserCurves(clip.curves);
+            UpdateActiveIndex();
+            
+            _playables[_activeIndex - _layerLevel] = clip;
+            
+            // Connect new playable.
+            mixer.ConnectInput(_activeIndex, clip.playableClip, 0, 0f);
+            mixer.SetLayerMaskFromAvatarMask((uint) _activeIndex, mask);
+            mixer.SetLayerAdditive((uint) _activeIndex, bAdditive);
+
+            // Initialize blending properties.
+            _blendTime = clip.blendTime;
+            _blendTime.endTime = clip.GetLength();
+            BlendInWeight = BlendOutWeight = 0f;
+            
+            _blendingIn = _isMixerActive = true;
+            _autoBlendOut = clip.autoBlendOut;
         }
-
-        public void AddClip(CoreAnimPlayable clip, AvatarMask mask, bool bAdditive = false, AnimCurve[] curves = null)
+        
+        public void Update()
         {
-            CacheCurves();
-            _curves = curves;
-            AddCurves();
+            if (!_isMixerActive)
+            {
+                return;
+            }
             
-            UpdatePlayingIndex();
-            clip.animTime.blendTime.Validate();
+            if (_blendingIn)
+            {
+                BlendInPlayable();
+                return;
+            }
             
-            mixer.ConnectInput(_playingIndex, clip.playableClip, 0, 0);
-            _playables[_playingIndex - 1] = clip;
-            mixer.SetLayerMaskFromAvatarMask((uint) _playingIndex, mask);
-            mixer.SetLayerAdditive((uint) _playingIndex, bAdditive);
-            _bForceBlendOut = false;
-
-            blendOutWeight = 0f;
+            BlendOutPlayable();
         }
 
         public void Stop(float blendOutTime)
         {
-            if (!mixer.GetInput(_playingIndex).IsValid())
-            {
-                return;
-            }
+            if (!_isMixerActive) return;
             
-            _forceBlendTime = blendOutTime;
-            _forceStartBlendTime = (float) _playables[_playingIndex - 1].playableClip.GetTime();
-            _bForceBlendOut = true;
+            _blendingIn = false;
+            _autoBlendOut = true;
+            
+            _blendTime.blendOutTime = blendOutTime;
+            _blendTime.endTime = GetPlayingTime();
+
+            if (_activeIndex == _layerLevel) return;
+            
+            //If we have inactive playables, cache their weights.
+            for (int i = _layerLevel; i < _activeIndex; i++)
+            {
+                var inactivePlayable = _playables[i - _layerLevel];
+                inactivePlayable.cachedWeight = mixer.GetInputWeight(i);
+                _playables[i - _layerLevel] = inactivePlayable;
+            }
         }
 
         public float GetCurveValue(string curveName)
         {
-            if (!_curveTable.ContainsKey(curveName)) return 0f;
-            return _curveTable[curveName].value;
-        }
-
-        public float Update()
-        {
-            if (!mixer.GetInput(_playingIndex).IsValid())
-            {
-                return 0f;
-            }
-
-            if (_bForceBlendOut)
-            {
-                ForceBlendOut();
-            }
-            else
-            {
-                BlendInPlayable();
-                BlendOutPlayable();
-            }
+            if (_blendedCurves == null) return 0f;
             
-            return _playingWeight;
+            if (!_blendedCurves.ContainsKey(curveName) || !_isMixerActive) return 0f;
+            return GetBlendedCurveValue(_blendedCurves[curveName]);
         }
 
-        public void UpdateMixerWeight()
+        private float GetPlayingTime()
         {
-            BlendMixerWeight();
+            return GetActivePlayable().IsValid() ? (float) GetActivePlayable().playableClip.GetTime() : 0f;
+        }
+
+        private float GetNormalizedTime()
+        {
+            if (Mathf.Approximately(_blendTime.endTime, 0f)) return 0f;
+            return Mathf.Clamp01(GetPlayingTime() / _blendTime.endTime);
+        }
+
+        private CoreAnimPlayable GetActivePlayable()
+        {
+            return _playables[_activeIndex - _layerLevel];
         }
         
-        public void SetMixerWeight(float weight)
+        private float GetBlendedCurveValue(AnimCurve blendedAnimCurve)
         {
-            _mixerWeight = Mathf.Clamp01(weight);
-        }
-
-        private void BlendMixerWeight()
-        {
-            for (int i = 1; i <= _playingIndex; i++)
+            // Inactive curve
+            if (blendedAnimCurve.curve == null)
             {
-                if (!mixer.GetInput(i).IsValid())
-                {
-                    continue;
-                }
-
-                float weight = mixer.GetInputWeight(i);
-                mixer.SetInputWeight(i, weight * _mixerWeight);
+                return Mathf.Lerp(blendedAnimCurve.valueCache, 0f, BlendInWeight);
             }
-        }
 
-        // Save curve values
-        private void CacheCurves()
-        {
-            if (_curves == null) return;
+            float rawValue = blendedAnimCurve.curve.Evaluate(GetNormalizedTime());
             
-            foreach (var curve in _curves)
-            {
-                var newCurve = _curveTable[curve.name];
-                newCurve.cache = newCurve.value;
-                _curveTable[curve.name] = newCurve;
-            }
-        }
+            float blendedValue = Mathf.Lerp(blendedAnimCurve.valueCache, rawValue, BlendInWeight);
+            blendedValue = Mathf.Lerp(blendedValue, 0f, BlendOutWeight);
 
-        private void AddCurves()
+            return blendedValue;
+        }
+        
+        private void AddUserCurves(AnimCurve[] newCurves)
         {
-            if (_curves == null) return;
+            var blendedCurves = _blendedCurves.ToArray();
             
-            _inActiveCurves.Clear();
-            foreach (var curve in _curves)
+            Dictionary<string, AnimCurve> userCurveSet = null;
+            if (newCurves != null)
             {
-                if (!_curveTable.ContainsKey(curve.name))
+                userCurveSet = newCurves.ToDictionary(curve => curve.name);
+            }
+            
+            foreach (var curve in blendedCurves)
+            {
+                // Cache all blended curves.
+                AnimCurve animCurve = curve.Value;
+                animCurve.valueCache = GetBlendedCurveValue(animCurve);
+
+                if (userCurveSet != null)
                 {
-                    _curveTable.Add(curve.name, new AnimCurveValue());
+                    // If the input curve is in both sets, refresh the curve reference.
+                    // If the curve is not present in the user set, set to null.
+
+                    if (userCurveSet.ContainsKey(curve.Key))
+                    {
+                        animCurve.curve = userCurveSet[curve.Key].curve;
+                        userCurveSet.Remove(curve.Key);
+                    }
+                    else
+                    {
+                        animCurve.curve = null;
+                    }
                 }
+                
+                _blendedCurves[curve.Key] = animCurve;
             }
 
-            var activeCurveNames = new HashSet<string>(_curves.Select(c => c.name));
-            foreach (var curve in _curveTable)
+            if (newCurves == null) return;
+            
+            // Add new curves.
+            foreach (var userCurve in userCurveSet)
             {
-                if (!activeCurveNames.Contains(curve.Key))
-                {
-                    _inActiveCurves.Add(curve.Key);
-                }
+                _blendedCurves.Add(userCurve.Key, userCurve.Value);
             }
         }
 
-        private void UpdatePlayingIndex()
+        private void UpdateActiveIndex()
         {
-            if (_playingIndex == -1)
+            if (_activeIndex == -1)
             {
-                for (int i = 1; i < mixer.GetInputCount(); i++)
-                {
-                    mixer.DisconnectInput(i);
-                    _playables[i - 1].Release();
-                }
-                _playingIndex = 1;
+                _activeIndex = _layerLevel;
                 return;
             }
             
             // Try to use the next slot
-            if (_playingIndex + 1 < mixer.GetInputCount())
+            if (_activeIndex + 1 < mixer.GetInputCount())
             {
-                _playingIndex++;
+                _activeIndex++;
                 // Save current weights
-                for (int i = 1; i < _playingIndex; i++)
+                for (int i = _layerLevel; i < _activeIndex; i++)
                 {
-                    var clip = _playables[i - 1];
+                    var clip = _playables[i - _layerLevel];
                     clip.cachedWeight = mixer.GetInputWeight(i);
-                    _playables[i - 1] = clip;
+                    _playables[i - _layerLevel] = clip;
                 }
                 return;
             }
 
             _playables[0].Release();
+            mixer.DisconnectInput(_layerLevel);
             // Reconnect
-            for (int i = 1; i < mixer.GetInputCount() - 1; i++)
+            for (int i = _layerLevel; i < mixer.GetInputCount() - 1; i++)
             {
-                if (!mixer.GetInput(i + 1).IsValid())
-                {
-                    continue;
-                }
-                
                 float inputWeight = mixer.GetInputWeight(i + 1);
-                var clip = _playables[i];
+                CoreAnimPlayable clip = _playables[i + 1 - _layerLevel];
                 clip.cachedWeight = inputWeight;
-                _playables[i - 1] = clip;
-
-                mixer.DisconnectInput(i);
+                _playables[i - _layerLevel] = clip;
+                
                 var source = mixer.GetInput(i + 1);
                 mixer.DisconnectInput(i + 1);
                 mixer.ConnectInput(i, source, 0, inputWeight);
             }
             
-            _playingIndex = mixer.GetInputCount() - 1;
-            mixer.DisconnectInput(_playingIndex);
-        }
-
-        private void UpdateCurve(string curveName, float value)
-        {
-            var newCurve = _curveTable[curveName];
-            newCurve.target = value;
-            _curveTable[curveName] = newCurve;
-        }
-
-        private void BlendInCurve(string curveName, float weight)
-        {
-            var newCurve = _curveTable[curveName];
-            newCurve.value = Mathf.Lerp(newCurve.cache, newCurve.target, weight);
-            _curveTable[curveName] = newCurve;
+            _activeIndex = mixer.GetInputCount() - 1;
+            mixer.DisconnectInput(_activeIndex);
         }
         
-        private void BlendOutCurve(string curveName, float weight)
+        private void BlendOutInactive()
         {
-            var newCurve = _curveTable[curveName];
-            newCurve.value *= 1f - weight;
-            _curveTable[curveName] = newCurve;
-        }
+            for (int i = _layerLevel; i < _activeIndex; i++)
+            {
+                if (!_blendingIn)
+                {
+                    mixer.DisconnectInput(i);
+                    _playables[i - _layerLevel].Release();
+                    continue;
+                }
 
+                float weight = _playables[i - _layerLevel].cachedWeight;
+                weight = Mathf.Lerp(weight, 0f, BlendInWeight);
+                mixer.SetInputWeight(i, weight);
+            }
+
+            if (_blendingIn) return;
+            
+            var curves = _blendedCurves.ToArray();
+            foreach (var curve in curves)
+            {
+                if (curve.Value.curve == null) _blendedCurves.Remove(curve.Key);
+            }
+        }
+        
         private void BlendInPlayable()
         {
-            var animation = _playables[_playingIndex - 1];
-            float blendTime = animation.animTime.blendTime.blendInTime;
-            var time = (float) animation.playableClip.GetTime();
-            
-            if (_bBlendOut && (time >= animation.GetLength()))
+            float alpha = 1f;
+            if (!Mathf.Approximately(_blendTime.blendInTime, 0f))
             {
-                return;
+                alpha = (GetPlayingTime() - _blendTime.startTime) / _blendTime.blendInTime;
             }
             
-            // todo: use CurveLib easing functions
-            float alpha = Mathf.Approximately(blendTime, 0f) ? 1f : (time - animation.animTime.startTime) / blendTime;
-            _playingWeight = Mathf.Lerp(0f, 1f, alpha);
-            blendInWeight = _playingWeight; 
-            mixer.SetInputWeight(_playingIndex, _playingWeight);
+            BlendInWeight = Mathf.Clamp01(alpha);
+            mixer.SetInputWeight(_activeIndex, BlendInWeight);
+
+            if (Mathf.Approximately(BlendInWeight, 1f))
+            {
+                _blendingIn = false;
+                _isMixerActive = _autoBlendOut;
+            }
             
             BlendOutInactive();
-
-            // Blend out inactive curves.
-            foreach (var curve in _inActiveCurves)
-            {
-                BlendOutCurve(curve, 1 - _playingWeight);
-            }
-
-            if (Mathf.Approximately(1f, _playingWeight))
-            {
-                _inActiveCurves.Clear();
-            }
-
-            if (_curves == null) return;
-            
-            //Blend curves here
-            foreach (var curve in _curves)
-            {
-                float curveValue = curve.curve != null ? curve.curve.Evaluate(time / animation.GetLength()) : 0f;
-                UpdateCurve(curve.name, curveValue);
-                BlendInCurve(curve.name, _playingWeight);
-            }
         }
 
         private void BlendOutPlayable()
         {
-            if (!_bBlendOut)
-            {
-                return;
-            }
-
-            var animPlayable = _playables[_playingIndex - 1];
-            var animTime = animPlayable.animTime;
-            var time = (float) animPlayable.playableClip.GetTime();
+            if (GetPlayingTime() < _blendTime.endTime) return;
             
-            if (time >= animPlayable.GetLength())
+            float alpha = 1f;
+            if (!Mathf.Approximately(_blendTime.blendOutTime, 0f))
             {
-                // todo: use CurveLib ease functions
-                float alpha = 0f;
-                if (Mathf.Approximately(animTime.blendTime.blendOutTime, 0f))
-                {
-                    alpha = 1f;
-                }
-                else
-                {
-                    alpha = (time - animPlayable.GetLength()) / animTime.blendTime.blendOutTime;
-                }
-                
-                float weight = Mathf.Lerp(_playingWeight, 0f, alpha);
-                mixer.SetInputWeight(_playingIndex, weight);
-                blendOutWeight = alpha;
-
-                if (Mathf.Approximately(weight, 0f))
-                {
-                    mixer.DisconnectInput(_playingIndex);
-                    _playables[_playingIndex - 1].Release();
-                    _playingIndex = -1;
-                    blendOutWeight = 1f;
-                    alpha = 1f;
-                }
-
-                if (_curves == null) return;
-                
-                // Blend out curves here
-                foreach (var curve in _curves)
-                {
-                    BlendOutCurve(curve.name, alpha);
-                }
-
-                foreach (var inActiveCurve in _inActiveCurves)
-                {
-                    BlendOutCurve(inActiveCurve, weight);
-                }
-            }
-        }
-
-        private void ForceBlendOut()
-        {
-            var animPlayable = _playables[_playingIndex - 1];
-            var time = (float) animPlayable.playableClip.GetTime();
-
-            //todo: check the zero case
-            float outWeight = (time - _forceStartBlendTime) / _forceBlendTime;
-            outWeight = Mathf.Clamp01(outWeight);
-            
-            for (int i = 1; i <= _playingIndex; i++)
-            {
-                var animation = _playables[i - 1];
-                if (!animation.playableClip.IsValid())
-                {
-                    continue;
-                }
-
-                _playingWeight *= 1f - outWeight;
-                mixer.SetInputWeight(i, mixer.GetInputWeight(i) * (1f - outWeight));
-                blendOutWeight = 1f - outWeight;
-                
-                if (Mathf.Approximately(outWeight, 1f))
-                {
-                    mixer.DisconnectInput(i);
-                    _playables[i - 1].Release();
-                }
-            }
-
-            foreach (var curve in _curves)
-            {
-                BlendOutCurve(curve.name, outWeight);
-            }
-
-            foreach (var curve in _inActiveCurves)
-            {
-                BlendOutCurve(curve, outWeight);
-            }
-
-            if (Mathf.Approximately(outWeight, 1f))
-            {
-                _inActiveCurves.Clear();
-            }
-        }
-
-        private void BlendOutInactive()
-        {
-            if (!_bBlendOut)
-            {
-                return;
+                alpha = (GetPlayingTime() - _blendTime.endTime) / _blendTime.blendOutTime;
             }
             
-            for (int i = 1; i < _playingIndex; i++)
+            BlendOutWeight = Mathf.Clamp01(alpha);
+            mixer.SetInputWeight(_activeIndex,Mathf.Lerp(BlendInWeight, 0f, BlendOutWeight));
+            
+            // In case of force blending out.
+            if (_activeIndex > _layerLevel)
             {
-                var animation = _playables[i - 1];
-                if (!animation.playableClip.IsValid())
+                for (int i = _layerLevel; i < _activeIndex; i++)
                 {
-                    continue;
-                }
-
-                float weight = Mathf.Lerp(animation.cachedWeight, 0f, _playingWeight);
-                mixer.SetInputWeight(i, weight);
-                
-                if (Mathf.Approximately(weight, 0f))
-                {
-                    mixer.DisconnectInput(i);
-                    _playables[i - 1].Release();
+                    float cache = _playables[i - _layerLevel].cachedWeight;
+                    float inactiveWeight = Mathf.Lerp(cache, 0f, BlendOutWeight);
+                    mixer.SetInputWeight(i, inactiveWeight);
                 }
             }
+
+            if (!Mathf.Approximately(BlendOutWeight, 1f)) return;
+
+            for (int i = _layerLevel; i <= _activeIndex; i++)
+            {
+                mixer.DisconnectInput(i);
+                _playables[i - _layerLevel].Release();
+            }
+            
+            _activeIndex = -1;
+            BlendOutWeight = 1f;
+
+            _blendedCurves.Clear();
+            _isMixerActive = false;
         }
     }
 }

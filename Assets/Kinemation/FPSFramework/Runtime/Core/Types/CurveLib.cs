@@ -8,18 +8,12 @@ using UnityEngine;
 
 namespace Kinemation.FPSFramework.Runtime.Core.Types
 {
-    public struct AnimCurveValue
-    {
-        public float value;
-        public float cache;
-        public float target;
-    }
-    
     [Serializable]
     public struct AnimCurve
     {
         [AnimCurveName] public string name;
         public AnimationCurve curve;
+        [NonSerialized] public float valueCache;
     }
     
     [Serializable]

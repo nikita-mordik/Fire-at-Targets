@@ -2,6 +2,7 @@
 
 using Kinemation.FPSFramework.Runtime.Recoil;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Kinemation.FPSFramework.Runtime.Core.Types
 {
@@ -21,13 +22,19 @@ namespace Kinemation.FPSFramework.Runtime.Core.Types
         public AdsData adsData;
         
         [Tooltip("Offsets the arms pose")]
+        public ViewmodelOffset viewmodelOffset = new ViewmodelOffset()
+        {
+            poseOffset = LocRot.identity,
+            rightHandOffset = LocRot.identity,
+            leftHandOffset = LocRot.identity
+        };
+        
         public LocRot viewOffset = LocRot.identity;
         
-        [Header("SwayLayer")]
-        [Tooltip("Aiming sway")] 
-        public LocRotSpringData springData;
-        public FreeAimData freeAimData;
-        public MoveSwayData moveSwayData;
+        [FormerlySerializedAs("springData")] [Header("SwayLayer")]
+        public LocRotSpringData aimSwaySettings;
+        [FormerlySerializedAs("freeAimData")] public FreeAimData freeAimSettings;
+        [FormerlySerializedAs("moveSwayData")] public MoveSwayData moveSwaySettings;
         
         [Header("WeaponCollision")] 
         public GunBlockData blockData;
@@ -35,8 +42,5 @@ namespace Kinemation.FPSFramework.Runtime.Core.Types
         [Header("Pivoting")] 
         public Vector3 adsRecoilOffset;
         public Vector3 adsSwayOffset;
-
-        [Header("RightHandIK")] 
-        public LocRot rightHandOffset = LocRot.identity;
     }
 }

@@ -297,7 +297,7 @@ namespace Kinemation.FPSFramework.Runtime.Recoil
                 Func<float,float,float,float, float> Interp = (a, b, speed, scale) =>
                 {
                     scale = Mathf.Approximately(scale, 0f) ? 1f : scale;
-                    return Mathf.Approximately(speed, 0f) ? b * scale : CoreToolkitLib.Glerp(a, b * scale, speed);
+                    return Mathf.Approximately(speed, 0f) ? b * scale : CoreToolkitLib.Interp(a, b * scale, speed, Time.deltaTime);
                 };
 
                 lerped.x = Interp(_smoothRotOut.x, _rawRotOut.x, smooth.x, _recoilData.extraRot.x);
@@ -323,19 +323,19 @@ namespace Kinemation.FPSFramework.Runtime.Recoil
 
         private void ApplyNoise(ref Vector3 finalized)
         {
-            _noiseTarget.x = CoreToolkitLib.Glerp(_noiseTarget.x, 0f, _recoilData.noiseDamp.x);
-            _noiseTarget.y = CoreToolkitLib.Glerp(_noiseTarget.y, 0f, _recoilData.noiseDamp.y);
+            _noiseTarget.x = CoreToolkitLib.Interp(_noiseTarget.x, 0f, _recoilData.noiseDamp.x, Time.deltaTime);
+            _noiseTarget.y = CoreToolkitLib.Interp(_noiseTarget.y, 0f, _recoilData.noiseDamp.y, Time.deltaTime);
 	
-            _noiseOut.x = CoreToolkitLib.Glerp(_noiseOut.x, _noiseTarget.x, _recoilData.noiseAccel.x);
-            _noiseOut.y = CoreToolkitLib.Glerp(_noiseOut.y, _noiseTarget.y, _recoilData.noiseAccel.y);
+            _noiseOut.x = CoreToolkitLib.Interp(_noiseOut.x, _noiseTarget.x, _recoilData.noiseAccel.x, Time.deltaTime);
+            _noiseOut.y = CoreToolkitLib.Interp(_noiseOut.y, _noiseTarget.y, _recoilData.noiseAccel.y, Time.deltaTime);
 
             finalized += new Vector3(_noiseOut.x, _noiseOut.y, 0f);
         }
 
         private void ApplyPushback(ref Vector3 finalized)
         {
-            _pushTarget = CoreToolkitLib.Glerp(_pushTarget, 0f, _recoilData.pushDamp);
-            _pushOut = CoreToolkitLib.Glerp(_pushOut, _pushTarget, _recoilData.pushAccel);
+            _pushTarget = CoreToolkitLib.Interp(_pushTarget, 0f, _recoilData.pushDamp, Time.deltaTime);
+            _pushOut = CoreToolkitLib.Interp(_pushOut, _pushTarget, _recoilData.pushAccel, Time.deltaTime);
 
             finalized += new Vector3(0f, 0f, _pushOut);
         }

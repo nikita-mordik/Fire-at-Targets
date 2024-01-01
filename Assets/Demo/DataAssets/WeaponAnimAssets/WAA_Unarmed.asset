@@ -35,28 +35,35 @@ MonoBehaviour:
     aimSpeed: 0
     changeSightSpeed: 0
     pointAimSpeed: 0
+  viewmodelOffset:
+    poseOffset:
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+    rightHandOffset:
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+    leftHandOffset:
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
   viewOffset:
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-  springData:
+  aimSwaySettings:
     loc:
       x:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       y:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       z:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       scale: {x: 0, y: 0, z: 0}
     rot:
@@ -64,70 +71,61 @@ MonoBehaviour:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       y:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       z:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       scale: {x: 0, y: 0, z: 0}
-  freeAimData:
-    scalar: 0
+  freeAimSettings:
     maxValue: 0
-    speed: 0
-  moveSwayData:
-    maxMoveLocSway: {x: 0, y: 0, z: 0}
-    maxMoveRotSway: {x: 0, y: 0, z: 0}
-    moveLocSway:
+    interpolationSpeed: 0
+    inputScale: 0
+  moveSwaySettings:
+    translationScale: {x: 0, y: 0, z: 0}
+    rotationScale: {x: 0, y: 0, z: 0}
+    positionSpringSettings:
       x:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       y:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       z:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       scale: {x: 0, y: 0, z: 0}
-    moveRotSway:
+    rotationSpringSettings:
       x:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       y:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       z:
         stiffness: 0
         criticalDamping: 0
         speed: 0
-        mass: 0
         maxValue: 0
       scale: {x: 0, y: 0, z: 0}
-    locSpeed: {x: 0, y: 0, z: 0}
-    rotSpeed: {x: 0, y: 0, z: 0}
+    translationDampingFactor: 0
+    rotationDampingFactor: 0
   blockData:
     weaponLength: 0
     startOffset: 0
@@ -135,8 +133,5 @@ MonoBehaviour:
     restPose:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 0}
-  adsRecoilOffset: {x: 0, y: 0, z: 0}
-  adsSwayOffset: {x: 0, y: 0, z: 0}
-  rightHandOffset:
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
+  adsRecoilOffset: {x: 0, y: -0.05, z: -0.03}
+  adsSwayOffset: {x: 0, y: -0.05, z: -0.3}

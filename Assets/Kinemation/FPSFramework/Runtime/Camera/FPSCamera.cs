@@ -80,9 +80,9 @@ namespace Kinemation.FPSFramework.Runtime.Camera
 
             Vector3 curveValue = _shake.shakeCurve.Evaluate(_playBack);
 
-            _out.x = CoreToolkitLib.Glerp(_out.x, curveValue.x * _target.x, _shake.smoothSpeed);
-            _out.y = CoreToolkitLib.Glerp(_out.y, curveValue.y * _target.y, _shake.smoothSpeed);
-            _out.z = CoreToolkitLib.Glerp(_out.z, curveValue.z * _target.z, _shake.smoothSpeed);
+            _out.x = CoreToolkitLib.Interp(_out.x, curveValue.x * _target.x, _shake.smoothSpeed, Time.deltaTime);
+            _out.y = CoreToolkitLib.Interp(_out.y, curveValue.y * _target.y, _shake.smoothSpeed, Time.deltaTime);
+            _out.z = CoreToolkitLib.Interp(_out.z, curveValue.z * _target.z, _shake.smoothSpeed, Time.deltaTime);
 
             Quaternion rot = Quaternion.Euler(_out);
             transform.rotation *= rot;
@@ -98,7 +98,7 @@ namespace Kinemation.FPSFramework.Runtime.Camera
             float vFOVrad = 2.0f * Mathf.Atan(Mathf.Tan(hFOV * Mathf.Deg2Rad / 2.0f) / _mainCamera.aspect)
                                  * Mathf.Rad2Deg;
 
-            _fov = CoreToolkitLib.GlerpLayer(_fov, vFOVrad, cameraData.extraSmoothing);
+            _fov = CoreToolkitLib.InterpLayer(_fov, vFOVrad, cameraData.extraSmoothing, Time.deltaTime);
             _mainCamera.fieldOfView = _fov;
 
             _fovPlayback += Time.deltaTime * cameraData.aimSpeed * (isAiming ? 1f : -1f);

@@ -84,6 +84,9 @@ namespace Kinemation.FPSFramework.Editor.FPSAnimator
                 {
                     owner.SavePose();
                     
+                    EditorUtility.SetDirty(owner.weaponAsset);
+                    AssetDatabase.SaveAssets();
+                    
                     if (PrefabUtility.IsPartOfPrefabInstance(owner.gameObject))
                     {
                         // Apply the changes to the Prefab asset

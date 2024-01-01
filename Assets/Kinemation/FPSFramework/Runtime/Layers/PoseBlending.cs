@@ -13,31 +13,28 @@ namespace Kinemation.FPSFramework.Runtime.Layers
         [SerializeField] private List<PoseBlend> poseBlending;
         private Quaternion _spineRoot;
 
-        public override void OnAnimStart()
+        public override void InitializeLayer()
         {
-            if (!Application.isPlaying) return;
+            base.InitializeLayer();
             
             foreach (var poseBlend in poseBlending)
             {
-                if(poseBlend == null) continue;
-                poseBlend.Initialize(transform, GetPelvis(), GetRigData().spineRoot);
+                poseBlend?.Initialize(transform, GetPelvis(), GetRigData().spineRoot);
             }
         }
 
-        public override void OnPreAnimUpdate()
+        public override void PreUpdateLayer()
         {
             float target = GetAnimator().GetFloat(curveName);
-            target =  Mathf.Lerp(1f - Mathf.Clamp01(target), 1f, GetCurveValue(CurveLib.Curve_Overlay));
-            smoothLayerAlpha = CoreToolkitLib.GlerpLayer(smoothLayerAlpha, target, lerpSpeed);
+            target = Mathf.Lerp(1f - Mathf.Clamp01(target), 1f, GetCurveValue(CurveLib.Curve_Overlay));
+            smoothLayerAlpha = CoreToolkitLib.InterpLayer(smoothLayerAlpha, target, lerpSpeed, Time.deltaTime);
             smoothLayerAlpha *= layerAlpha;
 
             _spineRoot = GetRigData().spineRoot.localRotation;
         }
 
-        public override void OnAnimUpdate()
+        public override void UpdateLayer()
         {
-            if (Mathf.Approximately(smoothLayerAlpha, 0f) || GetGunAsset() == null) return;
-
             float poseAlpha = core.animGraph.GetPoseProgress();
 
             foreach (var poseBlend in poseBlending)

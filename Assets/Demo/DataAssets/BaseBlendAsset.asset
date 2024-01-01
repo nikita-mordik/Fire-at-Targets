@@ -16,17 +16,17 @@ MonoBehaviour:
   pose: {fileID: 7400000, guid: 76b46d6158e9d33409f549110878a545, type: 2}
   blendProfile:
   - boneIndex: 14
-    baseWeight: 0.693
-    animWeight: 1
+    baseWeight: 0
+    animWeight: 0
   - boneIndex: 15
-    baseWeight: 0.75
-    animWeight: 1
+    baseWeight: 0
+    animWeight: 0
   - boneIndex: 16
-    baseWeight: 0.75
-    animWeight: 1
+    baseWeight: 0
+    animWeight: 0
   - boneIndex: 41
     baseWeight: 0
-    animWeight: 1
+    animWeight: 0
   - boneIndex: 42
     baseWeight: 0
-    animWeight: 1
+    animWeight: 0

@@ -17,8 +17,6 @@ namespace Kinemation.FPSFramework.Editor.Layers
         private SerializedProperty drawDebugInfo;
         private SerializedProperty layerAlpha;
         private SerializedProperty lerpSpeed;
-        private SerializedProperty handsAlpha;
-        private SerializedProperty handsLerp;
         private SerializedProperty pelvisAlpha;
         private SerializedProperty pelvisLerp;
         
@@ -36,10 +34,6 @@ namespace Kinemation.FPSFramework.Editor.Layers
         private SerializedProperty leanAmount;
         private SerializedProperty leanSpeed;
         
-        private SerializedProperty detectZeroFrames;
-        private SerializedProperty checkZeroFootIK;
-        private SerializedProperty useRightOffset;
-        
         private SerializedProperty curveName;
         
         private void OnEnable()
@@ -53,8 +47,6 @@ namespace Kinemation.FPSFramework.Editor.Layers
             drawDebugInfo = serializedObject.FindProperty("drawDebugInfo");
             layerAlpha = serializedObject.FindProperty("layerAlpha");
             lerpSpeed = serializedObject.FindProperty("lerpSpeed");
-            handsAlpha = serializedObject.FindProperty("handsLayerAlpha");
-            handsLerp = serializedObject.FindProperty("handsLerpSpeed");
             pelvisAlpha = serializedObject.FindProperty("pelvisLayerAlpha");
             pelvisLerp = serializedObject.FindProperty("pelvisLerpSpeed");
 
@@ -71,10 +63,6 @@ namespace Kinemation.FPSFramework.Editor.Layers
             leanDirection = serializedObject.FindProperty("leanDirection");
             leanAmount = serializedObject.FindProperty("leanAmount");
             leanSpeed = serializedObject.FindProperty("leanSpeed");
-
-            detectZeroFrames = serializedObject.FindProperty("detectZeroFrames");
-            checkZeroFootIK = serializedObject.FindProperty("checkZeroFootIK");
-            useRightOffset = serializedObject.FindProperty("useRightOffset");
             
             curveName = serializedObject.FindProperty("curveName");
         }
@@ -84,8 +72,6 @@ namespace Kinemation.FPSFramework.Editor.Layers
             EditorGUILayout.PropertyField(curveName);
             EditorGUILayout.PropertyField(layerAlpha);
             EditorGUILayout.PropertyField(lerpSpeed);
-            EditorGUILayout.PropertyField(handsAlpha);
-            EditorGUILayout.PropertyField(handsLerp);
             EditorGUILayout.PropertyField(pelvisAlpha);
             EditorGUILayout.PropertyField(pelvisLerp);
         }
@@ -150,13 +136,6 @@ namespace Kinemation.FPSFramework.Editor.Layers
             EditorGUILayout.PropertyField(leanSpeed);
         }
         
-        private void DrawDefault()
-        {
-            EditorGUILayout.PropertyField(detectZeroFrames);
-            EditorGUILayout.PropertyField(checkZeroFootIK);
-            EditorGUILayout.PropertyField(useRightOffset);
-        }
-
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
@@ -177,8 +156,6 @@ namespace Kinemation.FPSFramework.Editor.Layers
                     DrawLeanTab(); ;
                     break;
             }
-
-            DrawDefault();
             serializedObject.ApplyModifiedProperties();
         }
     }

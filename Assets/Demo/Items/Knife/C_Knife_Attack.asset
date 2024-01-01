@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: C_Knife_Attack
   m_EditorClassIdentifier: 
   clip: {fileID: 7400000, guid: 469d1753df411f9488f0fab2aafecdff, type: 2}
-  mask: {fileID: 0}
+  mask: {fileID: 31900000, guid: 572701504aa6c17498da75bfc9ecc1ea, type: 2}
   spineRotation: {x: 0, y: 0, z: 0, w: 1}
   overrideMask: {fileID: 0}
   isAdditive: 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   overrideMask: {fileID: 0}
   isAdditive: 0
   blendTime:
-    blendInTime: 0.1
+    blendInTime: 0.2
     blendOutTime: 0
     rateScale: 1
   curves: []

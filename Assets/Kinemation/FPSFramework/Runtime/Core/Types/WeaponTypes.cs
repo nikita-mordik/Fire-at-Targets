@@ -4,28 +4,29 @@ using Kinemation.FPSFramework.Runtime.Camera;
 
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Kinemation.FPSFramework.Runtime.Core.Types
 {
     [Serializable]
     public struct FreeAimData
     {
-        public float scalar;
         public float maxValue;
-        public float speed;
+        [FormerlySerializedAs("speed")] public float interpolationSpeed;
+        public float inputScale;
     }
 
     [Serializable]
     public struct MoveSwayData
     {
-        public Vector3 maxMoveLocSway;
-        public Vector3 maxMoveRotSway;
+        [FormerlySerializedAs("maxMoveLocSway")] public Vector3 translationScale;
+        [FormerlySerializedAs("maxMoveRotSway")] public Vector3 rotationScale;
 
-        public VectorSpringData moveLocSway;
-        public VectorSpringData moveRotSway;
+        [FormerlySerializedAs("moveLocSway")] public VectorSpringData positionSpringSettings;
+        [FormerlySerializedAs("moveRotSway")] public VectorSpringData rotationSpringSettings;
 
-        public Vector3 locSpeed;
-        public Vector3 rotSpeed;
+        [FormerlySerializedAs("locSpeed")] public float translationDampingFactor;
+        [FormerlySerializedAs("rotSpeed")] public float rotationDampingFactor;
     }
     
     [Serializable]
@@ -61,6 +62,14 @@ namespace Kinemation.FPSFramework.Runtime.Core.Types
             aimSpeed = changeSightSpeed = pointAimSpeed = speed;
             adsTranslationBlend = adsRotationBlend = new AdsBlend();
         }
+    }
+
+    [Serializable]
+    public struct ViewmodelOffset
+    {
+        public LocRot poseOffset;
+        public LocRot rightHandOffset;
+        public LocRot leftHandOffset;
     }
     
     [Serializable]

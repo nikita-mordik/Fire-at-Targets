@@ -2,13 +2,17 @@
 
 using Kinemation.FPSFramework.Runtime.Attributes;
 using Kinemation.FPSFramework.Runtime.Core.Types;
+using Kinemation.FPSFramework.Runtime.Core.Playables;
 
 using System;
 using System.Collections.Generic;
-using Kinemation.FPSFramework.Runtime.Core.Playables;
+using Kinemation.FPSFramework.Runtime.Core.Jobs;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -32,6 +36,22 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         [Tooltip("Target IK Object")]
         public GameObject obj;
 
+        private LocRot _cachedHintTransform;
+
+        public void CacheHintTransform()
+        {
+            _cachedHintTransform = new LocRot(hintObj.transform);
+        }
+
+        public void BlendHintCachedTransform(float alpha = 1f)
+        {
+            LocRot targetTransform = new LocRot(hintObj.transform);
+            targetTransform = LocRot.Lerp(_cachedHintTransform, targetTransform, alpha);
+
+            hintObj.transform.position = targetTransform.position;
+            hintObj.transform.rotation = targetTransform.rotation;
+        }
+
         public void Retarget()
         {
             if (target == null)
@@ -50,30 +70,62 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             hintObj.transform.position = hintTarget.position;
             hintObj.transform.rotation = hintTarget.rotation;
         }
-
-        public void Rotate(Quaternion parent, Quaternion rotation, float alpha = 1f)
-        {
-            CoreToolkitLib.RotateInBoneSpace(parent, obj.transform, rotation, alpha);
-        }
         
-        public void Rotate(Transform parent, Quaternion rotation, float alpha = 1f)
+        public void Offset(Transform parent, Quaternion rotation, float alpha = 1f)
         {
             CoreToolkitLib.RotateInBoneSpace(parent.rotation, obj.transform, rotation, alpha);
         }
 
-        public void Rotate(Quaternion rotation, float alpha = 1f)
+        public void Offset(Quaternion parent, Quaternion rotation, float alpha = 1f)
+        {
+            CoreToolkitLib.RotateInBoneSpace(parent, obj.transform, rotation, alpha);
+        }
+
+        public void Offset(Quaternion rotation, float alpha = 1f)
         {
             CoreToolkitLib.RotateInBoneSpace(obj.transform.rotation, obj.transform, rotation, alpha);
         }
 
-        public void Move(Transform parent, Vector3 offset, float alpha = 1f)
+        public void Offset(Transform parent, Vector3 offset, float alpha = 1f)
         {
             CoreToolkitLib.MoveInBoneSpace(parent, obj.transform, offset, alpha);
         }
 
-        public void Move(Vector3 offset, float alpha = 1f)
+        public void Offset(Vector3 offset, float alpha = 1f)
         {
             CoreToolkitLib.MoveInBoneSpace(obj.transform, obj.transform, offset, alpha);
+        }
+
+        public void Override(Transform space, Vector3 offset, float alpha = 1f)
+        {
+            obj.transform.position = Vector3.Lerp(obj.transform.position, space.TransformPoint(offset), alpha);
+        }
+        
+        public void Override(Vector3 offset, float alpha = 1f)
+        {
+            obj.transform.position = Vector3.Lerp(obj.transform.position, offset, alpha);
+        }
+        
+        public void Override(Transform space, Quaternion offset, float alpha = 1f)
+        {
+            obj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, space.rotation * offset, alpha);
+        }
+        
+        public void Override(Quaternion offset, float alpha = 1f)
+        {
+            obj.transform.rotation = Quaternion.Slerp(obj.transform.rotation, offset, alpha);
+        }
+        
+        public void Override(Transform space, LocRot offset, float alpha = 1f)
+        {
+            Override(space, offset.position, alpha);
+            Override(space, offset.rotation, alpha);
+        }
+        
+        public void Override(LocRot offset, float alpha = 1f)
+        {
+            Override(offset.position, alpha);
+            Override(offset.rotation, alpha);
         }
     }
 
@@ -120,8 +172,8 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             weaponBoneRight.position = weaponBone.position;
             weaponBoneRight.rotation = weaponBone.rotation;
 
-            weaponBoneLeft.position = weaponBone.position;
-            weaponBoneLeft.rotation = weaponBone.rotation;
+            weaponBoneLeft.position = weaponBoneRight.position;
+            weaponBoneLeft.rotation = weaponBoneRight.rotation;
         }
 
         public void RetargetWeaponBone()
@@ -136,15 +188,9 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             LocRot boneRight = new LocRot(masterDynamic.obj.transform);
             LocRot boneLeft = new LocRot(weaponBoneLeft);
 
-            LocRot result = LocRot.identity;
-            if (weaponBoneWeight >= 0f)
-            {
-                result = CoreToolkitLib.Lerp(boneDefault, boneRight, weaponBoneWeight);
-            }
-            else
-            {
-                result = CoreToolkitLib.Lerp(boneDefault, boneLeft, -weaponBoneWeight);
-            }
+            LocRot result = weaponBoneWeight >= 0f
+                ? LocRot.Lerp(boneDefault, boneRight, weaponBoneWeight)
+                : LocRot.Lerp(boneDefault, boneLeft, -weaponBoneWeight);
 
             masterDynamic.obj.transform.position = result.position;
             masterDynamic.obj.transform.rotation = result.rotation;
@@ -154,7 +200,7 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         {
             if (!Application.isPlaying) return;
 
-            masterDynamic.Move(offset, 1f);
+            masterDynamic.Offset(offset, 1f);
 
             weaponBone.position = masterDynamic.obj.transform.position;
             weaponBone.rotation = masterDynamic.obj.transform.rotation;
@@ -188,55 +234,88 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         private bool _updateInEditor = false;
         private float _interpHands;
         private float _interpLayer;
-
-        // General IK weight for hands
-        [SerializeField, Range(0f, 1f)] private float handIkWeight = 1f;
-
-        // Global IK weight for feet
-        [SerializeField, Range(0f, 1f)] private float legIkWeight = 1f;
         
-        private Quaternion pelvisPoseMS = Quaternion.identity;
-        private Quaternion pelvisPoseMSCache = Quaternion.identity;
+        private Quaternion _pelvisPoseMS = Quaternion.identity;
+        private Quaternion _pelvisPoseMSCache = Quaternion.identity;
         
         // Static weapon bone pose in mesh space
-        private LocRot weaponBonePose;
-        private LocRot weaponBoneSpinePose;
+        private LocRot _weaponBonePose;
+        private LocRot _weaponBoneSpinePose;
         
-        private bool isPivotValid = false;
+        private bool _isPivotValid = false;
 
-        private Tuple<float, float> rightHandWeight = new(1f, 1f);
-        private Tuple<float, float> leftHandWeight = new(1f, 1f);
-        private Tuple<float, float> rightFootWeight = new(1f, 1f);
-        private Tuple<float, float> leftFootWeight = new(1f, 1f);
+        private Tuple<float, float> _rightHandWeight = new(1f, 1f);
+        private Tuple<float, float> _leftHandWeight = new(1f, 1f);
+        private Tuple<float, float> _rightFootWeight = new(1f, 1f);
+        private Tuple<float, float> _leftFootWeight = new(1f, 1f);
+        
+        private JobHandle _ikJobHandle;
+        private NativeArray<TwoBoneIkJobData> _ikDataArray;
 
-        private void ApplyIK()
+        private void ScheduleIkJobs()
         {
-            if (!useIK)
+            if (!useIK) return;
+            
+            void UpdateJobData(DynamicBone tipBone, Tuple<float, float> weights,
+                int index)
             {
-                return;
-            }
-
-            void SolveIK(DynamicBone tipBone, Tuple<float, float> weights, float sliderWeight)
-            {
-                if (Mathf.Approximately(sliderWeight, 0f))
+                Transform mid = tipBone.target.parent;
+                Transform root = mid.parent;
+                
+                _ikDataArray[index] = new TwoBoneIkJobData()
                 {
-                    return;
-                }
+                    effectorWeight = weights.Item1,
+                    hintWeight = weights.Item2,
 
-                float tWeight = sliderWeight * weights.Item1;
-                float hWeight = sliderWeight * weights.Item2;
+                    root = new LocRot(root),
+                    mid = new LocRot(mid),
+                    tip = new LocRot(tipBone.target),
 
-                Transform hintTarget = tipBone.hintObj == null ? tipBone.hintTarget : tipBone.hintObj.transform;
-
-                var lowerBone = tipBone.target.parent;
-                CoreToolkitLib.SolveTwoBoneIK(lowerBone.parent, lowerBone, tipBone.target,
-                    tipBone.obj.transform, hintTarget, tWeight, tWeight, hWeight);
+                    effectorTarget = new LocRot(tipBone.obj.transform),
+                    hasValidHint = tipBone.hintObj != null,
+                    hintTarget = tipBone.hintObj != null ? new LocRot(tipBone.hintObj.transform) : LocRot.identity
+                };
             }
+            
+            UpdateJobData(ikRigData.rightHand, _rightHandWeight, 0);
+            UpdateJobData(ikRigData.leftHand, _leftHandWeight, 1);
+            UpdateJobData(ikRigData.rightFoot, _rightFootWeight, 2);
+            UpdateJobData(ikRigData.leftFoot, _leftFootWeight, 3);
 
-            SolveIK(ikRigData.rightHand, rightHandWeight, handIkWeight);
-            SolveIK(ikRigData.leftHand, leftHandWeight, handIkWeight);
-            SolveIK(ikRigData.rightFoot, rightFootWeight, legIkWeight);
-            SolveIK(ikRigData.leftFoot, leftFootWeight, legIkWeight);
+            var job = new TwoBoneIKJob()
+            {
+                jobData = _ikDataArray
+            };
+
+            _ikJobHandle = job.Schedule(4, 1);
+        }
+
+        private void CompleteIkJobs()
+        {
+            void ApplyIk(ref DynamicBone bone, int index)
+            {
+                Transform tip = bone.target;
+                Transform mid = tip.parent;
+                Transform root = mid.parent;
+
+                var jobData = _ikDataArray[index];
+
+                root.position = jobData.root.position;
+                root.rotation = jobData.root.rotation;
+                
+                mid.position = jobData.mid.position;
+                mid.rotation = jobData.mid.rotation;
+                
+                tip.position = jobData.tip.position;
+                tip.rotation = jobData.tip.rotation;
+            }
+            
+            _ikJobHandle.Complete();
+
+            ApplyIk(ref ikRigData.rightHand, 0);
+            ApplyIk(ref ikRigData.leftHand, 1);
+            ApplyIk(ref ikRigData.rightFoot, 2);
+            ApplyIk(ref ikRigData.leftFoot, 3);
         }
 
         private void OnEnable()
@@ -248,23 +327,22 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             {
                 animGraph = gameObject.AddComponent<CoreAnimGraph>();
             }
-
-            foreach (var layer in animLayers)
-            {
-                layer.OnEnable();
-            }
         }
 
-        public void InitializeLayers()
+        public void InitializeComponent()
         {
             foreach (var layer in animLayers)
             {
-                layer.OnAnimStart();
+                layer.InitializeLayer();
             }
             
             ikRigData.weaponTransform = LocRot.identity;
             ikRigData.weaponBoneRight.localPosition = ikRigData.weaponBoneLeft.localPosition = Vector3.zero;
             ikRigData.weaponBoneRight.localRotation = ikRigData.weaponBoneLeft.localRotation = Quaternion.identity;
+            
+            _ikDataArray = new NativeArray<TwoBoneIkJobData>(4, Allocator.Persistent);
+
+            if (!Application.isPlaying) return;
             
             var additiveBone = new GameObject("WeaponBoneAdditive")
             {
@@ -279,40 +357,29 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             ikRigData.weaponBoneAdditive = additiveBone.transform;
         }
 
-        public void UpdateCoreComponent()
-        {
-            ikRigData.RetargetWeaponBone();
-            animGraph.UpdateGraphWeights();
-        }
-
         private void UpdateSpineStabilization()
         {
-            if (weaponAsset == null) return;
+            Transform spineRoot = ikRigData.spineRoot;
             
-            var spineRoot = ikRigData.spineRoot;
-            var rootRot = ikRigData.rootBone.rotation;
-            var pelvisRot = Quaternion.Slerp(pelvisPoseMSCache, pelvisPoseMS, animGraph.GetPoseProgress());
+            Quaternion rootWorldRotation = ikRigData.rootBone.rotation;
+            Quaternion invRootWorldRotation = Quaternion.Inverse(rootWorldRotation);
             
-            // Apply hips stabilization.
-            // We perform this by rotating the root spine bone based on the cached static hip rotation.
-            
-            Quaternion hipsRotCached = ikRigData.pelvis.rotation;
-            ikRigData.pelvis.rotation = rootRot * pelvisRot;
-            
-            var spineRot = spineRoot.rotation;
-            ikRigData.pelvis.rotation = hipsRotCached;
-            
-            spineRoot.rotation = Quaternion.Slerp(spineRoot.rotation, spineRot, animGraph.graphWeight);
-            CoreToolkitLib.RotateInBoneSpace(rootRot, spineRoot, animGraph.GetSpineOffset(), 1f);
+            Quaternion pelvisWorldRotation =
+                rootWorldRotation * Quaternion.Slerp(_pelvisPoseMSCache, _pelvisPoseMS, animGraph.GetPoseProgress());
+
+            Quaternion stableRotation = pelvisWorldRotation * spineRoot.localRotation;
+            stableRotation = Quaternion.Slerp(spineRoot.rotation, stableRotation, animGraph.GetGraphWeight());
+
+            spineRoot.rotation = rootWorldRotation * (animGraph.GetSpineOffset() * (invRootWorldRotation * stableRotation));
         }
 
         private void UpdateWeaponBone()
         {
-            // Parented to the right or left hand
+            // Not parented to the right or left hand
             if (ikRigData.weaponBoneWeight > 0f)
             {
-                LocRot basePose = weaponBonePose.FromSpace(ikRigData.rootBone);
-                LocRot combinedPose = weaponBoneSpinePose.FromSpace(ikRigData.spineRoot);
+                LocRot basePose = _weaponBonePose.FromSpace(ikRigData.rootBone);
+                LocRot combinedPose = _weaponBoneSpinePose.FromSpace(ikRigData.spineRoot);
 
                 combinedPose.position -= basePose.position;
                 combinedPose.rotation = Quaternion.Inverse(basePose.rotation) * combinedPose.rotation;
@@ -325,10 +392,10 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             ikRigData.UpdateWeaponParent();
             
             var rotOffset = weaponAsset != null ? weaponAsset.rotationOffset : Quaternion.identity;
-            ikRigData.masterDynamic.Rotate(rotOffset, 1f);
+            ikRigData.masterDynamic.Offset(rotOffset);
             
-            var pivotOffset = isPivotValid ? weaponTransformData.pivotPoint.localPosition : Vector3.zero;
-            ikRigData.masterDynamic.Move(pivotOffset, 1f);
+            var pivotOffset = _isPivotValid ? weaponTransformData.pivotPoint.localPosition : Vector3.zero;
+            ikRigData.masterDynamic.Offset(pivotOffset);
             
             ikRigData.rightHand.Retarget();
             ikRigData.leftHand.Retarget();
@@ -346,22 +413,28 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             PreUpdateLayers();
             
             ikRigData.Retarget();
+            
             UpdateSpineStabilization();
             UpdateWeaponBone();
-
             UpdateLayers();
-            ApplyIK();
-            PostUpdateLayers();
+            ScheduleIkJobs();
             
-            var pivotOffset = isPivotValid ? weaponTransformData.pivotPoint.localPosition : Vector3.zero;
+            var pivotOffset = _isPivotValid ? weaponTransformData.pivotPoint.localPosition : Vector3.zero;
             ikRigData.AlignWeaponBone(-pivotOffset);
-             
+
+            CompleteIkJobs();
+            
             onPostUpdate.Invoke();
         }
 
         private void OnDestroy()
         {
             onPreUpdate = onPostUpdate = null;
+
+            if (_ikDataArray.IsCreated)
+            {
+                _ikDataArray.Dispose();
+            }
         }
         
         // Called right after retargeting
@@ -369,75 +442,41 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         {
             foreach (var layer in animLayers)
             {
-                if (!Application.isPlaying && !layer.runInEditor)
+                if (!Application.isPlaying && !layer.runInEditor || layer.CanUseParallelExecution())
                 {
                     continue;
                 }
 
-                layer.OnPreAnimUpdate();
+                layer.PreUpdateLayer();
             }
         }
 
         private void UpdateLayers()
         {
-            bool bValidElbows = ikRigData.rightHand.hintObj != null && ikRigData.leftHand.hintObj != null;
-            if (bValidElbows)
-            {
-                var rightElbowIK = ikRigData.rightHand.hintObj.transform;
-                var leftElbowIK = ikRigData.leftHand.hintObj.transform;
-
-                rightElbowIK.position = ikRigData.rightHand.hintTarget.position;
-                rightElbowIK.rotation = ikRigData.rightHand.hintTarget.rotation;
-                
-                leftElbowIK.position = ikRigData.leftHand.hintTarget.position;
-                leftElbowIK.rotation = ikRigData.leftHand.hintTarget.rotation;
-            }
+            bool isPlaying = Application.isPlaying;
             
             foreach (var layer in animLayers)
             {
-                if (!Application.isPlaying && !layer.runInEditor)
+                if (!isPlaying && !layer.runInEditor || !layer.CanUpdate())
                 {
                     continue;
                 }
-
-                Transform rightElbow = null, leftElbow = null;
-                LocRot cacheElbowRight = LocRot.identity, cacheElbowLeft = LocRot.identity;
                 
-                if (bValidElbows)
+                ikRigData.rightHand.CacheHintTransform();
+                ikRigData.leftHand.CacheHintTransform();
+
+                if (isPlaying && layer.CanUseParallelExecution())
                 {
-                    rightElbow = ikRigData.rightHand.hintObj.transform;
-                    leftElbow = ikRigData.leftHand.hintObj.transform;
-                    
-                    cacheElbowRight = new LocRot(rightElbow);
-                    cacheElbowLeft = new LocRot(leftElbow);
+                    layer.CompleteJobs();
+                }
+                else
+                {
+                    layer.UpdateLayer();
                 }
                 
-                layer.OnAnimUpdate();
-                
-                if (bValidElbows)
-                {
-                    float alpha = layer.elbowsWeight;
-                    
-                    rightElbow.position = Vector3.Lerp(cacheElbowRight.position,rightElbow.position, alpha);
-                    rightElbow.rotation = Quaternion.Slerp(cacheElbowRight.rotation,rightElbow.rotation, alpha);
-                    
-                    leftElbow.position = Vector3.Lerp(cacheElbowLeft.position,leftElbow.position, alpha);
-                    leftElbow.rotation = Quaternion.Slerp(cacheElbowLeft.rotation,leftElbow.rotation, alpha);
-                }
-            }
-        }
-
-        // Called after IK pass
-        private void PostUpdateLayers()
-        {
-            foreach (var layer in animLayers)
-            {
-                if (!Application.isPlaying && !layer.runInEditor)
-                {
-                    continue;
-                }
-
-                layer.OnPostIK();
+                float weight = layer.elbowsWeight;
+                ikRigData.rightHand.BlendHintCachedTransform(weight);
+                ikRigData.leftHand.BlendHintCachedTransform(weight);
             }
         }
         
@@ -460,11 +499,11 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         public void OnPoseSampled()
         {
             ikRigData.RetargetHandBones();
-            pelvisPoseMSCache = pelvisPoseMS;
-            pelvisPoseMS = ikRigData.GetPelvisMS();
+            _pelvisPoseMSCache = _pelvisPoseMS;
+            _pelvisPoseMS = ikRigData.GetPelvisMS();
 
-            weaponBonePose = new LocRot(ikRigData.weaponBone, false);
-            weaponBoneSpinePose = new LocRot(ikRigData.weaponBone).ToSpace(ikRigData.spineRoot);
+            _weaponBonePose = new LocRot(ikRigData.weaponBone, false);
+            _weaponBoneSpinePose = new LocRot(ikRigData.weaponBone).ToSpace(ikRigData.spineRoot);
             
             foreach (var layer in animLayers)
             {
@@ -481,7 +520,7 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         {
             weaponAsset = asset;
             weaponTransformData = data;
-            isPivotValid = weaponTransformData.pivotPoint != null;
+            _isPivotValid = weaponTransformData.pivotPoint != null;
         }
 
         public void OnSightChanged(Transform newSight)
@@ -494,40 +533,51 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             characterData = data;
         }
 
+        public void ScheduleJobs()
+        {
+            if (!Application.isPlaying) return;
+            
+            foreach (var layer in animLayers)
+            {
+                if(!layer.CanUseParallelExecution()) continue;
+                
+                layer.PreUpdateLayer();
+                layer.ScheduleJobs();
+            }
+        }
+
         public void SetRightHandIKWeight(float effector, float hint)
         {
-            rightHandWeight = Tuple.Create(effector, hint);
+            _rightHandWeight = Tuple.Create(effector, hint);
         }
 
         public void SetLeftHandIKWeight(float effector, float hint)
         {
-            leftHandWeight = Tuple.Create(effector, hint);
+            _leftHandWeight = Tuple.Create(effector, hint);
         }
 
         public void SetRightFootIKWeight(float effector, float hint)
         {
-            rightFootWeight = Tuple.Create(effector, hint);
+            _rightFootWeight = Tuple.Create(effector, hint);
         }
 
         public void SetLeftFootIKWeight(float effector, float hint)
         {
-            leftFootWeight = Tuple.Create(effector, hint);
+            _leftFootWeight = Tuple.Create(effector, hint);
         }
 
 // Editor utils
 #if UNITY_EDITOR
         public void EnableEditorPreview()
         {
+            if (_updateInEditor) return;
+            
             if (ikRigData.animator == null)
             {
                 ikRigData.animator = GetComponent<Animator>();
             }
 
-            foreach (var layer in animLayers)
-            {
-                layer.OnEnable();
-                layer.OnAnimStart();
-            }
+            InitializeComponent();
 
             animGraph.StartPreview();
             EditorApplication.QueuePlayerLoopUpdate();
@@ -536,6 +586,8 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
 
         public void DisableEditorPreview()
         {
+            if (!_updateInEditor) return;
+            
             _updateInEditor = false;
 
             if (ikRigData.animator == null)
@@ -554,6 +606,8 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
 
             ikRigData.weaponBone.localPosition = Vector3.zero;
             ikRigData.weaponBone.localRotation = Quaternion.identity;
+
+            if (_ikDataArray.IsCreated) _ikDataArray.Dispose();
         }
 
         private void OnDrawGizmos()

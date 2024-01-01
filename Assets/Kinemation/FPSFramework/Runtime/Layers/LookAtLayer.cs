@@ -119,19 +119,19 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             }
         }
 
-        public override void OnPreAnimUpdate()
+        public override void PreUpdateLayer()
         {
             bool bValid = lookSource != null && lookAtTarget != null
                                              && (lookAtTarget.position - lookSource.position).magnitude <= maxDistance;
             float alpha = layerAlpha * (bValid ? 1f : 0f);
-            smoothLayerAlpha = CoreToolkitLib.GlerpLayer(smoothLayerAlpha, alpha, lerpSpeed);
+            smoothLayerAlpha = CoreToolkitLib.InterpLayer(smoothLayerAlpha, alpha, lerpSpeed, Time.deltaTime);
             if (!string.IsNullOrEmpty(curveName))
             {
                 smoothLayerAlpha *= GetAnimator().GetFloat(curveName);
             }
         }
 
-        public override void OnAnimUpdate()
+        public override void UpdateLayer()
         {
             if (Mathf.Approximately(smoothLayerAlpha, 0f))
             {

@@ -32,15 +32,13 @@ namespace Kinemation.FPSFramework.Editor.Core
         private SerializedProperty useIK;
         private SerializedProperty drawDebug;
         
-        private SerializedProperty handIkWeight;
-        private SerializedProperty legIkWeight;
-        
         private SerializedProperty onPreUpdate;
         private SerializedProperty onPostUpdate;
 
         private SerializedProperty previewClip;
         private SerializedProperty loopPreview;
         private SerializedProperty upperBodyMask;
+        private SerializedProperty fpsAnimatorController;
 
         private void OnEnable()
         {
@@ -65,9 +63,7 @@ namespace Kinemation.FPSFramework.Editor.Core
             loopPreview = animGraphEditor.serializedObject.FindProperty("loopPreview");
             
             upperBodyMask = animGraphEditor.serializedObject.FindProperty("upperBodyMask");
-
-            handIkWeight = serializedObject.FindProperty("handIkWeight");
-            legIkWeight = serializedObject.FindProperty("legIkWeight");
+            fpsAnimatorController = animGraphEditor.serializedObject.FindProperty("firstPersonAnimator");
             
             onPreUpdate = serializedObject.FindProperty("onPreUpdate");
             onPostUpdate = serializedObject.FindProperty("onPostUpdate");
@@ -85,9 +81,6 @@ namespace Kinemation.FPSFramework.Editor.Core
             
             EditorGUILayout.PropertyField(rigData, new GUIContent("IK Rig Data"));
             EditorGUILayout.PropertyField(useIK);
-
-            EditorGUILayout.PropertyField(handIkWeight);
-            EditorGUILayout.PropertyField(legIkWeight);
 
             if (GUILayout.Button(new GUIContent("Setup IK Rig", "Will find or create IK bones")))
             {
@@ -124,8 +117,15 @@ namespace Kinemation.FPSFramework.Editor.Core
         private void DrawAnimGraphTab()
         {
             animGraphEditor.serializedObject.Update();
-            EditorGUILayout.PropertyField(upperBodyMask);
 
+            EditorGUILayout.PropertyField(fpsAnimatorController);
+            if (fpsAnimatorController.objectReferenceValue == null)
+            {
+                EditorGUILayout.HelpBox("FPS Animator Controller is Null!", MessageType.Warning);
+            }
+            
+            EditorGUILayout.PropertyField(upperBodyMask);
+            
             if (upperBodyMask.objectReferenceValue == null)
             {
                 EditorGUILayout.HelpBox("Avatar Mask is null!", MessageType.Warning);

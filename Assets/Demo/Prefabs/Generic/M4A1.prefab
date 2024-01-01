@@ -119,7 +119,7 @@ MonoBehaviour:
   fireRate: 750
   burstAmount: 3
   reloadClip: {fileID: 11400000, guid: 10267ceb909c5a14b8d7d0743e573d1a, type: 2}
-  grenadeClip: {fileID: 11400000, guid: b97b26628010a35439d0c4cfc7934c92, type: 2}
+  grenadeClip: {fileID: 11400000, guid: 0ce32e0e84c8ca447ba239f3cce584aa, type: 2}
   fireClip: {fileID: 0}
   overlayType: 2
   canAim: 1

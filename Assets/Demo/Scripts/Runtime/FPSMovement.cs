@@ -289,8 +289,6 @@ namespace Demo.Scripts.Runtime
             _inputDirection.x = moveX;
             _inputDirection.y = moveY;
 
-            //_inputDirection = inputService.Axis;
-
             if (MovementState == FPSMovementState.Sliding && !Mathf.Approximately(_slideProgress, 1f))
             {
                 // Consume input, but do not allow cancelling sliding.
@@ -367,7 +365,6 @@ namespace Demo.Scripts.Runtime
             {
                 _desiredGait.velocitySmoothing = movementSettings.slideDirectionSmoothing;
                 _slideProgress = 0f;
-                _animator.CrossFade(Sliding, 0.1f);
                 onSlideStarted.Invoke();
                 Crouch();
                 return;

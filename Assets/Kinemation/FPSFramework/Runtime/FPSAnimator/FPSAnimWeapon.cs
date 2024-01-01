@@ -55,8 +55,10 @@ namespace Kinemation.FPSFramework.Runtime.FPSAnimator
 
         public void SavePose()
         {
-            //weaponBone.position = transform.localPosition;
-            //weaponBone.rotation = transform.localRotation;
+            if (weaponAsset == null) return;
+
+            weaponAsset.weaponBone.position = transform.localPosition;
+            weaponAsset.weaponBone.rotation = transform.localRotation;
         }
 #endif
     }

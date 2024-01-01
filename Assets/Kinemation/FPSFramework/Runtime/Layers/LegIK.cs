@@ -74,7 +74,7 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             targetLfIK = TraceFoot(GetLeftFoot());
         }
 
-        public override void OnAnimUpdate()
+        public override void UpdateLayer()
         {
             if (Mathf.Approximately(smoothLayerAlpha, 0f))
             {
@@ -98,8 +98,8 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             var rightFoot = GetRightFoot();
             var leftFoot = GetLeftFoot();
             
-            smoothRfIK = CoreToolkitLib.Glerp(smoothRfIK, targetRfIK, footInterpSpeed);
-            smoothLfIK = CoreToolkitLib.Glerp(smoothLfIK, targetLfIK, footInterpSpeed);
+            smoothRfIK = CoreToolkitLib.Interp(smoothRfIK, targetRfIK, footInterpSpeed, Time.deltaTime);
+            smoothLfIK = CoreToolkitLib.Interp(smoothLfIK, targetLfIK, footInterpSpeed, Time.deltaTime);
             
             CoreToolkitLib.MoveInBoneSpace(GetRootBone(), rightFoot, smoothRfIK.position, smoothLayerAlpha);
             CoreToolkitLib.MoveInBoneSpace(GetRootBone(), leftFoot, smoothLfIK.position, smoothLayerAlpha);
@@ -111,7 +111,7 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             float leftFootHeight = targetLfIK.position.y;
             float pelvisTarget = Mathf.Min(rightFootHeight, leftFootHeight);
             
-            smoothPelvis = CoreToolkitLib.Glerp(smoothPelvis, pelvisTarget, pelvisInterpSpeed);
+            smoothPelvis = CoreToolkitLib.Interp(smoothPelvis, pelvisTarget, pelvisInterpSpeed, Time.deltaTime);
             
             CoreToolkitLib.MoveInBoneSpace(GetRootBone(), GetPelvis(), 
                 new Vector3(0f, smoothPelvis, 0f), 1f);

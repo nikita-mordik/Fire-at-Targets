@@ -1,6 +1,5 @@
 // Designed by KINEMATION, 2023
 
-using System;
 using Kinemation.FPSFramework.Runtime.Core.Types;
 using UnityEngine;
 

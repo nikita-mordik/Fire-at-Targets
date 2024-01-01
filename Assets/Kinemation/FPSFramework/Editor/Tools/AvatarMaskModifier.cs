@@ -51,7 +51,7 @@ namespace Kinemation.FPSFramework.Editor.Tools
                 {
                     path = path.Substring(slashIndex + 1);
                 }
-
+                
                 _maskToModify.SetTransformPath(_maskToModify.transformCount - 1, path);
             }
         }

@@ -54,15 +54,15 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             }
         }
         
-        public override void OnAnimUpdate()
+        public override void UpdateLayer()
         {
             if (GetGunAsset() == null) return;
             
             Trace();
-            smoothPose = CoreToolkitLib.Glerp(smoothPose, offsetPose, 10f);
+            smoothPose = CoreToolkitLib.Interp(smoothPose, offsetPose, 10f, Time.deltaTime);
             
-            GetMasterIK().Move(smoothPose.position, smoothLayerAlpha);
-            GetMasterIK().Rotate(smoothPose.rotation, smoothLayerAlpha);
+            GetMasterIK().Offset(smoothPose.position, smoothLayerAlpha);
+            GetMasterIK().Offset(smoothPose.rotation, smoothLayerAlpha);
         }
     }
 }

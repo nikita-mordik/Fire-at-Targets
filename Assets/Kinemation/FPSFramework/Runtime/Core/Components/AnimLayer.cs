@@ -3,8 +3,8 @@
 using Kinemation.FPSFramework.Runtime.Attributes;
 using Kinemation.FPSFramework.Runtime.Core.Types;
 
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace Kinemation.FPSFramework.Runtime.Core.Components
 {
@@ -35,39 +35,47 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
         }
 
         // Called in Start()
-        public virtual void OnAnimStart()
+        public virtual void InitializeLayer()
+        {
+            core = GetComponent<CoreAnimComponent>();
+        }
+
+        public virtual bool CanUpdate()
+        {
+            return !Mathf.Approximately(smoothLayerAlpha, 0f) && !Mathf.Approximately(Time.deltaTime, 0f) 
+                                                              && GetGunAsset() != null;
+        }
+
+        public virtual bool CanUseParallelExecution()
+        {
+            return false;
+        }
+
+        public virtual void ScheduleJobs()
         {
         }
         
-        // Called before the main anim update cycle
-        public virtual void OnPreAnimUpdate()
+        // Called before the main anim update loop.
+        public virtual void PreUpdateLayer()
         {
             float target = !string.IsNullOrEmpty(curveName) ? GetAnimator().GetFloat(curveName) : layerAlpha;
-            smoothLayerAlpha = CoreToolkitLib.GlerpLayer(smoothLayerAlpha, Mathf.Clamp01(target), lerpSpeed);
+            smoothLayerAlpha = CoreToolkitLib.InterpLayer(smoothLayerAlpha, Mathf.Clamp01(target), lerpSpeed, 
+                Time.deltaTime);
+        }
+
+        // Called if we need to complete the job.
+        public virtual void CompleteJobs()
+        {
         }
         
         // Main anim update
-        public virtual void OnAnimUpdate()
+        public virtual void UpdateLayer()
         {
         }
         
-        // Called after the IK is applied
-        public virtual void OnPostIK()
-        {
-        }
-
         // Called when an overlay pose is sampled
         public virtual void OnPoseSampled()
         {
-        }
-
-        protected virtual void Awake()
-        {
-        }
-
-        public void OnEnable()
-        {
-            core = GetComponent<CoreAnimComponent>();
         }
         
         protected WeaponAnimAsset GetGunAsset()
@@ -165,14 +173,11 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             LocRot rightElbow = new LocRot(GetRightHandIK().hintTarget);
             LocRot leftElbow = new LocRot(GetLeftHandIK().hintTarget);
 
-            GetMasterIK().Move(GetMasterPivot(), offset.position, alpha);
-            GetMasterIK().Rotate(GetMasterPivot().rotation, offset.rotation, alpha);
-
-            GetRightHand().position = rightHandTip.position;
-            GetRightHand().rotation = rightHandTip.rotation;
-
-            GetLeftHand().position = leftHandTip.position;
-            GetLeftHand().rotation = leftHandTip.rotation;
+            GetMasterIK().Offset(GetMasterPivot(), offset.position, alpha);
+            GetMasterIK().Offset(GetMasterPivot().rotation, offset.rotation, alpha);
+            
+            GetRightHandIK().Override(rightHandTip);
+            GetLeftHandIK().Override(leftHandTip);
 
             GetRightHandIK().hintTarget.position = rightElbow.position;
             GetRightHandIK().hintTarget.rotation = rightElbow.rotation;
@@ -189,7 +194,7 @@ namespace Kinemation.FPSFramework.Runtime.Core.Components
             LocRot rightElbow = new LocRot(GetRightHandIK().hintTarget);
             LocRot leftElbow = new LocRot(GetLeftHandIK().hintTarget);
 
-            GetMasterIK().Move(GetMasterPivot(), offset, alpha);
+            GetMasterIK().Offset(GetMasterPivot(), offset, alpha);
 
             GetRightHand().position = rightHandTip.position;
             GetRightHand().rotation = rightHandTip.rotation;

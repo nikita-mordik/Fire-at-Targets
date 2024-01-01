@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Rifle_Static
   m_EditorClassIdentifier: 
   clip: {fileID: 7400000, guid: 2e3b52212d42f8144807413da9f37e97, type: 2}
-  spineRotation: {x: 0, y: 0, z: 0, w: 1}
   mask: {fileID: 0}
+  spineRotation: {x: 0, y: 0, z: 0, w: 1}
+  overrideMask: {fileID: 0}
+  isAdditive: 0
   blendTime:
-    blendInTime: 0.1
-    blendOutTime: 0.1
+    blendInTime: 0
+    blendOutTime: 0
     rateScale: 1
   curves: []

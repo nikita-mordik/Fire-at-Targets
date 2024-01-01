@@ -83,7 +83,7 @@ MonoBehaviour:
   weaponTransformData:
     pivotPoint: {fileID: 4039766212137896336}
     aimPoint: {fileID: 904304390162002501}
-    leftHandTarget: {fileID: 4880146977252746949}
+    leftHandTarget: {fileID: 0}
   fireMode: 2
   fireRate: 620
   burstAmount: 0

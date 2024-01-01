@@ -47,7 +47,7 @@ namespace Kinemation.FPSFramework.Runtime.Layers
 
             _blendAlpha += Time.deltaTime * _asset.blendSpeed;
             _blendAlpha = Mathf.Clamp01(_blendAlpha);
-            _out = CoreToolkitLib.Lerp(_cache, activeMotion, _blendAlpha);
+            _out = LocRot.Lerp(_cache, activeMotion, _blendAlpha);
         }
         
         public void PlayMotion(IKAnimation animationAsset)
@@ -63,16 +63,17 @@ namespace Kinemation.FPSFramework.Runtime.Layers
             _length = _asset.GetLength();
         }
 
-        public override void OnAnimStart()
+        public override void InitializeLayer()
         {
+            base.InitializeLayer();
             Reset();
         }
 
-        public override void OnAnimUpdate()
+        public override void UpdateLayer()
         {
             UpdateMotion();
-            GetMasterIK().Move(GetRootBone(), _out.position, smoothLayerAlpha);
-            GetMasterIK().Rotate(GetRootBone().rotation, _out.rotation, smoothLayerAlpha);
+            GetMasterIK().Offset(GetRootBone(), _out.position, smoothLayerAlpha);
+            GetMasterIK().Offset(GetRootBone().rotation, _out.rotation, smoothLayerAlpha);
         }
     }
 }

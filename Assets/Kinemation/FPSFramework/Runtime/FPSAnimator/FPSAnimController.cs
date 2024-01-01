@@ -18,9 +18,11 @@ namespace Kinemation.FPSFramework.Runtime.FPSAnimator
     {
         private CoreAnimComponent fpsAnimator;
         private FPSCamera fpsCamera;
-        private LookLayer internalLookLayer;
         protected RecoilAnimation recoilComponent;
         protected CharAnimData charAnimData;
+        
+        private LookLayer internalLookLayer;
+        private AdsLayer internalAdsLayer;
         
         // Used primarily for function calls from Animation Events
         // Runs once at the beginning of the next update
@@ -36,13 +38,14 @@ namespace Kinemation.FPSFramework.Runtime.FPSAnimator
         {
             fpsAnimator = GetComponentInChildren<CoreAnimComponent>();
             fpsAnimator.animGraph.InitPlayableGraph();
-            fpsAnimator.InitializeLayers();
+            fpsAnimator.InitializeComponent();
 
             recoilComponent = GetComponentInChildren<RecoilAnimation>();
             charAnimData = new CharAnimData();
 
             fpsCamera = GetComponentInChildren<FPSCamera>();
             internalLookLayer = GetComponentInChildren<LookLayer>();
+            internalAdsLayer = GetComponentInChildren<AdsLayer>();
 
             if (fpsCamera != null)
             {
@@ -67,8 +70,12 @@ namespace Kinemation.FPSFramework.Runtime.FPSAnimator
             fpsAnimator.OnGunEquipped(weapon.weaponAsset, weapon.weaponTransformData);
             
             fpsAnimator.ikRigData.weaponTransform = weapon.weaponAsset.weaponBone;
-            internalLookLayer.SetAimOffsetTable(weapon.weaponAsset.aimOffsetTable);
 
+            if (internalLookLayer != null)
+            {
+                internalLookLayer.SetAimOffsetTable(weapon.weaponAsset.aimOffsetTable);
+            }
+            
             var pose = weapon.weaponAsset.overlayPose;
 
             if (pose == null)
@@ -91,6 +98,11 @@ namespace Kinemation.FPSFramework.Runtime.FPSAnimator
         protected void InitAimPoint(FPSAnimWeapon weapon)
         {
             fpsAnimator.OnSightChanged(weapon.GetAimPoint());
+            
+            if (internalAdsLayer != null)
+            {
+                internalAdsLayer.UpdateAimPoint();
+            }
         }
 
         // Call this during Update after all the gameplay logic
@@ -104,21 +116,22 @@ namespace Kinemation.FPSFramework.Runtime.FPSAnimator
 
             if (recoilComponent != null)
             {
-                charAnimData.recoilAnim = new LocRot(recoilComponent.OutLoc, Quaternion.Euler(recoilComponent.OutRot));
+                charAnimData.recoilAnim = 
+                    new LocRot(recoilComponent.OutLoc, Quaternion.Euler(recoilComponent.OutRot));
             }
             
             fpsAnimator.SetCharData(charAnimData);
-            
-            fpsAnimator.animGraph.UpdateGraph();
-            fpsAnimator.UpdateCoreComponent();
+            fpsAnimator.ikRigData.RetargetWeaponBone();
+            GetAnimGraph().UpdateGraph();
+            fpsAnimator.ScheduleJobs();
 
             if (fpsCamera != null)
             {
-                float Pitch = GetAnimGraph().GetCurveValue(CurveLib.Curve_Camera_Pitch);
-                float Yaw = GetAnimGraph().GetCurveValue(CurveLib.Curve_Camera_Yaw);
-                float Roll = GetAnimGraph().GetCurveValue(CurveLib.Curve_Camera_Roll);
-                
-                Quaternion rot = Quaternion.Euler(Pitch, Yaw, Roll);
+                float pitch = GetAnimGraph().GetCurveValue(CurveLib.Curve_Camera_Pitch);
+                float yaw = GetAnimGraph().GetCurveValue(CurveLib.Curve_Camera_Yaw);
+                float roll = GetAnimGraph().GetCurveValue(CurveLib.Curve_Camera_Roll);
+
+                Quaternion rot = Quaternion.Euler(pitch, yaw, roll);
                 fpsCamera.UpdateCameraAnimation(rot.normalized);
             }
         }
@@ -134,16 +147,10 @@ namespace Kinemation.FPSFramework.Runtime.FPSAnimator
         // Call this to play a Camera shake
         protected void PlayCameraShake(FPSCameraShake shake)
         {
-            if (fpsCamera != null)
+            if (fpsCamera != null && shake != null)
             {
                 fpsCamera.PlayShake(shake.shakeInfo);
             }
-        }
-        
-        protected void PlayController(RuntimeAnimatorController controller, AnimSequence motion)
-        {
-            if (motion == null) return;
-            fpsAnimator.animGraph.PlayController(controller, motion.clip, motion.blendTime.blendInTime);
         }
         
         // Call this to play a static pose on the character upper body
@@ -157,7 +164,6 @@ namespace Kinemation.FPSFramework.Runtime.FPSAnimator
         protected void PlayAnimation(AnimSequence motion, float startTime = 0f)
         {
             if (motion == null) return;
-            
             fpsAnimator.animGraph.PlayAnimation(motion, startTime);
         }
         
