@@ -1,7 +1,7 @@
 using System;
-using FreedLOW.FireAtTergets.Code.Target;
+using FreedLOW.FireAtTargets.Code.Target;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Point
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point
 {
     public interface IPointService
     {

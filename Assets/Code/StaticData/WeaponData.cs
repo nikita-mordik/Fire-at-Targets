@@ -1,7 +1,7 @@
 using Kinemation.FPSFramework.Runtime.Recoil;
 using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.StaticData
+namespace FreedLOW.FireAtTargets.Code.StaticData
 {
     [CreateAssetMenu(fileName = "WeaponData", menuName = "StaticData/WeaponData")]
     public class WeaponData : ScriptableObject

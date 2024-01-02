@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.Target
+namespace FreedLOW.FireAtTargets.Code.Target
 {
     public class RootMilitaryTargetHealth : MonoBehaviour, ITargetHealth
     {

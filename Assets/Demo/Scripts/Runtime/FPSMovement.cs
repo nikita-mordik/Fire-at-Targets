@@ -1,6 +1,6 @@
 // Designed by KINEMATION, 2023
 
-using FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using Kinemation.FPSFramework.Runtime.FPSAnimator;
 using UnityEngine;
 using UnityEngine.Events;

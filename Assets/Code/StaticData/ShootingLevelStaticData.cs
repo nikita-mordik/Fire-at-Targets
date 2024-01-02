@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.StaticData
+namespace FreedLOW.FireAtTargets.Code.StaticData
 {
     [CreateAssetMenu(fileName = "ShootingLevelData", menuName = "StaticData/ShootingLevel")]
     public class ShootingLevelStaticData : ScriptableObject

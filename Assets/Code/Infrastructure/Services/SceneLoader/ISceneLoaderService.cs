@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.SceneLoader
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.SceneLoader
 {
     public interface ISceneLoaderService
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace FreedLOW.FireAtTergets.Code.Extensions
+namespace FreedLOW.FireAtTargets.Code.Extensions
 {
   public static class ColorExtensions
   {

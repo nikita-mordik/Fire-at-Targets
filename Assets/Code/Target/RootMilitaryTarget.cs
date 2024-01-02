@@ -2,7 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.Target
+namespace FreedLOW.FireAtTargets.Code.Target
 {
     public class RootMilitaryTarget : MonoBehaviour
     {

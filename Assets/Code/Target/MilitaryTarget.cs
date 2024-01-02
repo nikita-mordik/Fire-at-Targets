@@ -1,6 +1,8 @@
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point;
 using UnityEngine;
+using Zenject;
 
-namespace FreedLOW.FireAtTergets.Code.Target
+namespace FreedLOW.FireAtTargets.Code.Target
 {
     public class MilitaryTarget : MonoBehaviour , IMilitaryTarget
     {
@@ -11,10 +13,17 @@ namespace FreedLOW.FireAtTergets.Code.Target
 
         public TargetShootPointType TargetShootPointType => targetShootPointType;
 
+        private IPointService pointService;
+
+        [Inject]
+        private void Construct(IPointService pointService)
+        {
+            this.pointService = pointService;
+        }
+
         private void Awake()
         {
             targetHealth = root.GetComponent<ITargetHealth>();
-            Debug.LogError(targetHealth!=null);
         }
 
         public void Damage(int damageAmount)
@@ -23,7 +32,7 @@ namespace FreedLOW.FireAtTergets.Code.Target
             targetHealth.TakeDamage(damageAmount);
             
             // TODO: send point data using TargetShootPointType
-            //pointService.AddPoint(targetShootPointType);
+            pointService.AddPoint(targetShootPointType);
         }
     }
 }

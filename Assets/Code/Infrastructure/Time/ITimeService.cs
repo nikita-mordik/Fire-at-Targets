@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.Time
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.Time
 {
   public interface ITimeService
   {

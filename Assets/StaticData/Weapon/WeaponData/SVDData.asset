@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9a3815d91804b93acd76aa1c83ae6ad, type: 3}
+  m_Name: SVDData
+  m_EditorClassIdentifier: 
+  Damage: 20
+  FireMode: 0
+  FireRate: 350
+  BurstAmount: 0
+  MaxAmmo: 90
+  StartAmmo: 15

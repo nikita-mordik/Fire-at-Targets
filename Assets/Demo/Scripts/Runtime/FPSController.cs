@@ -7,7 +7,8 @@ using Kinemation.FPSFramework.Runtime.Recoil;
 
 using UnityEngine;
 using System.Collections.Generic;
-using FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
+using FreedLOW.FireAtTargets.Code.Weapon;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -300,6 +301,9 @@ namespace Demo.Scripts.Runtime
         {
             if (HasActiveAction()) return;
             
+            var weaponBehaviour = GetGun().GetComponent<WeaponBehaviour>();
+            if (!weaponBehaviour.HasMagazineAmmo() && weaponBehaviour.CurrentAmmo <= 0) return;
+            
             GetGun().OnFire();
             PlayAnimation(GetGun().fireClip);
             
@@ -331,6 +335,16 @@ namespace Demo.Scripts.Runtime
                 }
                 
                 _bursts--;
+            }
+            
+            // TODO: here decrease ammo from WeaponBehaviour or RayShooting:
+            weaponBehaviour.CurrentAmmo--;
+            if (weaponBehaviour.CurrentAmmo <= 0)
+            {
+                if (!weaponBehaviour.HasMagazineAmmo()) return;
+                
+                TryReload();
+                return;
             }
 
             if (recoilComponent.fireMode == FireMode.Semi)
@@ -471,10 +485,13 @@ namespace Demo.Scripts.Runtime
         private void TryReload()
         {
             if (HasActiveAction()) return;
-
+            
             var reloadClip = GetGun().reloadClip;
 
             if (reloadClip == null) return;
+
+            var weaponBehaviour = GetGun().GetComponent<WeaponBehaviour>();
+            weaponBehaviour.Reload();
             
             OnFireReleased();
             

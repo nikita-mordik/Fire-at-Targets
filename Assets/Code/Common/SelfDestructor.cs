@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.Common
+namespace FreedLOW.FireAtTargets.Code.Common
 {
   public class SelfDestructor : MonoBehaviour
   {

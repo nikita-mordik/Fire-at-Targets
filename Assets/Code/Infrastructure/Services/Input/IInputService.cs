@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
     public interface IInputService
     {
@@ -10,6 +10,7 @@ namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input
 
         event Action OnShoot;
         event Action OnShootStop;
+        event Action OnScope;
         
         bool IsShootButtonDown();
         bool IsShootButtonUp();

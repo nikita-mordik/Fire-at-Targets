@@ -5,7 +5,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.SceneLoader
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.SceneLoader
 {
     public class SceneLoaderService : ISceneLoaderService
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
     public abstract class InputService : IInputService
     {
@@ -18,6 +18,7 @@ namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input
 
         public event Action OnShoot;
         public event Action OnShootStop;
+        public event Action OnScope;
 
         public virtual bool IsShootButtonDown() => 
             SimpleInput.GetButtonDown(ShootButton);
@@ -28,8 +29,11 @@ namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input
         public virtual bool IsReloadButtonDown() => 
             SimpleInput.GetButtonDown(ReloadButton);
 
-        public virtual bool IsScopeButtonDown() => 
-            SimpleInput.GetButtonDown(ScopeButton);
+        public virtual bool IsScopeButtonDown()
+        {
+            OnScope?.Invoke();
+            return SimpleInput.GetButtonDown(ScopeButton);
+        }
 
         public void InvokeOnShoot() => 
             OnShoot?.Invoke();

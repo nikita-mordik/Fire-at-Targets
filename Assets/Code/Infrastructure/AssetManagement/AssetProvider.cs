@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.AssetManagement
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement
 {
     public class AssetProvider : IAssetProvider
     {

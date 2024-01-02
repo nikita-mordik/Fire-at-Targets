@@ -1,6 +1,6 @@
 {
     "name": "Fire at Targets",
-    "rootNamespace": "FreedLOW.FireAtTergets",
+    "rootNamespace": "FreedLOW.FireAtTargets",
     "references": [
         "GUID:91287448c38e1c242882ffc9da520fe4",
         "GUID:d20f5b52ccd183042b995ba808c3f6d2",

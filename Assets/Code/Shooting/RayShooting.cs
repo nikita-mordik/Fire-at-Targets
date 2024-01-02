@@ -1,9 +1,9 @@
-using FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input;
-using FreedLOW.FireAtTergets.Code.Target;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
+using FreedLOW.FireAtTargets.Code.Target;
 using UnityEngine;
 using Zenject;
 
-namespace FreedLOW.FireAtTergets.Code.Shooting
+namespace FreedLOW.FireAtTargets.Code.Shooting
 {
     public class RayShooting : MonoBehaviour
     {
@@ -15,7 +15,7 @@ namespace FreedLOW.FireAtTergets.Code.Shooting
         
         private int damageAmount;
 
-        public int DamageAmount { get => damageAmount; set => damageAmount = value; }
+        public int DamageAmount { set => damageAmount = value; }
         
         private IInputService inputService;
 
@@ -44,7 +44,7 @@ namespace FreedLOW.FireAtTergets.Code.Shooting
             if (hitCount > 0)
             {
                 var militaryTarget = hits[0].collider.GetComponent<IMilitaryTarget>();
-                militaryTarget.Damage(damageAmount);
+                militaryTarget?.Damage(damageAmount);
             }
         }
     }

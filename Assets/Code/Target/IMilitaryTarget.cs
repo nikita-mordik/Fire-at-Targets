@@ -1,4 +1,4 @@
-namespace FreedLOW.FireAtTergets.Code.Target
+namespace FreedLOW.FireAtTargets.Code.Target
 {
     public interface IMilitaryTarget
     {

@@ -1,7 +1,7 @@
 using System;
-using FreedLOW.FireAtTergets.Code.Target;
+using FreedLOW.FireAtTargets.Code.Target;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Point
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point
 {
     public class PointService : IPointService
     {
@@ -12,9 +12,7 @@ namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Point
         public void AddPoint(TargetShootPointType pointType)
         {
             if (pointType == TargetShootPointType.None)
-            {
                 throw new Exception("Not valid data!");
-            }
 
             CurrentPoints += (int) pointType;
             OnPointsChanged?.Invoke(CurrentPoints);

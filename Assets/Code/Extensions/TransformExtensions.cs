@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.Extensions
+namespace FreedLOW.FireAtTargets.Code.Extensions
 {
   public static class TransformExtensions
   {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FreedLOW.FireAtTergets.Code.Infrastructure.Services.Input
+namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
     public class StandaloneInputService : InputService
     {
