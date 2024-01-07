@@ -3335,6 +3335,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  shootHitEffect: {fileID: 74863579}
+  shootAudio: {fileID: 74863578}
 --- !u!114 &74863577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3350,6 +3352,32 @@ MonoBehaviour:
   weapon: {fileID: 74863575}
   weaponData: {fileID: 11400000, guid: 50655da18c0f8d2479de71c52ab370f1, type: 2}
   rayShooting: {fileID: 74863576}
+--- !u!114 &74863578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74863573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be826982fa22448597a8a122cd89b070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponAudioSource: {fileID: 0}
+--- !u!114 &74863579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74863573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPrefab: {fileID: 0}
 --- !u!1001 &75006276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16632,6 +16660,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  shootHitEffect: {fileID: 465177038}
+  shootAudio: {fileID: 465177037}
 --- !u!114 &465177036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16647,6 +16677,32 @@ MonoBehaviour:
   weapon: {fileID: 465177034}
   weaponData: {fileID: 11400000, guid: 66ed0cd66e350924991b111aa47dcd69, type: 2}
   rayShooting: {fileID: 465177035}
+--- !u!114 &465177037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465177032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be826982fa22448597a8a122cd89b070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponAudioSource: {fileID: 0}
+--- !u!114 &465177038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465177032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPrefab: {fileID: 0}
 --- !u!1001 &466275047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19632,6 +19688,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  shootHitEffect: {fileID: 556077435}
+  shootAudio: {fileID: 556077434}
 --- !u!114 &556077433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19647,6 +19705,32 @@ MonoBehaviour:
   weapon: {fileID: 556077431}
   weaponData: {fileID: 11400000, guid: 9c3862ebf1e2ec746a1e79ebf9e55ccd, type: 2}
   rayShooting: {fileID: 556077432}
+--- !u!114 &556077434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556077429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be826982fa22448597a8a122cd89b070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponAudioSource: {fileID: 0}
+--- !u!114 &556077435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556077429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPrefab: {fileID: 0}
 --- !u!1001 &556378499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26439,6 +26523,34 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  shootHitEffect: {fileID: 768398970}
+  shootAudio: {fileID: 768398969}
+--- !u!114 &768398969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768398964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be826982fa22448597a8a122cd89b070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponAudioSource: {fileID: 0}
+--- !u!114 &768398970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768398964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPrefab: {fileID: 0}
 --- !u!1001 &769929962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26926,6 +27038,10 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1080293397}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2962799436222830615, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 776525316}
     - targetCorrespondingSourceObject: {fileID: 858376381946630211, guid: 09dfc55288e2c514d98ea3b20e78195b,
         type: 3}
       insertIndex: -1
@@ -26934,6 +27050,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1017827320}
+    - targetCorrespondingSourceObject: {fileID: 858376381946630211, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1017827323}
+    - targetCorrespondingSourceObject: {fileID: 858376381946630211, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1017827322}
     - targetCorrespondingSourceObject: {fileID: 7547053201941260935, guid: 09dfc55288e2c514d98ea3b20e78195b,
         type: 3}
       insertIndex: -1
@@ -26942,6 +27066,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 74863576}
+    - targetCorrespondingSourceObject: {fileID: 7547053201941260935, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 74863579}
+    - targetCorrespondingSourceObject: {fileID: 7547053201941260935, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 74863578}
     - targetCorrespondingSourceObject: {fileID: 2230096739418631840, guid: 09dfc55288e2c514d98ea3b20e78195b,
         type: 3}
       insertIndex: -1
@@ -26950,6 +27082,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1232129746}
+    - targetCorrespondingSourceObject: {fileID: 2230096739418631840, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1232129749}
+    - targetCorrespondingSourceObject: {fileID: 2230096739418631840, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1232129748}
     - targetCorrespondingSourceObject: {fileID: 8114113013104750834, guid: 09dfc55288e2c514d98ea3b20e78195b,
         type: 3}
       insertIndex: -1
@@ -26958,6 +27098,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 556077432}
+    - targetCorrespondingSourceObject: {fileID: 8114113013104750834, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 556077435}
+    - targetCorrespondingSourceObject: {fileID: 8114113013104750834, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 556077434}
     - targetCorrespondingSourceObject: {fileID: 7563868114568910666, guid: 09dfc55288e2c514d98ea3b20e78195b,
         type: 3}
       insertIndex: -1
@@ -26966,6 +27114,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 768398967}
+    - targetCorrespondingSourceObject: {fileID: 7563868114568910666, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 768398970}
+    - targetCorrespondingSourceObject: {fileID: 7563868114568910666, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 768398969}
     - targetCorrespondingSourceObject: {fileID: 3977475913692203653, guid: 09dfc55288e2c514d98ea3b20e78195b,
         type: 3}
       insertIndex: -1
@@ -26974,7 +27130,46 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 465177035}
+    - targetCorrespondingSourceObject: {fileID: 3977475913692203653, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 465177038}
+    - targetCorrespondingSourceObject: {fileID: 3977475913692203653, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 465177037}
   m_SourcePrefab: {fileID: 100100000, guid: 09dfc55288e2c514d98ea3b20e78195b, type: 3}
+--- !u!114 &776525314 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7195391591855915974, guid: 09dfc55288e2c514d98ea3b20e78195b,
+    type: 3}
+  m_PrefabInstance: {fileID: 776525313}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776525315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81d0c9cae953fca4ab9737e1caf87cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &776525315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2962799436222830615, guid: 09dfc55288e2c514d98ea3b20e78195b,
+    type: 3}
+  m_PrefabInstance: {fileID: 776525313}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &776525316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776525315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57f72e2497d4a22b0779ced59218263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fpsController: {fileID: 776525314}
 --- !u!1001 &778866247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35044,6 +35239,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  shootHitEffect: {fileID: 1017827323}
+  shootAudio: {fileID: 1017827322}
 --- !u!114 &1017827321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35059,6 +35256,32 @@ MonoBehaviour:
   weapon: {fileID: 1017827319}
   weaponData: {fileID: 11400000, guid: c007e396ca48c7547b3ac1327ad01d9e, type: 2}
   rayShooting: {fileID: 1017827320}
+--- !u!114 &1017827322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017827317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be826982fa22448597a8a122cd89b070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponAudioSource: {fileID: 0}
+--- !u!114 &1017827323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017827317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPrefab: {fileID: 0}
 --- !u!1001 &1019854787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35353,6 +35576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db3f8ca4361489d93d09d31f4245ad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerControllerService: {fileID: 776525316}
 --- !u!114 &1027537643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42524,6 +42748,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  shootHitEffect: {fileID: 1232129749}
+  shootAudio: {fileID: 1232129748}
 --- !u!114 &1232129747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42539,6 +42765,32 @@ MonoBehaviour:
   weapon: {fileID: 1232129745}
   weaponData: {fileID: 11400000, guid: a69c4c3e6f5d09548ba3a01ab6b61904, type: 2}
   rayShooting: {fileID: 1232129746}
+--- !u!114 &1232129748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232129743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be826982fa22448597a8a122cd89b070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponAudioSource: {fileID: 0}
+--- !u!114 &1232129749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232129743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPrefab: {fileID: 0}
 --- !u!1001 &1233262816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52286,6 +52538,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  shootHitEffect: {fileID: 0}
+  shootAudio: {fileID: 0}
 --- !u!114 &1495221527
 MonoBehaviour:
   m_ObjectHideFlags: 0

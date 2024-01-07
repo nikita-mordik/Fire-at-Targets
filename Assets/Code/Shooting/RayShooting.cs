@@ -10,6 +10,10 @@ namespace FreedLOW.FireAtTargets.Code.Shooting
         [SerializeField] private Transform shootPoint;
         [SerializeField] private float maxDistance;
         [SerializeField] private LayerMask targetLayer;
+        
+        [Header("Effects")]
+        [SerializeField] private ShootHitEffect shootHitEffect;
+        [SerializeField] private ShootAudio shootAudio;
 
         private readonly RaycastHit[] hits = new RaycastHit[1];
         
@@ -40,11 +44,19 @@ namespace FreedLOW.FireAtTargets.Code.Shooting
 
         private void OnShoot()
         {
-            var hitCount = Physics.RaycastNonAlloc(shootPoint.position, shootPoint.forward, hits, maxDistance, targetLayer);
+            shootAudio.PlayShoot();
+            var hitCount = Physics.RaycastNonAlloc(shootPoint.position, shootPoint.forward, hits, maxDistance);
             if (hitCount > 0)
             {
-                var militaryTarget = hits[0].collider.GetComponent<IMilitaryTarget>();
-                militaryTarget?.Damage(damageAmount);
+                if (hits[0].collider.TryGetComponent<IMilitaryTarget>(out var militaryTarget))
+                {
+                    militaryTarget.Damage(damageAmount);
+                    shootHitEffect.HitMilitaryTargetEffect(hits[0].point);
+                }
+                else
+                {
+                    shootHitEffect.HitDefaultEffect(hits[0].point);
+                }
             }
         }
     }

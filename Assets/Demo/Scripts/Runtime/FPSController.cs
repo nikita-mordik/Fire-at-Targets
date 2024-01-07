@@ -120,6 +120,8 @@ namespace Demo.Scripts.Runtime
 
         private bool _isUnarmed;
         
+        public List<Weapon> Weapons => weapons;
+
         private IInputService inputService;
 
         [Inject]
@@ -209,7 +211,7 @@ namespace Demo.Scripts.Runtime
         {
         }
 
-        private void EquipWeapon()
+        public void EquipWeapon()
         {
             if (weapons.Count == 0) return;
 
@@ -491,7 +493,8 @@ namespace Demo.Scripts.Runtime
             if (reloadClip == null) return;
 
             var weaponBehaviour = GetGun().GetComponent<WeaponBehaviour>();
-            weaponBehaviour.Reload();
+            if (weaponBehaviour != null)
+                weaponBehaviour.Reload();
             
             OnFireReleased();
             
