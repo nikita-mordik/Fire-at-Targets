@@ -28,10 +28,7 @@ namespace FreedLOW.FireAtTargets.Code.Target
 
         public void Damage(int damageAmount)
         {
-            Debug.LogError("here hit " + targetShootPointType);
             targetHealth.TakeDamage(damageAmount);
-            
-            // TODO: send point data using TargetShootPointType
             pointService.AddPoint(targetShootPointType);
         }
     }

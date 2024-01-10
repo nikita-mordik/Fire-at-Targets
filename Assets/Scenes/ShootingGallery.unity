@@ -3332,9 +3332,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 1306485178}
   maxDistance: 100
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
   shootHitEffect: {fileID: 74863579}
   shootAudio: {fileID: 74863578}
 --- !u!114 &74863577
@@ -3377,7 +3374,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPrefab: {fileID: 0}
+  muzzleFlash: {fileID: 153266, guid: a9053ac253b0e0d4394e96a67adf0b6f, type: 3}
+  impactElemets:
+  - MaterialType: 0
+    ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+  - MaterialType: 1
+    ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+  - MaterialType: 2
+    ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+  - MaterialType: 3
+    ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+  - MaterialType: 4
+    ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+  - MaterialType: 5
+    ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+  - MaterialType: 6
+    ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+  - MaterialType: 7
+    ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+  - MaterialType: 8
+    ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+  - MaterialType: 9
+    ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
 --- !u!1001 &75006276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15747,11 +15765,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1428965035936244, guid: 9cab6bfb38f9abd46a991eeb41b35a5b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 433547708}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
 --- !u!4 &433547706 stripped
 Transform:
@@ -15759,33 +15773,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 433547705}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &433547707 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1428965035936244, guid: 9cab6bfb38f9abd46a991eeb41b35a5b,
-    type: 3}
-  m_PrefabInstance: {fileID: 433547705}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &433547708
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433547707}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.19999999, y: 3.75, z: 1.5499998}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &435144284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16657,9 +16644,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 1080293397}
   maxDistance: 100
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
   shootHitEffect: {fileID: 465177038}
   shootAudio: {fileID: 465177037}
 --- !u!114 &465177036
@@ -16702,7 +16686,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPrefab: {fileID: 0}
+  muzzleFlash: {fileID: 110062, guid: 1f6cd59b6cb9b30479cb9701829d3c16, type: 3}
+  impactElemets:
+  - MaterialType: 0
+    ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+  - MaterialType: 1
+    ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+  - MaterialType: 2
+    ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+  - MaterialType: 3
+    ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+  - MaterialType: 4
+    ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+  - MaterialType: 5
+    ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+  - MaterialType: 6
+    ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+  - MaterialType: 7
+    ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+  - MaterialType: 8
+    ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+  - MaterialType: 9
+    ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
 --- !u!1001 &466275047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19685,9 +19690,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 1986698201}
   maxDistance: 100
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
   shootHitEffect: {fileID: 556077435}
   shootAudio: {fileID: 556077434}
 --- !u!114 &556077433
@@ -19730,7 +19732,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPrefab: {fileID: 0}
+  muzzleFlash: {fileID: 183908, guid: 9817249ba0956464da55ce1de9ae9c30, type: 3}
+  impactElemets:
+  - MaterialType: 0
+    ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+  - MaterialType: 1
+    ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+  - MaterialType: 2
+    ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+  - MaterialType: 3
+    ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+  - MaterialType: 4
+    ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+  - MaterialType: 5
+    ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+  - MaterialType: 6
+    ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+  - MaterialType: 7
+    ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+  - MaterialType: 8
+    ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+  - MaterialType: 9
+    ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
 --- !u!1001 &556378499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26520,9 +26543,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 843108428}
   maxDistance: 100
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
   shootHitEffect: {fileID: 768398970}
   shootAudio: {fileID: 768398969}
 --- !u!114 &768398969
@@ -26550,7 +26570,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPrefab: {fileID: 0}
+  muzzleFlash: {fileID: 124018, guid: fdac2b543efe1164abc20e40e85905c2, type: 3}
+  impactElemets:
+  - MaterialType: 0
+    ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+  - MaterialType: 1
+    ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+  - MaterialType: 2
+    ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+  - MaterialType: 3
+    ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+  - MaterialType: 4
+    ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+  - MaterialType: 5
+    ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+  - MaterialType: 6
+    ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+  - MaterialType: 7
+    ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+  - MaterialType: 8
+    ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+  - MaterialType: 9
+    ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
 --- !u!1001 &769929962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26959,6 +27000,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Radius
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520993946623423604, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      propertyPath: onPostUpdate.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520993946623423604, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      propertyPath: onPostUpdate.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520993946623423604, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      propertyPath: onPostUpdate.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 776525314}
+    - target: {fileID: 6520993946623423604, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      propertyPath: onPostUpdate.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520993946623423604, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      propertyPath: onPostUpdate.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: OnFireProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520993946623423604, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      propertyPath: onPostUpdate.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: Demo.Scripts.Runtime.FPSController, Fire at Targets
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520993946623423604, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      propertyPath: onPostUpdate.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7195391591855915974, guid: 09dfc55288e2c514d98ea3b20e78195b,
         type: 3}
@@ -30507,11 +30583,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1428965035936244, guid: 9cab6bfb38f9abd46a991eeb41b35a5b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 883571577}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
 --- !u!4 &883571575 stripped
 Transform:
@@ -30519,33 +30591,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 883571574}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &883571576 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1428965035936244, guid: 9cab6bfb38f9abd46a991eeb41b35a5b,
-    type: 3}
-  m_PrefabInstance: {fileID: 883571574}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &883571577
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883571576}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.20000005, y: 3.75, z: 1.5500003}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &888712137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35236,9 +35281,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 312709967}
   maxDistance: 100
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
   shootHitEffect: {fileID: 1017827323}
   shootAudio: {fileID: 1017827322}
 --- !u!114 &1017827321
@@ -35281,7 +35323,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPrefab: {fileID: 0}
+  muzzleFlash: {fileID: 146992, guid: 4e20780f83b08084f9f9435e4b48bac4, type: 3}
+  impactElemets:
+  - MaterialType: 0
+    ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+  - MaterialType: 1
+    ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+  - MaterialType: 2
+    ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+  - MaterialType: 3
+    ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+  - MaterialType: 4
+    ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+  - MaterialType: 5
+    ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+  - MaterialType: 6
+    ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+  - MaterialType: 7
+    ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+  - MaterialType: 8
+    ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+  - MaterialType: 9
+    ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
 --- !u!1001 &1019854787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42745,9 +42808,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 2016490725}
   maxDistance: 100
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
   shootHitEffect: {fileID: 1232129749}
   shootAudio: {fileID: 1232129748}
 --- !u!114 &1232129747
@@ -42790,7 +42850,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPrefab: {fileID: 0}
+  muzzleFlash: {fileID: 160582, guid: 54c6cbb0345b562429527ec1b4f6cb37, type: 3}
+  impactElemets:
+  - MaterialType: 0
+    ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+  - MaterialType: 1
+    ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+  - MaterialType: 2
+    ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+  - MaterialType: 3
+    ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+  - MaterialType: 4
+    ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+  - MaterialType: 5
+    ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+  - MaterialType: 6
+    ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+  - MaterialType: 7
+    ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+  - MaterialType: 8
+    ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+  - MaterialType: 9
+    ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
 --- !u!1001 &1233262816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52535,9 +52616,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 527851079}
   maxDistance: 100
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 256
   shootHitEffect: {fileID: 0}
   shootAudio: {fileID: 0}
 --- !u!114 &1495221527
@@ -55753,39 +55831,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1428965035936244, guid: 9cab6bfb38f9abd46a991eeb41b35a5b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1606263118}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
---- !u!1 &1606263117 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1428965035936244, guid: 9cab6bfb38f9abd46a991eeb41b35a5b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1606263116}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1606263118
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606263117}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.20000003, y: 3.75, z: 1.5500002}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1607014183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64040,6 +64087,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1826278911}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1826770378
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3656623572338171029, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_Name
+      value: MilitaryRoot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.805
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.841
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.899
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860007920101396108, guid: 3f7e4f111daec4c4090db58dc5ea9d6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3f7e4f111daec4c4090db58dc5ea9d6d, type: 3}
 --- !u!1001 &1827451451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80316,6 +80431,7 @@ SceneRoots:
   - {fileID: 615250597}
   - {fileID: 1701537272}
   - {fileID: 5592346410394795500}
+  - {fileID: 1826770378}
   - {fileID: 543450653621936084}
   - {fileID: 543450652412269904}
   - {fileID: 1262971456}

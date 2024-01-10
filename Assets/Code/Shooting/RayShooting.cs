@@ -9,7 +9,6 @@ namespace FreedLOW.FireAtTargets.Code.Shooting
     {
         [SerializeField] private Transform shootPoint;
         [SerializeField] private float maxDistance;
-        [SerializeField] private LayerMask targetLayer;
         
         [Header("Effects")]
         [SerializeField] private ShootHitEffect shootHitEffect;
@@ -27,11 +26,14 @@ namespace FreedLOW.FireAtTargets.Code.Shooting
         private void Construct(IInputService inputService)
         {
             this.inputService = inputService;
-
-            this.inputService.OnShoot += OnShoot;
         }
 
-        private void OnDestroy()
+        private void OnEnable()
+        {
+            inputService.OnShoot += OnShoot;
+        }
+
+        private void OnDisable()
         {
             inputService.OnShoot -= OnShoot;
         }
@@ -45,18 +47,17 @@ namespace FreedLOW.FireAtTargets.Code.Shooting
         private void OnShoot()
         {
             shootAudio.PlayShoot();
+            shootHitEffect.ShootEffect(shootPoint.position);
+            
             var hitCount = Physics.RaycastNonAlloc(shootPoint.position, shootPoint.forward, hits, maxDistance);
             if (hitCount > 0)
             {
                 if (hits[0].collider.TryGetComponent<IMilitaryTarget>(out var militaryTarget))
                 {
                     militaryTarget.Damage(damageAmount);
-                    shootHitEffect.HitMilitaryTargetEffect(hits[0].point);
                 }
-                else
-                {
-                    shootHitEffect.HitDefaultEffect(hits[0].point);
-                }
+                
+                shootHitEffect.HitEffect(hits[0]);
             }
         }
     }

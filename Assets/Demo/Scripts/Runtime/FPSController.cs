@@ -7,6 +7,7 @@ using Kinemation.FPSFramework.Runtime.Recoil;
 
 using UnityEngine;
 using System.Collections.Generic;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using FreedLOW.FireAtTargets.Code.Weapon;
 using Zenject;
@@ -119,6 +120,7 @@ namespace Demo.Scripts.Runtime
         private bool _isFiring;
 
         private bool _isUnarmed;
+        private bool isFireProjectile;
         
         public List<Weapon> Weapons => weapons;
 
@@ -298,6 +300,16 @@ namespace Demo.Scripts.Runtime
         {
             InitAimPoint(GetGun());
         }
+        
+        public void OnFireProjectile()
+        {
+            if (isFireProjectile)
+            {
+                //todo spawn a projectile here.
+                isFireProjectile = false;
+                inputService.InvokeOnShoot();
+            }
+        }
 
         private void Fire()
         {
@@ -305,6 +317,8 @@ namespace Demo.Scripts.Runtime
             
             var weaponBehaviour = GetGun().GetComponent<WeaponBehaviour>();
             if (!weaponBehaviour.HasMagazineAmmo() && weaponBehaviour.CurrentAmmo <= 0) return;
+
+            isFireProjectile = true;
             
             GetGun().OnFire();
             PlayAnimation(GetGun().fireClip);
@@ -325,8 +339,6 @@ namespace Demo.Scripts.Runtime
             }
             
             recoilComponent.Play();
-
-            inputService.InvokeOnShoot();
             
             if (recoilComponent.fireMode == FireMode.Burst)
             {

@@ -28,16 +28,16 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
                     throw new Exception("Incorrect value!");
 
                 currentAmmo = value;
-                weaponHandlerService.InvokeOnCurrentAmmoChanged(currentAmmo);
+                _weaponEventHandlerService.InvokeOnCurrentAmmoChanged(currentAmmo);
             }
         }
 
-        private IWeaponHandlerService weaponHandlerService;
+        private IWeaponEventHandlerService _weaponEventHandlerService;
 
         [Inject]
-        private void Construct(IWeaponHandlerService weaponHandlerService)
+        private void Construct(IWeaponEventHandlerService weaponEventHandlerService)
         {
-            this.weaponHandlerService = weaponHandlerService;
+            this._weaponEventHandlerService = weaponEventHandlerService;
         }
 
         private void Awake()
@@ -58,8 +58,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             currentMaxAmmo -= CurrentAmmo;
             
             // TODO: here invoke event OnReload
-            weaponHandlerService.InvokeOnReload(currentMaxAmmo);
-            Debug.LogError("here reload");
+            _weaponEventHandlerService.InvokeOnReload(currentMaxAmmo);
         }
 
         public bool HasMagazineAmmo() => 

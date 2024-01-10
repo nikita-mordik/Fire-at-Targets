@@ -49,8 +49,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
 
         private void BindWeaponHandlerService()
         {
-            Container.Bind<IWeaponHandlerService>()
-                .To<WeaponHandlerService>()
+            Container.Bind<IWeaponEventHandlerService>()
+                .To<WeaponEventHandlerService>()
                 .AsSingle();
         }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5815963621968096897}
   - component: {fileID: 2286449848166762538}
   - component: {fileID: 4020720612349557958}
+  - component: {fileID: 7358598405192348281}
   m_Layer: 8
   m_Name: 5
   m_TagString: Untagged
@@ -121,6 +122,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 5
+--- !u!114 &7358598405192348281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327814023073255691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &2367902907711441911
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +148,7 @@ GameObject:
   - component: {fileID: 7077457403099160131}
   - component: {fileID: 1421272194278511700}
   - component: {fileID: 7995925408871247184}
+  - component: {fileID: 1138093229864620607}
   m_Layer: 8
   m_Name: 8
   m_TagString: Untagged
@@ -242,6 +257,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 8
+--- !u!114 &1138093229864620607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367902907711441911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &2588268671605904205
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,6 +283,7 @@ GameObject:
   - component: {fileID: 8844822759556454460}
   - component: {fileID: 3980583480920656190}
   - component: {fileID: 8743331530234137693}
+  - component: {fileID: 7436418106673642509}
   m_Layer: 8
   m_Name: 4
   m_TagString: Untagged
@@ -363,6 +392,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 4
+--- !u!114 &7436418106673642509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2588268671605904205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &3045448955587289068
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,6 +418,7 @@ GameObject:
   - component: {fileID: 4089447576602660028}
   - component: {fileID: 5351236394434519414}
   - component: {fileID: 3603774593198819638}
+  - component: {fileID: 1425722562217009372}
   m_Layer: 8
   m_Name: 1
   m_TagString: Untagged
@@ -484,6 +527,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 1
+--- !u!114 &1425722562217009372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045448955587289068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &3264428268431031150
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +553,7 @@ GameObject:
   - component: {fileID: 7699030117363319176}
   - component: {fileID: 5026084780413492057}
   - component: {fileID: 5972599432416809375}
+  - component: {fileID: 5450425838468756557}
   m_Layer: 8
   m_Name: 10
   m_TagString: Untagged
@@ -605,6 +662,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 10
+--- !u!114 &5450425838468756557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264428268431031150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &3656623572338171029
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +751,7 @@ GameObject:
   - component: {fileID: 3279459836656038234}
   - component: {fileID: 9028816393206754783}
   - component: {fileID: 8731783505072023883}
+  - component: {fileID: 4291443964118484414}
   m_Layer: 8
   m_Name: 7
   m_TagString: Untagged
@@ -789,6 +860,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 7
+--- !u!114 &4291443964118484414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4227654473866947871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &4738572481603598487
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,6 +886,7 @@ GameObject:
   - component: {fileID: 7097074804855155993}
   - component: {fileID: 4253993531930593966}
   - component: {fileID: 3424534098290687890}
+  - component: {fileID: 3166482572036615229}
   m_Layer: 8
   m_Name: 3
   m_TagString: Untagged
@@ -910,6 +995,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 3
+--- !u!114 &3166482572036615229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4738572481603598487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &5722625484920742853
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,6 +1021,7 @@ GameObject:
   - component: {fileID: 4255313815075726200}
   - component: {fileID: 6510035863165194526}
   - component: {fileID: 8039075114750020560}
+  - component: {fileID: 1681440493820109798}
   m_Layer: 8
   m_Name: 2
   m_TagString: Untagged
@@ -1031,6 +1130,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 2
+--- !u!114 &1681440493820109798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722625484920742853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &5897293338191076920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,6 +1156,7 @@ GameObject:
   - component: {fileID: 5237737106326010607}
   - component: {fileID: 927127205717275349}
   - component: {fileID: 5181448795187206378}
+  - component: {fileID: 6089645384400104785}
   m_Layer: 8
   m_Name: Military Target
   m_TagString: Untagged
@@ -1165,6 +1278,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6089645384400104785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5897293338191076920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &6293321407254695475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,6 +1304,7 @@ GameObject:
   - component: {fileID: 3635003056782718921}
   - component: {fileID: 6249592163851296734}
   - component: {fileID: 3907619789055434255}
+  - component: {fileID: 8516327226100404784}
   m_Layer: 8
   m_Name: 9
   m_TagString: Untagged
@@ -1286,6 +1413,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 9
+--- !u!114 &8516327226100404784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6293321407254695475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &7388317178861853967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,6 +1438,7 @@ GameObject:
   - component: {fileID: 4207159037636486396}
   - component: {fileID: 2767788084278957485}
   - component: {fileID: 425959959451784790}
+  - component: {fileID: 6800198885000958834}
   m_Layer: 8
   m_Name: Out
   m_TagString: Untagged
@@ -1392,6 +1533,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6250710606382680247, guid: 94a7cfce168f1cb409a12c493ee21ee9, type: 3}
+--- !u!114 &6800198885000958834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388317178861853967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &7459053850194976182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,6 +1559,7 @@ GameObject:
   - component: {fileID: 2146211648376677935}
   - component: {fileID: 4898735092256334649}
   - component: {fileID: 4953714311624198925}
+  - component: {fileID: 7982616486809393767}
   m_Layer: 8
   m_Name: 6
   m_TagString: Untagged
@@ -1513,6 +1668,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 6860007920101396108}
   targetShootPointType: 6
+--- !u!114 &7982616486809393767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7459053850194976182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86c216f014d903439060cd429cb53a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfMaterial: 4
 --- !u!1 &7581703678156357370
 GameObject:
   m_ObjectHideFlags: 0
