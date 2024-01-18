@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 23249487264560692}
   - component: {fileID: 1508330225}
   - component: {fileID: 1177372244270864648}
+  - component: {fileID: 4334007572618398083}
+  - component: {fileID: 6128195844481968173}
   m_Layer: 0
   m_Name: SGStrippedWall
   m_TagString: Untagged
@@ -92,7 +94,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428965035936244}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 68e20f404fb49fb4f96afed2015aed8f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -119,3 +121,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TypeOfMaterial: 1
+--- !u!114 &4334007572618398083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428965035936244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45c576f0cc5b9fb408ba690361383217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _priority: 0
+  _material: {fileID: 11400000, guid: 7a7dbfb38fea99846972f2de8a6ea0ae, type: 2}
+--- !u!114 &6128195844481968173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428965035936244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6e125879df9b8949a41dabefe0f9a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enabled: 1
+  _target: {fileID: 4334007572618398083}
+  _useMaterialComposition: 0
+  _contactMode: 0
+  _highPriority: 0

@@ -7,7 +7,6 @@ using Kinemation.FPSFramework.Runtime.Recoil;
 
 using UnityEngine;
 using System.Collections.Generic;
-using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using FreedLOW.FireAtTargets.Code.Weapon;
 using Zenject;
@@ -123,6 +122,7 @@ namespace Demo.Scripts.Runtime
         private bool isFireProjectile;
         
         public List<Weapon> Weapons => weapons;
+        public bool IsGrounded { get; private set; } = true;
 
         private IInputService inputService;
 
@@ -305,7 +305,6 @@ namespace Demo.Scripts.Runtime
         {
             if (isFireProjectile)
             {
-                //todo spawn a projectile here.
                 isFireProjectile = false;
                 inputService.InvokeOnShoot();
             }
@@ -488,11 +487,13 @@ namespace Demo.Scripts.Runtime
 
         private void OnJump()
         {
+            IsGrounded = false;
             slotLayer.PlayMotion(onJumpMotionAsset);
         }
 
         private void OnLand()
         {
+            IsGrounded = true;
             slotLayer.PlayMotion(onLandedMotionAsset);
         }
 

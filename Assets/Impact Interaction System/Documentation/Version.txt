@@ -1,0 +1,3 @@
+Impact Physics Interaction System Version: 1.9.6
+Publish Date: 12/03/2023
+Required Unity Version: 2020.3+

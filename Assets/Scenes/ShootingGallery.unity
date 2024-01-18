@@ -3362,6 +3362,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAudioSource: {fileID: 0}
+  bulletTag:
+    _value: 4
+    _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
 --- !u!114 &74863579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16674,6 +16677,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAudioSource: {fileID: 0}
+  bulletTag:
+    _value: 4
+    _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
 --- !u!114 &465177038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19720,6 +19726,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAudioSource: {fileID: 0}
+  bulletTag:
+    _value: 4
+    _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
 --- !u!114 &556077435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26558,6 +26567,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAudioSource: {fileID: 0}
+  bulletTag:
+    _value: 4
+    _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
 --- !u!114 &768398970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27118,6 +27130,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 776525316}
+    - targetCorrespondingSourceObject: {fileID: 2962799436222830615, guid: 09dfc55288e2c514d98ea3b20e78195b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 776525320}
     - targetCorrespondingSourceObject: {fileID: 858376381946630211, guid: 09dfc55288e2c514d98ea3b20e78195b,
         type: 3}
       insertIndex: -1
@@ -27246,6 +27262,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fpsController: {fileID: 776525314}
+--- !u!114 &776525320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776525315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e5fdfe5b8d4f14a9646480333e78cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fpsController: {fileID: 776525314}
+  footstepLeftTag:
+    _value: 2
+    _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
+  footstepRightTag:
+    _value: 3
+    _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
+  footstepInterval: 0.85
+  footOffset: {x: 0, y: 0.1, z: 0}
 --- !u!1001 &778866247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30549,10 +30586,6 @@ PrefabInstance:
       value: SGStrippedWall (2)
       objectReference: {fileID: 0}
     - target: {fileID: 4378973317347456, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4378973317347456, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.95
       objectReference: {fileID: 0}
@@ -30579,6 +30612,18 @@ PrefabInstance:
     - target: {fileID: 4378973317347456, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378973317347456, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378973317347456, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378973317347456, guid: 9cab6bfb38f9abd46a991eeb41b35a5b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -35311,6 +35356,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAudioSource: {fileID: 0}
+  bulletTag:
+    _value: 4
+    _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
 --- !u!114 &1017827323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42838,6 +42886,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAudioSource: {fileID: 0}
+  bulletTag:
+    _value: 4
+    _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
 --- !u!114 &1232129749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53436,6 +53487,65 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1510669690}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1513306101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1513306103}
+  - component: {fileID: 1513306102}
+  m_Layer: 0
+  m_Name: Impact Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1513306102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513306101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 928669ca857ac5145a45d35263d4cadd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _physicsInteractionsLimit: 0
+  _interactionResultBufferSize: 8
+  _activeContinuousInteractions: 8
+  _materialCompositionBufferSize: 8
+  _usePhysicMaterialMapping: 1
+  _dontDestroyOnLoad: 1
+  _setAsActiveInstance: 1
+  _physicMaterialMap:
+  - PhysicMaterial: {fileID: 13400000, guid: f3d1fc3f1e264b34db82f26aa65b574c, type: 2}
+    ImpactMaterial: {fileID: 11400000, guid: cd624dd402810544688effd49e7c48b5, type: 2}
+  - PhysicMaterial: {fileID: 13400000, guid: 613ff9628e0ec4b4ba9b08e71f22ed69, type: 2}
+    ImpactMaterial: {fileID: 11400000, guid: 027976eb2609c164aa0c82363c3569b1, type: 2}
+  - PhysicMaterial: {fileID: 13400000, guid: 099fe5a8a544f704e965a387fda8caa2, type: 2}
+    ImpactMaterial: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _physicsMaterial2DMap: []
+--- !u!4 &1513306103
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513306101}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1522310179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80426,6 +80536,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 247213432}
+  - {fileID: 1513306103}
   - {fileID: 2055834435}
   - {fileID: 776525313}
   - {fileID: 615250597}

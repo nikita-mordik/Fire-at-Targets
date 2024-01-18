@@ -56,7 +56,8 @@ namespace FreedLOW.FireAtTargets.Code.Shooting
                 {
                     militaryTarget.Damage(damageAmount);
                 }
-                
+
+                shootAudio.PlayHit(hits[0], shootPoint.forward);
                 shootHitEffect.HitEffect(hits[0]);
             }
         }
