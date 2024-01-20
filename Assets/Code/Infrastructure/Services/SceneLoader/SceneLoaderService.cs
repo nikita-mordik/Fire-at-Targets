@@ -9,20 +9,15 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.SceneLoader
 {
     public class SceneLoaderService : ISceneLoaderService
     {
-        public void LoadScene(string nextScene, Action onLoaded = null)
+        public bool IsSceneLoaded(string sceneName) => 
+            SceneManager.GetSceneByName(sceneName).isLoaded;
+
+        public async UniTask LoadSceneAsync(string sceneName, Action onSceneLoad = null)
         {
-            if (SceneManager.GetActiveScene().name == nextScene)
-            {
-                onLoaded?.Invoke();
-                return;
-            }
-
-            AsyncOperationHandle<SceneInstance> waitNextScene = Addressables.LoadSceneAsync(nextScene);
-
-            while (!waitNextScene.IsDone) 
-                UniTask.Delay(100);
-
-            onLoaded?.Invoke();
+            AsyncOperationHandle<SceneInstance> handler = Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Single, false);
+            await handler.ToUniTask();
+            await handler.Result.ActivateAsync().ToUniTask();
+            onSceneLoad?.Invoke();
         }
     }
 }

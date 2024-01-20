@@ -16,17 +16,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             BindInputService();
             BindWeaponHandlerService();
             BindPointService();
-            BindPlayerConstructorService();
             BindPlayerControllerService();
         }
-
-        private void BindPlayerConstructorService()
-        {
-            Container.Bind<IPlayerConstructor>()
-                .To<PlayerConstructor>()
-                .AsSingle();
-        }
-
         private void BindPlayerControllerService()
         {
             Container.Bind<IPlayerControllerService>()
