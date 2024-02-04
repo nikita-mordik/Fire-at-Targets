@@ -1,28 +1,48 @@
+using System;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using FreedLOW.FireAtTargets.Code.Extensions;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Shooting
 {
     public class ShootHitEffect : MonoBehaviour
     {
-        [SerializeField] private GameObject muzzleFlash;
         [SerializeField] private ImpactInfo[] impactElemets;
+        
+        private IGameFactory gameFactory;
+        private IPrefabPoolService poolService;
 
-        public void ShootEffect(Vector3 shootPointPosition)
+        [Inject]
+        private void Construct(IGameFactory gameFactory, IPrefabPoolService poolService)
         {
-            var impactEffectInstance = Instantiate(muzzleFlash, shootPointPosition, transform.rotation);
-            Destroy(impactEffectInstance, 4f);
+            this.poolService = poolService;
+            this.gameFactory = gameFactory;
         }
 
-        public void HitEffect(RaycastHit hit)
+        public async void ShootEffect(Vector3 shootPointPosition)
+        {
+            var impactEffectInstance = await gameFactory.CreateShootParticle(ObjectType.MuzzleFlashOne);
+            impactEffectInstance.transform.SetTransform(shootPointPosition, transform.rotation);
+            await BackEffectToPoolRoutine(impactEffectInstance, 4f);
+        }
+
+        public async void HitEffect(RaycastHit hit)
         {
             var effect = GetImpactEffect(hit.transform.gameObject);
             if (effect == null)
                 return;
-            
-            var effectInstance = Instantiate(effect, hit.point, new Quaternion());
+
+            var poolObject = effect.GetComponent<IPoolObject>();
+            var effectInstance = await gameFactory.CreateHitParticle(poolObject.Type);
+            effectInstance.transform.SetTransform(hit.point, Quaternion.identity);
+            //Instantiate(effect, hit.point, new Quaternion());
             effectInstance.transform.LookAt(hit.point + hit.normal);
-            Destroy(effectInstance, 15f);
+            await BackEffectToPoolRoutine(effectInstance, 15f);
         }
 
         private GameObject GetImpactEffect(GameObject impactedGameObject)
@@ -33,6 +53,12 @@ namespace FreedLOW.FireAtTargets.Code.Shooting
             
             return (from impactInfo in impactElemets where impactInfo.MaterialType == materialType.TypeOfMaterial select impactInfo.ImpactEffect)
                 .FirstOrDefault();
+        }
+        
+        private async UniTask BackEffectToPoolRoutine(GameObject impactEffectInstance, float delay)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(delay));
+            poolService.BackObjectToPool(impactEffectInstance);
         }
     }
 }

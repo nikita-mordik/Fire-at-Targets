@@ -1,8 +1,6 @@
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
-using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point;
-using UnityEngine;
 using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
@@ -13,11 +11,11 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
         
         public override void InstallBindings()
         {
-            BindInputService();
             BindWeaponHandlerService();
             BindPointService();
             BindPlayerControllerService();
         }
+        
         private void BindPlayerControllerService()
         {
             Container.Bind<IPlayerControllerService>()
@@ -43,22 +41,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             Container.Bind<IWeaponEventHandlerService>()
                 .To<WeaponEventHandlerService>()
                 .AsSingle();
-        }
-
-        private void BindInputService()
-        {
-            Container.Bind<IInputService>()
-                .To<InputService>()
-                .FromInstance(GetInputService())
-                .AsSingle();
-        }
-
-        private static InputService GetInputService()
-        {
-            if (Application.isEditor)
-                return new StandaloneInputService();
-
-            return new MobileShootingGalleryInputService();
         }
     }
 }

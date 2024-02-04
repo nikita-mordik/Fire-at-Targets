@@ -9747,13 +9747,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438402}
+  - component: {fileID: 2457147578202627271}
   m_Layer: 0
   m_Name: WoodImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &438402
 Transform:
   m_ObjectHideFlags: 0
@@ -9773,6 +9774,19 @@ Transform:
   - {fileID: 4220664394535760428}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2457147578202627271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0bb04d31ba4cf9871022e69bd166f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 5
 --- !u!1 &148518
 GameObject:
   m_ObjectHideFlags: 0

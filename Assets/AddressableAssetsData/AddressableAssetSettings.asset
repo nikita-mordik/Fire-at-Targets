@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 04713439b1ea23a42bd00878a6302fb7
   m_currentHash:
     serializedVersion: 2
-    Hash: fdd3c7aaf5c35861a61c82249ee827cf
+    Hash: addcb57a9c2aa8abe35b14c9edb16735
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 910153c1d2ef786428dd5da590361777, type: 2}
   - {fileID: 11400000, guid: 502a1a6034d917b4485c0d1dd2a18b7b, type: 2}
   - {fileID: 11400000, guid: 6bcb04af96a5df64ab4da6985358771a, type: 2}
+  - {fileID: 11400000, guid: e8b12a4ecac9df546ad4dc02f111b8a2, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -90,6 +91,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - ShootingGalleryPool
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 3e6873fc356adab4dbcb92d9dcd6ae8d, type: 2}

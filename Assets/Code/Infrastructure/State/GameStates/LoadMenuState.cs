@@ -1,6 +1,5 @@
 using System;
 using Cysharp.Threading.Tasks;
-using FreedLOW.FireAtTargets.Code.Common;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.SceneLoader;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
@@ -26,10 +25,10 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
             
         }
 
-        private void OnLoad(Action action)
+        private async void OnLoad(Action action)
         {
             action?.Invoke();
-            stateMachine.Enter<MenuState>();
+            await stateMachine.Enter<MenuState>();
         }
     }
 }

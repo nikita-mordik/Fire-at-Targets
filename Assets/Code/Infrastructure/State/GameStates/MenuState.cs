@@ -5,9 +5,9 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
 {
     public class MenuState : IState
     {
-        public UniTask Enter(Action action = null)
+        public async UniTask Enter(Action action = null)
         {
-            throw new NotImplementedException();
+            await UniTask.Yield();
         }
 
         public void Exit()

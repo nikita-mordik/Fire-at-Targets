@@ -57,5 +57,12 @@ namespace FreedLOW.FireAtTargets.Code.Extensions
       transform.localPosition = transform.localPosition.AddX(y);
       return transform;
     }
+    
+    public static Transform SetTransform(this Transform transform, Vector3 position, Quaternion rotation)
+    {
+      transform.position = position;
+      transform.rotation = rotation;
+      return transform;
+    }
   }
 }

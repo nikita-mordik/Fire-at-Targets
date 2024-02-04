@@ -3384,28 +3384,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleFlash: {fileID: 153266, guid: a9053ac253b0e0d4394e96a67adf0b6f, type: 3}
   impactElemets:
   - MaterialType: 0
     ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 1
     ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 2
     ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 3
     ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 4
     ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 5
     ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 6
     ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 7
     ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 8
     ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 9
     ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!1001 &75006276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9005,6 +9054,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1582407671}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &226529233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 226529234}
+  m_Layer: 0
+  m_Name: Root
+  m_TagString: ShootingGalleryRoot
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &226529234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226529233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &229972695
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16733,28 +16813,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleFlash: {fileID: 110062, guid: 1f6cd59b6cb9b30479cb9701829d3c16, type: 3}
   impactElemets:
   - MaterialType: 0
     ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 1
     ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 2
     ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 3
     ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 4
     ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 5
     ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 6
     ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 7
     ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 8
     ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 9
     ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!1001 &466275047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19792,28 +19921,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleFlash: {fileID: 183908, guid: 9817249ba0956464da55ce1de9ae9c30, type: 3}
   impactElemets:
   - MaterialType: 0
     ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 1
     ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 2
     ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 3
     ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 4
     ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 5
     ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 6
     ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 7
     ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 8
     ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 9
     ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!1001 &556378499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26647,28 +26825,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleFlash: {fileID: 124018, guid: fdac2b543efe1164abc20e40e85905c2, type: 3}
   impactElemets:
   - MaterialType: 0
     ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 70293ccb9b36ad84ebb90509a675fc1e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 1
     ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 52aa1f2e1567b6e47b50df0d054982a7
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 2
     ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 50165a7e39a936f44ab5b824429e3417
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 3
     ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: f9c851a5a12292f4d9a24acc3899803b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 4
     ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 4fbc0156e9dd2ab41a17e56a2f515d2a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 5
     ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: e70de6a15623744499bf326c13e310f0
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 6
     ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: e4ed01af280d76248a9d0e72030c40c6
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 7
     ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 1fad06db51ffb86458cb3de2b4fc05c2
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 8
     ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 92422eb8369387a41a9a6259935757ac
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 9
     ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 8f2fb118e4280164e90e13f92ad21c28
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!1001 &769929962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35446,28 +35673,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleFlash: {fileID: 146992, guid: 4e20780f83b08084f9f9435e4b48bac4, type: 3}
   impactElemets:
   - MaterialType: 0
     ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 1
     ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 2
     ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 3
     ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 4
     ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 5
     ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 6
     ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 7
     ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 8
     ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 9
     ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!1001 &1019854787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42993,28 +43269,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5266150d1204041b80b055036994878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  muzzleFlash: {fileID: 160582, guid: 54c6cbb0345b562429527ec1b4f6cb37, type: 3}
   impactElemets:
   - MaterialType: 0
     ImpactEffect: {fileID: 178032, guid: 70293ccb9b36ad84ebb90509a675fc1e, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 1
     ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 2
     ImpactEffect: {fileID: 196912, guid: 50165a7e39a936f44ab5b824429e3417, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 3
     ImpactEffect: {fileID: 142740, guid: f9c851a5a12292f4d9a24acc3899803b, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 4
     ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 5
     ImpactEffect: {fileID: 151174, guid: e70de6a15623744499bf326c13e310f0, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 6
     ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 7
     ImpactEffect: {fileID: 186004, guid: 1fad06db51ffb86458cb3de2b4fc05c2, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 8
     ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - MaterialType: 9
     ImpactEffect: {fileID: 149956, guid: 8f2fb118e4280164e90e13f92ad21c28, type: 3}
+    ImpactEffectAsset:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!1001 &1233262816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80752,3 +81077,4 @@ SceneRoots:
   - {fileID: 1262971456}
   - {fileID: 1027537644}
   - {fileID: 1745353456}
+  - {fileID: 226529234}
