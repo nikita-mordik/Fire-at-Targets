@@ -8,8 +8,7 @@ namespace FreedLOW.FireAtTargets.Code.Target
     {
         [SerializeField] private float shootDownDuration;
         [SerializeField] private float recoveryDuration;
-
-        private readonly Vector3 shootDownRotation = Vector3.zero;
+        [SerializeField] private Vector3 shootDownRotation = Vector3.zero;
         
         private Quaternion initialRotation;
 

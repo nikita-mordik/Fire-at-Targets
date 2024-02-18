@@ -3,7 +3,7 @@ using FreedLOW.FireAtTargets.Code.Target;
 using UnityEngine;
 using Zenject;
 
-namespace FreedLOW.FireAtTargets.Code.Shooting
+namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
 {
     public class RayShooting : MonoBehaviour
     {

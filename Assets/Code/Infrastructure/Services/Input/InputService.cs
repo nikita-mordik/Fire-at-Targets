@@ -9,7 +9,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         protected const string Horizontal = "Horizontal";
         private const string VerticalRotation = "VerticalRotation";
         private const string HorizontalRotation = "HorizontalRotation";
-        private const string ShootButton = "Fire1";
+        private const string ShootButton = "Shoot";
         private const string ReloadButton = "Reload";
         private const string ScopeButton = "Scope";
         
@@ -31,8 +31,11 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 
         public virtual bool IsScopeButtonDown()
         {
+            var isScopeButtonDown = SimpleInput.GetButtonDown(ScopeButton);
+            if (!isScopeButtonDown) return false;
+            
             OnScope?.Invoke();
-            return SimpleInput.GetButtonDown(ScopeButton);
+            return true;
         }
 
         public void InvokeOnShoot() => 

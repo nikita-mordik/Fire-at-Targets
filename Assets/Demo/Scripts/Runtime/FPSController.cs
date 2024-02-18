@@ -157,8 +157,8 @@ namespace Demo.Scripts.Runtime
 
         private void Start()
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
             
             moveRotation = transform.rotation;
 

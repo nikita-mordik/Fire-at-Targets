@@ -1,7 +1,7 @@
 using System;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
-using FreedLOW.FireAtTargets.Code.Shooting;
 using FreedLOW.FireAtTargets.Code.StaticData;
+using FreedLOW.FireAtTargets.Code.Weapon.Shooting;
 using Kinemation.FPSFramework.Runtime.FPSAnimator;
 using UnityEngine;
 using Zenject;

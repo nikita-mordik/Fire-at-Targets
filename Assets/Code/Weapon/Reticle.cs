@@ -30,11 +30,6 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             this.inputService.OnScope += OnScope;
         }
 
-        private void Start()
-        {
-            ControlVisibleCrosshair(false);
-        }
-
         private void OnDestroy()
         {
             inputService.OnShoot -= OnShoot;

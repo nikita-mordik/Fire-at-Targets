@@ -2,7 +2,7 @@ using Impact;
 using Impact.Triggers;
 using UnityEngine;
 
-namespace FreedLOW.FireAtTargets.Code.Shooting
+namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
 {
     public class ShootAudio : MonoBehaviour
     {

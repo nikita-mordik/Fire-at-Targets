@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button:
-    m_key: Fire1
+    m_key: Shoot
     value: 0
 --- !u!1 &7675680961361934398
 GameObject:

@@ -5,10 +5,9 @@ using FreedLOW.FireAtTargets.Code.Extensions;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Zenject;
 
-namespace FreedLOW.FireAtTargets.Code.Shooting
+namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
 {
     public class ShootHitEffect : MonoBehaviour
     {
