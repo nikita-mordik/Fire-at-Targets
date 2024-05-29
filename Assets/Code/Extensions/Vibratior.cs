@@ -8,7 +8,6 @@ namespace FreedLOW.FireAtTargets.Code.Extensions
         private static AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         private static AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         private static AndroidJavaObject vibrator = currentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
-#endif
 
         public static void Vibrate(long milliseconds = 250)
         {
@@ -29,5 +28,7 @@ namespace FreedLOW.FireAtTargets.Code.Extensions
                 vibrator.Call("cancel");
             }
         }
+#endif
+
     }
 }
