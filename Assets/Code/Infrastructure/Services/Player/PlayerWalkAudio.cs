@@ -1,4 +1,4 @@
-using Demo.Scripts.Runtime;
+using Demo.Scripts.Runtime.Character;
 using Impact;
 using Impact.Triggers;
 using UnityEngine;
@@ -28,13 +28,13 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player
             float distanceTravelledThisFrame = Vector3.Distance(previousPosition, currentPosition);
 
             distanceTravelled += distanceTravelledThisFrame;
-            if (fpsController.IsGrounded && distanceTravelled > footstepInterval)
-            {
-                distanceTravelled = 0;
-                foot = -foot;
-
-                TriggerFootstep();
-            }
+            // if (fpsController.IsGrounded && distanceTravelled > footstepInterval)
+            // {
+            //     distanceTravelled = 0;
+            //     foot = -foot;
+            //
+            //     TriggerFootstep();
+            // }
 
             previousPosition = currentPosition;
         }

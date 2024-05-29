@@ -2,7 +2,7 @@ using System;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.StaticData;
 using FreedLOW.FireAtTargets.Code.Weapon.Shooting;
-using Kinemation.FPSFramework.Runtime.FPSAnimator;
+//using Kinemation.FPSFramework.Runtime.FPSAnimator;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +10,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 {
     public class WeaponBehaviour : MonoBehaviour
     {
-        [SerializeField] private FPSAnimWeapon weapon;
+        //[SerializeField] private FPSAnimWeapon weapon;
         [SerializeField] private WeaponData weaponData;
         [SerializeField] private RayShooting rayShooting;
 
@@ -42,9 +42,9 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         private void Awake()
         {
-            weapon.fireRate = weaponData.FireRate;
-            weapon.fireMode = weaponData.FireMode;
-            weapon.burstAmount = weaponData.BurstAmount;
+            // weapon.fireRate = weaponData.FireRate;
+            // weapon.fireMode = weaponData.FireMode;
+            // weapon.burstAmount = weaponData.BurstAmount;
             rayShooting.DamageAmount = weaponData.Damage;
             MaxAmmo = weaponData.MaxAmmo;
             currentMaxAmmo = MaxAmmo;

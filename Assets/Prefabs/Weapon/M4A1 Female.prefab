@@ -71,7 +71,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4476724786917920586}
-  - component: {fileID: 1164083573896240741}
   m_Layer: 0
   m_Name: M4A1 Female
   m_TagString: Untagged
@@ -98,35 +97,6 @@ Transform:
   - {fileID: 1113965642454994356}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1164083573896240741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3641011349632848223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd79974665c90734d9bd7ff5a68cba63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponAsset: {fileID: 11400000, guid: 24f513adbf570ac408cb34c72b8e69d0, type: 2}
-  weaponTransformData:
-    pivotPoint: {fileID: 2780427888855282223}
-    aimPoint: {fileID: 1973770957985343731}
-    leftHandTarget: {fileID: 0}
-  fireMode: 1
-  fireRate: 750
-  burstAmount: 3
-  reloadClip: {fileID: 11400000, guid: 10267ceb909c5a14b8d7d0743e573d1a, type: 2}
-  grenadeClip: {fileID: 11400000, guid: b97b26628010a35439d0c4cfc7934c92, type: 2}
-  fireClip: {fileID: 0}
-  overlayType: 2
-  canAim: 1
-  scopes:
-  - {fileID: 1973770957985343731}
-  recoilPattern: {fileID: 11400000, guid: df70e32e3d10bc9418d2aa3a6e8e7431, type: 2}
-  cameraShake: {fileID: 11400000, guid: ce574d2150fc1f540a612314d3d6662e, type: 2}
 --- !u!1 &8989889158040393666
 GameObject:
   m_ObjectHideFlags: 0

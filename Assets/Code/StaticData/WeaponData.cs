@@ -1,4 +1,4 @@
-using Kinemation.FPSFramework.Runtime.Recoil;
+using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
 using UnityEngine;
 
 namespace FreedLOW.FireAtTargets.Code.StaticData

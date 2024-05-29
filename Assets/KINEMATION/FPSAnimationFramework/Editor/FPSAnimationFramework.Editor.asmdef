@@ -1,0 +1,20 @@
+{
+    "name": "FPSAnimationFramework.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d02e55938f9d33c4aa8e18466d48abf6",
+        "GUID:3b9c1e777897a454ab8f17fb7264c2af",
+        "GUID:2b3eec6472d6cb248b60138bebe1f26e"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

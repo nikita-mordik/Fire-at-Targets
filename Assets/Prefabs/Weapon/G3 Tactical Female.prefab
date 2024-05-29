@@ -102,7 +102,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8835751189629912490}
-  - component: {fileID: 4720054333846582}
   m_Layer: 0
   m_Name: G3 Tactical Female
   m_TagString: Untagged
@@ -129,35 +128,6 @@ Transform:
   - {fileID: 7922270879647135605}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4720054333846582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8202519781225537296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd79974665c90734d9bd7ff5a68cba63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponAsset: {fileID: 11400000, guid: d30d2b5285f821c41bb3e0a9012c4ae2, type: 2}
-  weaponTransformData:
-    pivotPoint: {fileID: 603712335069143633}
-    aimPoint: {fileID: 3142645801603610479}
-    leftHandTarget: {fileID: 8720206092450059194}
-  fireMode: 2
-  fireRate: 600
-  burstAmount: 0
-  reloadClip: {fileID: 11400000, guid: 36470a5ebcec4f74a83e9664c5927c0b, type: 2}
-  grenadeClip: {fileID: 11400000, guid: ea84837baf9c7324ea9a6e0d2da5e68f, type: 2}
-  fireClip: {fileID: 0}
-  overlayType: 2
-  canAim: 1
-  scopes:
-  - {fileID: 3142645801603610479}
-  recoilPattern: {fileID: 11400000, guid: df70e32e3d10bc9418d2aa3a6e8e7431, type: 2}
-  cameraShake: {fileID: 11400000, guid: ce574d2150fc1f540a612314d3d6662e, type: 2}
 --- !u!1 &8903921265110073846
 GameObject:
   m_ObjectHideFlags: 0
