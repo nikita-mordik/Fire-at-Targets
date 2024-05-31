@@ -29,11 +29,14 @@ MonoBehaviour:
   - name: AimingWeight
     defaultValue: 0
     interpolationSpeed: 0
+  - name: SensitivityMultiplier
+    defaultValue: 1
+    interpolationSpeed: 8
   boolProperties:
   - name: IsAiming
     defaultValue: 0
   - name: UseFreeAim
-    defaultValue: 1
+    defaultValue: 0
   vectorProperties:
   - name: MouseInput
     defaultValue: {x: 0, y: 0, z: 0, w: 0}

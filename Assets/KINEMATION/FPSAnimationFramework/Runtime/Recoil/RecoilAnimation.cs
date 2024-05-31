@@ -63,6 +63,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Recoil
         }
     }
 
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/recoil-system/recoil-animation")]
     public class RecoilAnimation : MonoBehaviour
     {
         public Vector3 OutRot { get; private set; }

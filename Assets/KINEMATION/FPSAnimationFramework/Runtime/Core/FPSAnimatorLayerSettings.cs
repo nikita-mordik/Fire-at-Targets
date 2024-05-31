@@ -32,6 +32,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         [HideInInspector] public ECurveSource source;
     }
     
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/fundamentals/animator-layer")]
     public abstract class FPSAnimatorLayerSettings : ScriptableObject, IRigUser
     {
         [ShowStandalone] public KRig rigAsset;

@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 {
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/fundamentals/animator-profiles")]
     [CreateAssetMenu(fileName = "NewAnimatorProfile", menuName = FPSANames.FileMenuGeneral + "Animator Profile")]
     public class FPSAnimatorProfile : ScriptableObject, IRigObserver
     {

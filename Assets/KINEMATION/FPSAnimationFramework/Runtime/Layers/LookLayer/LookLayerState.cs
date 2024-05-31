@@ -13,6 +13,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
 
         private int _mouseInputPropertyIndex;
         private int _leanPropertyIndex;
+        private int _turnProperty;
 
         public override void InitializeState(FPSAnimatorLayerSettings newSettings)
         {
@@ -20,6 +21,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
 
             _mouseInputPropertyIndex = _inputController.GetPropertyIndex(_settings.mouseInputProperty);
             _leanPropertyIndex = _inputController.GetPropertyIndex(_settings.leanInputProperty);
+            _turnProperty = _inputController.GetPropertyIndex(_settings.turnOffsetProperty);
         }
 
         public override void OnLayerLinked(FPSAnimatorLayerSettings newSettings)
@@ -30,6 +32,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
         public override void OnEvaluatePose()
         {
             _lookInput = _inputController.GetValue<Vector4>(_mouseInputPropertyIndex);
+
+            if (_settings.useTurnOffset)
+            {
+                _lookInput.x = _inputController.GetValue<float>(_turnProperty);
+            }
+            
             float lean = _inputController.GetValue<float>(_leanPropertyIndex);
             
             float fraction = lean / 90f;

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
 {
@@ -15,13 +16,16 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
     {
         public KRigElement rigElement;
         public Vector2 clampedAngle;
-        [NonSerialized] public Vector2 CachedClampedAngle;
+        [HideInInspector] public Vector2 cachedClampedAngle;
     }
     
     public class LookLayerSettings : FPSAnimatorLayerSettings
     {
         [InputProperty] public string mouseInputProperty = FPSANames.MouseInput;
         [InputProperty] public string leanInputProperty = FPSANames.LeanInput;
+
+        public bool useTurnOffset = false;
+        [InputProperty] public string turnOffsetProperty;
         
         public List<LookLayerElement> pitchOffsetElements = new List<LookLayerElement>();
         public List<LookLayerElement> yawOffsetElements = new List<LookLayerElement>();
@@ -44,7 +48,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
                 angleToDistribute.x += Mathf.Abs(element.clampedAngle.x);
                 angleToDistribute.y += Mathf.Abs(element.clampedAngle.y);
                 
-                if (!Mathf.Approximately(element.CachedClampedAngle.x,element.clampedAngle.x))
+                if (!Mathf.Approximately(element.cachedClampedAngle.x,element.clampedAngle.x))
                 {
                     adjustStartIndex = i + 1;
                     bShallDistribute = true;
@@ -52,7 +56,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
                     break;
                 }
 
-                if (!Mathf.Approximately(element.CachedClampedAngle.y, element.clampedAngle.y))
+                if (!Mathf.Approximately(element.cachedClampedAngle.y, element.clampedAngle.y))
                 {
                     adjustStartIndex = i + 1;
                     bShallDistribute = true;
@@ -82,8 +86,8 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
             for (int i = 0; i < count; i++)
             {
                 var element = collection[i];
-                element.CachedClampedAngle.x = element.clampedAngle.x;
-                element.CachedClampedAngle.y = element.clampedAngle.y;
+                element.cachedClampedAngle.x = element.clampedAngle.x;
+                element.cachedClampedAngle.y = element.clampedAngle.y;
                 collection[i] = element;
             }
         }

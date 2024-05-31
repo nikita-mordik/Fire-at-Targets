@@ -208,9 +208,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
 
             KTransform localRoot = new KTransform(_pelvis.parent, false);
             KTransform worldPelvis = new KTransform(_pelvis);
-            
-            _pelvis.parent.localRotation = Quaternion.identity;
-            _pelvis.parent.localPosition = Vector3.zero;
+
+            if (_settings.overwriteRoot)
+            {
+                _pelvis.parent.localRotation = Quaternion.identity;
+                _pelvis.parent.localPosition = Vector3.zero;
+            }
             
             _pelvis.rotation = worldPelvis.rotation;
             _pelvis.position = worldPelvis.position;
@@ -218,9 +221,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
             ApplySpineStabilization();
             AdjustWeaponBone();
 
-            _pelvis.parent.localRotation = localRoot.rotation;
-            _pelvis.parent.localPosition = localRoot.position;
-            
+            if (_settings.overwriteRoot)
+            {
+                _pelvis.parent.localRotation = localRoot.rotation;
+                _pelvis.parent.localPosition = localRoot.position;
+            }
+
             _pelvis.rotation = worldPelvis.rotation;
             _pelvis.position = worldPelvis.position;
         }

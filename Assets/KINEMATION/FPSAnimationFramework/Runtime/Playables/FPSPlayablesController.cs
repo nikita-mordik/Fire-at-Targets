@@ -11,6 +11,7 @@ using UnityEngine.Playables;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
 {
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/workflow/components")]
     public class FPSPlayablesController : MonoBehaviour, IPlayablesController
     {
         [Header("General Settings")] 

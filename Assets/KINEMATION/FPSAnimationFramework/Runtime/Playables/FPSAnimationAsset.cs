@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
 {
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/workflow/playing-animations")]
     [CreateAssetMenu(fileName = "NewAnimation", menuName = FPSANames.FileMenuGeneral + "Animation Asset")]
     public class FPSAnimationAsset : ScriptableObject, IRigUser
     {

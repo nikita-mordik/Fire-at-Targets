@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Recoil
 {
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/recoil-system/recoil-pattern")]
     public class RecoilPattern : MonoBehaviour
     {
         [SerializeField] private RecoilPatternSettings recoilSettings;

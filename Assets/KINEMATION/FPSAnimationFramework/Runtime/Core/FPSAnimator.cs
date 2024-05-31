@@ -10,6 +10,7 @@ using Debug = UnityEngine.Debug;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 {
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/workflow/components")]
     [RequireComponent(typeof(FPSBoneController), typeof(UserInputController))]
     public class FPSAnimator : MonoBehaviour
     {
@@ -32,7 +33,8 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             _inputController.Initialize();
             _playablesController.InitializeController();
             _boneController.Initialize();
-            _cameraController.Initialize();
+            
+            if(_cameraController != null) _cameraController.Initialize();
             
             _boneController.LinkAnimatorProfile(animatorProfile);
         }
@@ -195,13 +197,15 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             ProcessVirtualElement(rigComponent, rightKnee, new []
             {
                 "lowerleg_r", "lowerleg_right", "r_lowerleg", "right_lowerleg",
-                "shin_r", "shin_right", "r_shin", "right_shin"
+                "shin_r", "shin_right", "r_shin", "right_shin",
+                "leg_r", "leg_right", "r_leg", "right_leg", "rightleg"
             });
             
             ProcessVirtualElement(rigComponent, leftKnee, new []
             {
                 "lowerleg_l", "lowerleg_left", "l_lowerleg", "left_lowerleg",
-                "shin_l", "shin_left", "l_lshin", "left_shin"
+                "shin_l", "shin_left", "l_lshin", "left_shin",
+                "leg_l", "leg_left", "l_leg", "left_leg", "leftleg"
             });
         }
 
@@ -234,12 +238,14 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             
             ProcessVirtualElement(rigComponent, rightElbow, new []
             {
-                "lowerarm_r", "lowerarm_right", "r_lowerarm", "right_lowerarm"
+                "lowerarm_r", "lowerarm_right", "r_lowerarm", "right_lowerarm",
+                "arm_r", "arm_right", "r_arm", "right_arm", "rightarm"
             });
             
             ProcessVirtualElement(rigComponent, leftElbow, new []
             {
-                "lowerarm_l", "lowerarm_left", "l_lowerarm", "left_lowerarm"
+                "lowerarm_l", "lowerarm_left", "l_lowerarm", "left_lowerarm",
+                "arm_l", "arm_left", "l_arm", "left_arm", "leftarm"
             });
         }
         

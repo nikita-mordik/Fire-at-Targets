@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Recoil
 {
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/recoil-system/recoil-pattern")]
     [CreateAssetMenu(fileName = "NewRecoilPattern", menuName = FPSANames.FileMenuGeneral + "Recoil Pattern")]
     public class RecoilPatternSettings : ScriptableObject
     {

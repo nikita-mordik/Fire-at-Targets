@@ -1,6 +1,5 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using System;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Core;
@@ -106,8 +105,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Camera
             
             // Stabilize the camera by overriding the rotation.
             Transform root = transform.root;
-            transform.rotation = root.rotation * Quaternion.Euler(0f, input.x, 0f) 
-                                               * Quaternion.Euler(input.y, 0f, 0f);
+            transform.rotation = root.rotation * Quaternion.Euler(input.y, 0f, 0f);
 
             UpdateCameraShake();
             UpdateCameraAnimation();

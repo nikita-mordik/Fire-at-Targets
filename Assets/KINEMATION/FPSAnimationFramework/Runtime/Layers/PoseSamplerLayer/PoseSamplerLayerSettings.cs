@@ -16,6 +16,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
         public FPSAnimationAsset poseToSample;
         public KTransform defaultWeaponPose = KTransform.Identity;
         public KTransform weaponBoneOffset = KTransform.Identity;
+        public bool overwriteRoot = false;
         
         [Header("IK Targets")]
         public KRigElement ikWeaponBone = new KRigElement(-1, FPSANames.IkWeaponBone);
