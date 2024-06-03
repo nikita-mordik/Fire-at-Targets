@@ -31,11 +31,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
 
         public override void OnEvaluatePose()
         {
+            float turnInput = _inputController.GetValue<float>(_turnProperty);
             _lookInput = _inputController.GetValue<Vector4>(_mouseInputPropertyIndex);
-
+            
             if (_settings.useTurnOffset)
             {
-                _lookInput.x = _inputController.GetValue<float>(_turnProperty);
+                _lookInput.x = turnInput;
             }
             
             float lean = _inputController.GetValue<float>(_leanPropertyIndex);

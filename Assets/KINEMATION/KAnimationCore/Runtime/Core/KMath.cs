@@ -8,6 +8,16 @@ namespace KINEMATION.KAnimationCore.Runtime.Core
     {
         public const float FloatMin = 1e-10f;
         public const float SqrEpsilon = 1e-8f;
+
+        public static float Square(float value)
+        {
+            return value * value;
+        }
+        
+        public static float SqrDistance(Vector3 a, Vector3 b)
+        {
+            return (b - a).sqrMagnitude;
+        }
         
         public static float NormalizeEulerAngle(float angle)
         {

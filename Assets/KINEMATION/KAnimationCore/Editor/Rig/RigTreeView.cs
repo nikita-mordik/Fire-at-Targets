@@ -22,12 +22,10 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
         
         private List<TreeViewItem> _treeItems;
         private (string, int)[] _originalItems;
-        private Dictionary<string, int> _originalItemsMap;
         
         public RigTreeView(TreeViewState state) : base(state)
         {
             _treeItems = new List<TreeViewItem>();
-            _originalItemsMap = new Dictionary<string, int>();
             Reload();
         }
 
@@ -42,7 +40,6 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
             for (int i = 0; i < count; i++)
             {
                 _treeItems.Add(new TreeViewItem(i + 1, items[i].Item2 + depthOffset, items[i].Item1));
-                _originalItemsMap.TryAdd(items[i].Item1, i);
             }
             
             items.CopyTo(_originalItems, 0);
@@ -114,7 +111,7 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
                 if (GUI.Button(buttonRect, args.item.displayName, EditorStyles.label))
                 {
                     string displayName = _originalItems[args.item.id - 1].Item1;
-                    int index = _originalItemsMap[displayName];
+                    int index = args.item.id - 1;
                     onItemClicked?.Invoke(displayName, index);
                 }
 
@@ -133,7 +130,7 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
             foreach (var selectedId in selectedIds)
             {
                 string displayName = _originalItems[selectedId - 1].Item1;
-                int index = _originalItemsMap[displayName];
+                int index = selectedId - 1;
                 selectedItems.Add((displayName, index));
             }
             

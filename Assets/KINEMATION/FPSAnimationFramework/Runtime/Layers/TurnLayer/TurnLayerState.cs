@@ -1,6 +1,7 @@
 // Designed by KINEMATION, 2024.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
+using KINEMATION.KAnimationCore.Runtime.Core;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.TurnLayer
@@ -37,10 +38,13 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.TurnLayer
             _turnLeftHash = Animator.StringToHash(_settings.animatorTurnLeftTrigger);
         }
 
-        public override void OnEvaluatePose()
+        public override void OnLayerLinked(FPSAnimatorLayerSettings newSettings)
         {
-            _characterRootBone.rotation *= Quaternion.Euler(0f, _turnAngle, 0f);
-            
+            _settings = (TurnLayerSettings) newSettings;
+        }
+
+        public override void OnPreEvaluatePose()
+        {
             float mouseDelta = _inputController.GetValue<Vector4>(_mouseDeltaProperty).x;
             _turnAngle -= mouseDelta;
 
@@ -66,6 +70,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.TurnLayer
             }
             
             _inputController.SetValue(_turnInputProperty, -_turnAngle);
+        }
+
+        public override void OnEvaluatePose()
+        {
+            Quaternion offset = Quaternion.Euler(0f, _turnAngle, 0f);
+            KAnimationMath.RotateInSpace(_owner.transform, _characterRootBone, offset, 1f);
         }
     }
 }

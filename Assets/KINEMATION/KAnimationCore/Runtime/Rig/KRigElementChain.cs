@@ -75,5 +75,13 @@ namespace KINEMATION.KAnimationCore.Runtime.Rig
                 KAnimationMath.ModifyTransform(element.root, element, pose, weight);
             }
         }
+
+        public bool IsValid()
+        {
+            if (transformChain == null || cachedTransforms == null) return false;
+            if (transformChain.Count == 0 || cachedTransforms.Count == 0) return false;
+            
+            return true;
+        }
     }
 }

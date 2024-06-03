@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
 {

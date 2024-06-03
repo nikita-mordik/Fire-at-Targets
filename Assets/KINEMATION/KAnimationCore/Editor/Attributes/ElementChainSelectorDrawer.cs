@@ -24,10 +24,10 @@ namespace KINEMATION.KAnimationCore.Editor.Attributes
             }
             
             KRig rig = (property.serializedObject.targetObject as IRigUser)?.GetRigAsset();
-
-            if (rig == null)
+            SerializedProperty assetProp = property.serializedObject.FindProperty(chainSelectorAttribute.targetAssetName);
+            
+            if (rig == null || assetProp != null)
             {
-                SerializedProperty assetProp = property.serializedObject.FindProperty(chainSelectorAttribute.targetAssetName);
                 if (assetProp == null) return;
                 rig = assetProp.objectReferenceValue as KRig;
             }

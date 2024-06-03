@@ -78,8 +78,16 @@ namespace KINEMATION.KAnimationCore.Editor.Misc
             }
             
             EditorGUILayout.BeginHorizontal(GUI.skin.FindStyle("Toolbar"));
+            GUI.SetNextControlName("SearchEntryField");
             _searchEntry = EditorGUILayout.TextField(_searchEntry, EditorStyles.toolbarSearchField);
             EditorGUILayout.EndHorizontal();
+            
+            // Automatically set focus to the text field when the window is opened
+            if (Event.current.type == EventType.Repaint && GUI.GetNameOfFocusedControl() == "")
+            {
+                Debug.Log("Set focused to the search entry field!");
+                GUI.FocusControl("SearchEntryField");
+            }
             
             _rigTreeWidget.rigTreeView.Filter(_searchEntry);
             _rigTreeWidget.Render();

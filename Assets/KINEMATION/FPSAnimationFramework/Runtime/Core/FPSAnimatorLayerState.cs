@@ -91,6 +91,11 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         {
         }
 
+        // Called on LateUpdate before any modifications.
+        public virtual void OnPreEvaluatePose()
+        {
+        }
+
         // Called on LateUpdate. Use it only to apply the actual pose.
         public virtual void OnEvaluatePose()
         {

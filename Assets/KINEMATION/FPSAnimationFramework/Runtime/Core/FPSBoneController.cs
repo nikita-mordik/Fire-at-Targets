@@ -79,6 +79,11 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         public virtual void EvaluatePose()
         {
             _rigComponent.AnimateVirtualElements();
+
+            foreach (var state in _layerStates)
+            {
+                state.OnPreEvaluatePose();
+            }
             
             // Apply the active animator states.
             foreach (var state in _layerStates)

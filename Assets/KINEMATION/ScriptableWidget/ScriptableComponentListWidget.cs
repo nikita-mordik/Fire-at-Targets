@@ -35,6 +35,9 @@ namespace KINEMATION.ScriptableWidget
         private Type[] _componentTypes;
         private string _friendlyComponentName;
 
+        private bool _useStandaloneWindow;
+        private int _editorIndex = -1;
+
         public ScriptableComponentListWidget(string friendlyComponentComponentName)
         {
             _friendlyComponentName = friendlyComponentComponentName;
@@ -78,10 +81,13 @@ namespace KINEMATION.ScriptableWidget
             if (_componentEditorWindow != null && _editors[index] == _componentEditorWindow.GetEditor())
             {
                 _componentEditorWindow.Close();
+                _editorIndex = -1;
             }
             
             _editors.RemoveAt(index);
             _serializedObject.Update();
+
+            _editorIndex--;
             
             var property = _componentsProperty.GetArrayElementAtIndex(index);
             var component = property.objectReferenceValue;
@@ -113,8 +119,7 @@ namespace KINEMATION.ScriptableWidget
             string clipboard = EditorGUIUtility.systemCopyBuffer;
             int separator = clipboard.IndexOf('|');
 
-            if (separator < 0)
-                return false;
+            if (separator < 0) return false;
 
             return component.GetType().AssemblyQualifiedName == clipboard.Substring(0, separator);
         }
@@ -162,15 +167,22 @@ namespace KINEMATION.ScriptableWidget
                 EditorGUI.LabelField(labelRect, elementName);
                 if (GUI.Button(buttonRect, "Edit Layer", EditorStyles.miniButton))
                 {
-                    if (_componentEditorWindow == null)
+                    if (_useStandaloneWindow)
                     {
-                        _componentEditorWindow = ScriptableComponentEditorWindow.CreateWindow();
+                        if (_componentEditorWindow == null)
+                        {
+                            _componentEditorWindow = ScriptableComponentEditorWindow.CreateWindow();
+                        }
+
+                        _componentEditorWindow.RefreshEditor(_editors[index], $"{elementName} Editor");
+
+                        _componentEditorWindow.Show();
+                        _componentEditorWindow.Repaint();
                     }
-
-                    _componentEditorWindow.RefreshEditor(_editors[index], $"{elementName} Editor");
-
-                    _componentEditorWindow.Show();
-                    _componentEditorWindow.Repaint();
+                    else
+                    {
+                        _editorIndex = index;
+                    }
                 }
                 
                 if (Event.current.type == EventType.MouseUp && Event.current.button == 1 
@@ -202,11 +214,13 @@ namespace KINEMATION.ScriptableWidget
             };
         }
         
-        public void Init(SerializedObject serializedObject, Type collectionType, string collectionName)
+        public void Init(SerializedObject serializedObject, Type collectionType, string collectionName, 
+            bool standaloneWindow = true)
         {
             _serializedObject = serializedObject;
             _componentsProperty = serializedObject.FindProperty(collectionName);
             _collectionType = collectionType;
+            _useStandaloneWindow = standaloneWindow;
             
             Assert.IsNotNull(_componentsProperty);
             Assert.IsNotNull(_collectionType);
@@ -270,6 +284,17 @@ namespace KINEMATION.ScriptableWidget
                 EditorUtility.DisplayCustomMenu(new Rect(Event.current.mousePosition, Vector2.zero), 
                     menuOptions, -1, AddComponent, null);
             }
+            
+            EditorGUILayout.Space();
+            
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+
+            if (!_useStandaloneWindow && _editorIndex > -1 && _editors.Count > 0)
+            {
+                _editors[_editorIndex].OnInspectorGUI();
+            }
+            
+            EditorGUILayout.EndVertical();
             
             _serializedObject.ApplyModifiedProperties();
         }
