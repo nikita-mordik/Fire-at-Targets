@@ -24,7 +24,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
         [InputProperty] public string leanInputProperty = FPSANames.LeanInput;
 
         public bool useTurnOffset = false;
-        [InputProperty] public string turnOffsetProperty;
+        [InputProperty] public string turnOffsetProperty = FPSANames.TurnOffset;
         
         public List<LookLayerElement> pitchOffsetElements = new List<LookLayerElement>();
         public List<LookLayerElement> yawOffsetElements = new List<LookLayerElement>();

@@ -16,7 +16,7 @@ MonoBehaviour:
   floatProperties:
   - name: PlayablesWeight
     defaultValue: 1
-    interpolationSpeed: 7
+    interpolationSpeed: 0
   - name: StabilizationWeight
     defaultValue: 1
     interpolationSpeed: 7

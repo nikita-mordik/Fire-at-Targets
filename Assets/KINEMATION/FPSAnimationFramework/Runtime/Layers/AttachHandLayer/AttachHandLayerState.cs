@@ -7,6 +7,10 @@ using KINEMATION.KAnimationCore.Runtime.Rig;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AttachHandLayer
 {
     public class AttachHandLayerState : FPSAnimatorLayerState
@@ -99,17 +103,44 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AttachHandLayer
 
         public override void OnEvaluatePose()
         {
-            KTransform cachedIkHandBone = new KTransform();
+            KTransform attachedPose = new KTransform();
             
-            cachedIkHandBone.position 
+            attachedPose.position 
                 = _ikWeaponBone.TransformPoint(_handPose.position + _settings.handPoseOffset.position);
             
-            cachedIkHandBone.rotation 
+            attachedPose.rotation 
                 = _ikWeaponBone.rotation * (_handPose.rotation * _settings.handPoseOffset.rotation);
             
-            _ikHandBone.position = Vector3.Lerp(_ikHandBone.position, cachedIkHandBone.position, Weight);
-            _ikHandBone.rotation = Quaternion.Slerp(_ikHandBone.rotation, cachedIkHandBone.rotation, Weight);
+            _ikHandBone.position = Vector3.Lerp(_ikHandBone.position, attachedPose.position, Weight);
+            _ikHandBone.rotation = Quaternion.Slerp(_ikHandBone.rotation, attachedPose.rotation, Weight);
             _leftHandChain.BlendTransforms(Weight);
         }
+
+#if UNITY_EDITOR
+        public override void OnSceneGUI()
+        {
+            Vector3 handlePos = _ikHandBone.position;
+            Quaternion handleRot = _ikHandBone.rotation;
+           
+            if (Tools.current == Tool.Move)
+            {
+                handlePos = Handles.PositionHandle(handlePos, _ikWeaponBone.rotation);
+                
+                Vector3 localHandle = _ikWeaponBone.InverseTransformPoint(handlePos);
+                Vector3 localHand = _ikWeaponBone.InverseTransformPoint(_ikHandBone.position);
+            
+                _settings.handPoseOffset.position += localHandle - localHand;
+            }
+            else if (Tools.current == Tool.Rotate)
+            {
+                handleRot = Handles.RotationHandle(handleRot, handlePos);
+                
+                Quaternion weaponInverse = Quaternion.Inverse(_ikWeaponBone.rotation);
+                Quaternion localHandle = weaponInverse * handleRot;
+                _settings.handPoseOffset.rotation
+                    *= Quaternion.Inverse(weaponInverse * _ikHandBone.rotation) * localHandle;
+            }
+        }
+#endif
     }
 }

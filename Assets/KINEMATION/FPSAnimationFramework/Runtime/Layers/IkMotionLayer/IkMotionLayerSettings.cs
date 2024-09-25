@@ -10,7 +10,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.IkMotionLayer
     [CreateAssetMenu(fileName = "NewIkMotionLayer", menuName = FPSANames.FileMenuLayers + "IK Motion")]
     public class IkMotionLayerSettings : FPSAnimatorLayerSettings
     {
-        public KRigElement boneToAnimate;
+        public KRigElement boneToAnimate = new KRigElement(-1, FPSANames.IkWeaponBone);
 
         public VectorCurve rotationCurves = new VectorCurve(new Keyframe[]
         {
@@ -29,6 +29,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.IkMotionLayer
         
         [Range(0f, 1f)] public float blendTime = 0f;
         [Range(0f, 2f)] public float playRate = 1f;
+        public bool autoBlendOut = true;
 
         public override FPSAnimatorLayerState CreateState()
         {

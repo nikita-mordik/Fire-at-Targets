@@ -27,7 +27,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
         private Transform _spineRoot;
         
         // In component space.
-        private Quaternion _cachedPelvisPose;
+        private Quaternion _cachedPelvisPose = Quaternion.identity;
         private KTransform _weaponBoneComponentPose;
         // In spine root bone space.
         private KTransform _weaponBoneSpinePose;
@@ -65,12 +65,36 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
             _weaponBoneLeft = _rigComponent.GetRigTransform(_settings.weaponBoneLeft);
             
             // Override the weapon bone transform with static data.
-            _weaponBone.position = _owner.transform.TransformPoint(_settings.defaultWeaponPose.position);
-            _weaponBone.rotation = _owner.transform.rotation * _settings.defaultWeaponPose.rotation;
+            // Only useful for Humanoids or clips that do not keyframe the weapon bone.
+            Transform root = _pelvis.parent;
+
+            bool resetRootRotation = root != _owner.transform;
+            if (resetRootRotation)
+            {
+                _pelvis.parent.localRotation = Quaternion.identity;
+            }
+
+            _weaponBone.position = root.TransformPoint(_settings.defaultWeaponPose.position);
+            _weaponBone.rotation = root.rotation * _settings.defaultWeaponPose.rotation;
             
             // Try overriding with the animation.
             _settings.poseToSample.clip.SampleAnimation(_owner, 0f);
             
+            // Avoid unnecessary root modification by the pose.
+            if (resetRootRotation)
+            {
+                KTransform pelvisCache = new KTransform(_pelvis);
+                _pelvis.parent.localRotation = Quaternion.identity;
+                _pelvis.position = pelvisCache.position;
+                _pelvis.rotation = pelvisCache.rotation;
+            }
+
+            if (_settings.overwriteWeaponBone)
+            {
+                _weaponBone.position = root.TransformPoint(_settings.defaultWeaponPose.position);
+                _weaponBone.rotation = root.rotation * _settings.defaultWeaponPose.rotation;
+            }
+
             _weaponBoneRight.position = _weaponBone.position;
             _weaponBoneRight.rotation = _weaponBone.rotation;
 
@@ -79,12 +103,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
             
             _ikHandRightHint = _rigComponent.GetRigTransform(_settings.ikHandRightHint);
             _ikHandLeftHint = _rigComponent.GetRigTransform(_settings.ikHandLeftHint);
-
+            
             // ReSharper disable all
-            _cachedPelvisPose = Quaternion.Inverse(_owner.transform.rotation) * _pelvis.rotation;
+            _cachedPelvisPose = Quaternion.Inverse(root.rotation) * _pelvis.rotation;
             
             _weaponBoneComponentPose = 
-                new KTransform(_owner.transform).GetRelativeTransform(new KTransform(_weaponBone), false);
+                new KTransform(root).GetRelativeTransform(new KTransform(_weaponBone), false);
             
             _weaponBoneSpinePose = 
                 new KTransform(_spineRoot).GetRelativeTransform(new KTransform(_weaponBone), false);
@@ -205,7 +229,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
         public override void OnEvaluatePose()
         {
             if (!_isValidToEvaluate) return;
-
+            
             KTransform localRoot = new KTransform(_pelvis.parent, false);
             KTransform worldPelvis = new KTransform(_pelvis);
 
@@ -214,7 +238,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
                 _pelvis.parent.localRotation = Quaternion.identity;
                 _pelvis.parent.localPosition = Vector3.zero;
             }
-            
+
             _pelvis.rotation = worldPelvis.rotation;
             _pelvis.position = worldPelvis.position;
             

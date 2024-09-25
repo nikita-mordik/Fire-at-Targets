@@ -6,7 +6,6 @@ using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Rig;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
 {
@@ -17,6 +16,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
         public KTransform defaultWeaponPose = KTransform.Identity;
         public KTransform weaponBoneOffset = KTransform.Identity;
         public bool overwriteRoot = false;
+        public bool overwriteWeaponBone = false;
         
         [Header("IK Targets")]
         public KRigElement ikWeaponBone = new KRigElement(-1, FPSANames.IkWeaponBone);

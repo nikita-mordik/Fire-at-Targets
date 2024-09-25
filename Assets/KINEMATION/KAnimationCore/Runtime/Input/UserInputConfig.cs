@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace KINEMATION.KAnimationCore.Runtime.Input
 {
-    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/fundamentals/input-system")]
     [CreateAssetMenu(fileName = "NewInputConfig", menuName = "KINEMATION/Input Config")]
     public class UserInputConfig : ScriptableObject
     {

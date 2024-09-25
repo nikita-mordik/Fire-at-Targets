@@ -1,9 +1,9 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using System;
 using KINEMATION.KAnimationCore.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Rig;
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +18,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         public EaseMode easeMode;
     }
     
+    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/workflow/components")]
     public class FPSBoneController : MonoBehaviour
     {
         protected KRigComponent _rigComponent;
@@ -296,5 +297,17 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             foreach (var state in _layerStates) state.OnDestroyed();
             _layerStates.Clear();
         }
+        
+#if UNITY_EDITOR
+        public void OnSceneGUI()
+        {
+        }
+        
+        private void OnDrawGizmos()
+        {
+            if (_layerStates == null) return;
+            foreach (var state in _layerStates) state.OnDrawGizmos();
+        }
+#endif
     }
 }

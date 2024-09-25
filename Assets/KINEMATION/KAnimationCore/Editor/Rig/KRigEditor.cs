@@ -90,24 +90,7 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
                 return false;
             }
             
-            _rigAsset.rigHierarchy.Clear();
-            _rigAsset.rigDepths.Clear();
-            
-            _rigComponent.RefreshHierarchy();
-            
-            var hierarchy = _rigComponent.GetRigTransforms();
-            var depths = _rigComponent.GetHierarchyDepths();
-            
-            for (int i = 0; i < hierarchy.Length; i++)
-            {
-                _rigAsset.rigHierarchy.Add(new KRigElement(i, hierarchy[i].transform.name));
-                _rigAsset.rigDepths.Add(depths[i]);
-            }
-            
-            _rigAsset.NotifyObservers();
-
-            EditorUtility.SetDirty(_rigAsset);
-            AssetDatabase.SaveAssets();
+            _rigAsset.ImportRig(_rigComponent);
             return true;
         }
 
@@ -116,7 +99,7 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
             _rigComponent = (KRigComponent) EditorGUILayout.ObjectField("Rig Component", 
                 _rigComponent, typeof(KRigComponent), true);
             
-            _rigAsset.targetAnimator = (RuntimeAnimatorController) EditorGUILayout.ObjectField("Target Animator", 
+            _rigAsset.targetAnimator = (RuntimeAnimatorController) EditorGUILayout.ObjectField("Animator", 
                 _rigAsset.targetAnimator, typeof(RuntimeAnimatorController), true);
             
             _rigAsset.inputConfig = (UserInputConfig) EditorGUILayout.ObjectField("Input Config", 

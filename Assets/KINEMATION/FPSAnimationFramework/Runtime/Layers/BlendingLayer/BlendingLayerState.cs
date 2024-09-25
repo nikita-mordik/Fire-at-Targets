@@ -1,10 +1,10 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using System;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Core;
 
 using System.Collections.Generic;
+using KINEMATION.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.BlendingLayer
@@ -19,7 +19,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.BlendingLayer
         public override void InitializeState(FPSAnimatorLayerSettings newSettings)
         {
             _settings = (BlendingLayerSettings) newSettings;
-
+            
             if (_settings.desiredPose == null) return;
             
             _rigComponent.CacheHierarchyPose();
@@ -61,6 +61,32 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.BlendingLayer
             }
             
             _basePose.Clear();
+        }
+
+        public override void RegisterBones(ref HashSet<int> registeredBones)
+        {
+            foreach (var element in _settings.blendingElements)
+            {
+                if(!element.cacheBlendedResult) continue;
+                registeredBones.Add(element.elementToBlend.index);
+            }
+        }
+
+        public override void CachePoses(ref List<KPose> cachedPoses)
+        {
+            int count = _elementTransforms.Count;
+            for (int i = 0; i < count; i++)
+            {
+                if(!_settings.blendingElements[i].cacheBlendedResult) continue;
+                
+                cachedPoses.Add(new KPose()
+                {
+                    element = _settings.blendingElements[i].elementToBlend,
+                    modifyMode = EModifyMode.Replace,
+                    pose = new KTransform(Vector3.zero, _elementTransforms[i].localRotation),
+                    space = ESpaceType.ParentBoneSpace
+                });
+            }
         }
     }
 }

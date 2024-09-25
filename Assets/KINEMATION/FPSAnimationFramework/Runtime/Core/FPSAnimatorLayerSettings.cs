@@ -1,11 +1,11 @@
 ﻿// Designed by KINEMATION, 2024.
 
+using KINEMATION.FPSAnimationFramework.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Rig;
 
 using System;
 using System.Collections.Generic;
-using KINEMATION.FPSAnimationFramework.Runtime.Attributes;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Core
@@ -33,7 +33,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
     }
     
     [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/fundamentals/animator-layer")]
-    public abstract class FPSAnimatorLayerSettings : ScriptableObject, IRigUser
+    public abstract class FPSAnimatorLayerSettings : ScriptableObject, IRigUser, IRigObserver
     {
         [ShowStandalone] public KRig rigAsset;
         [Range(0f, 1f)] public float alpha = 1f;
@@ -41,7 +41,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         
         [Tooltip("Will call OnUpdateSettings on the layer state if true.")]
         public bool linkDynamically;
-
+        
         public virtual FPSAnimatorLayerState CreateState() { return null; }
         
         public KRig GetRigAsset() { return rigAsset; }
@@ -53,13 +53,35 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         
 #if UNITY_EDITOR
         [HideInInspector] public bool isStandalone = true;
+        private KRig _cachedRigAsset;
         
         protected void UpdateRigElement(ref KRigElement element)
         {
             element = rigAsset.GetElementByName(element.name);
         }
 
-        protected void OnValidate() { }
+        protected void OnValidate()
+        {
+            if (!isStandalone) return;
+            
+            if (rigAsset == _cachedRigAsset)
+            {
+                return;
+            }
+
+            if (_cachedRigAsset != null)
+            {
+                _cachedRigAsset.UnRegisterObserver(this);
+            }
+
+            if (rigAsset != null)
+            {
+                rigAsset.RegisterRigObserver(this);
+                OnRigUpdated();
+            }
+
+            _cachedRigAsset = rigAsset;
+        }
 #endif
     }
 }

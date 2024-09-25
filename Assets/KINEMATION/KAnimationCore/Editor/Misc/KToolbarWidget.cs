@@ -1,5 +1,6 @@
 ﻿// Designed by KINEMATION, 2024.
 
+using UnityEditor;
 using UnityEngine;
 
 namespace KINEMATION.KAnimationCore.Editor.Misc
@@ -28,13 +29,13 @@ namespace KINEMATION.KAnimationCore.Editor.Misc
                 _toolbarTabNames[i] = _toolbarTabs[i].name;
             }
         }
-        
+
         public void Render()
         {
             if (_toolbarTabNames.Length == 0) return;
-            
-           _toolbarIndex = GUILayout.Toolbar(_toolbarIndex, _toolbarTabNames);
-           _toolbarTabs[_toolbarIndex].onTabRendered?.Invoke();
+
+            _toolbarIndex = GUILayout.Toolbar(_toolbarIndex, _toolbarTabNames);
+            _toolbarTabs[_toolbarIndex].onTabRendered?.Invoke();
         }
     }
 }

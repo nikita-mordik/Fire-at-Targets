@@ -3,7 +3,6 @@
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.ScriptableWidget;
 using UnityEditor;
-using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Editor.Core
 {
@@ -20,7 +19,7 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Core
 
         private void MarkLayersStandalone()
         {
-            if (_animatorProfile == null) return;
+            if (_animatorProfile == null || _animatorProfile.settings == null) return;
             foreach (var layer in _animatorProfile.settings) layer.isStandalone = false;
         }
         
@@ -37,7 +36,8 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Core
             _listWidget.Init(serializedObject, typeof(FPSAnimatorLayerSettings), "settings");
 
             // Update the Rig Asset for all layers.
-            _listWidget.OnComponentAdded = () => _animatorProfile.OnRigUpdated();
+            _listWidget.onComponentAdded = () => _animatorProfile.OnRigUpdated();
+            _listWidget.onComponentPasted = () => _animatorProfile.OnRigUpdated();
             MarkLayersStandalone();
         }
 
@@ -53,10 +53,9 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Core
             EditorGUILayout.PropertyField(_easeMode);
             
             EditorGUILayout.EndVertical();
-
-            serializedObject.ApplyModifiedProperties();
             
             _listWidget.OnGUI();
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }

@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace KINEMATION.KAnimationCore.Runtime.Input
 {
-    [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/workflow/components")]
     public class UserInputController : MonoBehaviour
     {
         [SerializeField] public UserInputConfig inputConfig;

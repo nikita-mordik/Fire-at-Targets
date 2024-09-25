@@ -1,5 +1,6 @@
 ﻿// Designed by KINEMATION, 2024.
 
+using KINEMATION.KAnimationCore.Editor.Misc;
 using KINEMATION.KAnimationCore.Runtime.Input;
 using UnityEditor;
 using UnityEngine;
@@ -10,10 +11,14 @@ namespace KINEMATION.KAnimationCore.Editor.Input
     public class UserInputControllerInspector : UnityEditor.Editor
     {
         private UserInputController _controller;
+
+        private AssetObjectWidget<UserInputConfig> _configWidget;
        
         private void OnEnable()
         {
             _controller = (UserInputController) target;
+            _configWidget = new AssetObjectWidget<UserInputConfig>(serializedObject, "inputConfig",
+                "Config");
         }
         
         private static bool IsInspectorFocused() 
@@ -31,7 +36,7 @@ namespace KINEMATION.KAnimationCore.Editor.Input
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-
+            
             var properties = _controller.GetPropertyBindings();
 
             if (properties == null) return;
@@ -42,25 +47,27 @@ namespace KINEMATION.KAnimationCore.Editor.Input
             {
                 string label = property.Item1;
                 object value = property.Item2;
-
-                GUI.enabled = false;
+                
                 if (value is bool)
                 {
-                    EditorGUILayout.Toggle(label, (bool) value);
+                    bool toggle = EditorGUILayout.Toggle(label, (bool) value);
+                    if(toggle != (bool) value) _controller.SetValue(label, toggle);
                 }
                 else if (value is int)
                 {
-                    EditorGUILayout.IntField(label, (int) value);
+                    int integer = EditorGUILayout.IntField(label, (int) value);
+                    if(integer != (int) value)  _controller.SetValue(label, integer);
                 }
                 else if (value is float)
                 {
-                    EditorGUILayout.FloatField(label, (float) value);
+                    float floatVal = EditorGUILayout.FloatField(label, (float) value);
+                    if(!Mathf.Approximately(floatVal, (float) value)) _controller.SetValue(label, floatVal);
                 }
                 else if (value is Vector4)
                 {
-                    EditorGUILayout.Vector4Field(label, (Vector4) value);
+                    Vector4 vector4 = EditorGUILayout.Vector4Field(label, (Vector4) value);
+                    if(!vector4.Equals(((Vector4) value))) _controller.SetValue(label, vector4);
                 }
-                GUI.enabled = true;
             }
             
             EditorGUILayout.EndVertical();

@@ -1,8 +1,11 @@
-﻿// Designed by KINEMATION, 2024
+﻿// Designed by KINEMATION, 2024.
+
+using KINEMATION.KAnimationCore.Editor.Misc;
+using KINEMATION.KAnimationCore.Runtime.Attributes;
+using KINEMATION.KAnimationCore.Runtime.Rig;
 
 using System.Linq;
-using KINEMATION.KAnimationCore.Editor.Misc;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+
 using UnityEditor;
 using UnityEngine;
 
@@ -14,12 +17,8 @@ namespace KINEMATION.KAnimationCore.Editor.Attributes
         private void SelectRigElement(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-            
-            KRig rig = property.serializedObject.targetObject as KRig;
-            if (rig == null)
-            {
-                rig = (property.serializedObject.targetObject as IRigUser)?.GetRigAsset();
-            }
+
+            KRig rig = RigDrawerUtility.TryGetRigAsset(fieldInfo, property);
             
             SerializedProperty name = property.FindPropertyRelative("name");
             SerializedProperty index = property.FindPropertyRelative("index");

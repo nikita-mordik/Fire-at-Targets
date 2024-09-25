@@ -20,6 +20,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         public const string MouseInput = "MouseInput";
         public const string MouseDeltaInput = "MouseDeltaInput";
         public const string MoveInput = "MoveInput";
+        public const string TurnOffset = "TurnOffset";
         // ~ Input Properties
         
         // ~ Element Names
@@ -45,6 +46,17 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 
         // ~ Curve names
         public const string Curve_WeaponBoneWeight = "WeaponBoneWeight";
+        public const string Curve_MaskAttachHand = "MaskAttachHand";
+        public const string Curve_Overlay = "Overlay";
         // ~ Curve names
+        
+        // ~ Element Chains
+        public const string Chain_SpineRoot = "SpineRootChain";
+        public const string Chain_Pelvis = "PelvisChain";
+        public const string Chain_RightHand = "RightHandChain";
+        public const string Chain_LeftHand = "LeftHandChain";
+        public const string Chain_RightFoot = "RightFootChain";
+        public const string Chain_LeftFoot = "LeftFootChain";
+        // ~ Element Chains
     }
 }

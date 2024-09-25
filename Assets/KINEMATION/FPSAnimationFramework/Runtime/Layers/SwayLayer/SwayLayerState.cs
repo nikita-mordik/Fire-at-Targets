@@ -1,6 +1,7 @@
 ﻿// Designed by KINEMATION, 2024.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
+using KINEMATION.FPSAnimationFramework.Runtime.Layers.WeaponLayer;
 using KINEMATION.KAnimationCore.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Rig;
 using UnityEngine;
@@ -14,22 +15,21 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
 {
     public struct VectorSpringState
     {
-        public FloatSpringState X;
-        public FloatSpringState Y;
-        public FloatSpringState Z;
+        public FloatSpringState x;
+        public FloatSpringState y;
+        public FloatSpringState z;
 
         public void Reset()
         {
-            X.Reset();
-            Y.Reset();
-            Z.Reset();
+            x.Reset();
+            y.Reset();
+            z.Reset();
         }
     }
     
-    public class SwayLayerState : FPSAnimatorLayerState
+    public class SwayLayerState : WeaponLayerState
     {
         private SwayLayerSettings _settings;
-        private Transform _boneToModify;
         private Transform _headBone;
         
         private Vector4 _mouseDelta;
@@ -64,13 +64,13 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
             ref VectorSpringState state)
         {
             current.x = KSpringMath.FloatSpringInterp(current.x, target.x, spring.speed.x, spring.damping.x,
-                spring.stiffness.x, spring.scale.x, ref state.X);
+                spring.stiffness.x, spring.scale.x, ref state.x);
             
             current.y = KSpringMath.FloatSpringInterp(current.y, target.y, spring.speed.y, spring.damping.y,
-                spring.stiffness.y, spring.scale.y, ref state.Y);
+                spring.stiffness.y, spring.scale.y, ref state.y);
             
             current.z = KSpringMath.FloatSpringInterp(current.z, target.z, spring.speed.z, spring.damping.z,
-                spring.stiffness.z, spring.scale.z, ref state.Z);
+                spring.stiffness.z, spring.scale.z, ref state.z);
         }
         
         private void EvaluateFreeAim()
@@ -104,7 +104,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
             rotation.Normalize();
 
             Vector3 headMS = _owner.transform.InverseTransformPoint(_headBone.position);
-            Vector3 masterMS = _owner.transform.InverseTransformPoint(_boneToModify.position);
+            Vector3 masterMS = _owner.transform.InverseTransformPoint(_weaponIkBone.position);
 
             Vector3 offset = headMS - masterMS;
             offset = rotation * offset - offset;
@@ -122,7 +122,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
                 space = _settings.freeAimSpace
             };
             
-            KAnimationMath.ModifyTransform(_owner.transform, _boneToModify, pose, Weight);
+            KAnimationMath.ModifyTransform(_owner.transform, _weaponIkBone, pose, Weight);
         }
 
         private void EvaluateMoveSway()
@@ -168,7 +168,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
                 space = _settings.moveSwaySpace
             };
             
-            KAnimationMath.ModifyTransform(_owner.transform, _boneToModify, pose, Weight);
+            KAnimationMath.ModifyTransform(_owner.transform, _weaponIkBone, pose, Weight);
         }
 
         private void EvaluateAimSway()
@@ -214,13 +214,14 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
                 space = _settings.aimSwaySpace
             };
             
-            KAnimationMath.ModifyTransform(_owner.transform, _boneToModify, pose, Weight);
+            KAnimationMath.ModifyTransform(_owner.transform, _weaponIkBone, pose, Weight);
         }
 
         public override void InitializeState(FPSAnimatorLayerSettings newSettings)
         {
+            base.InitializeState(newSettings);
+            
             _settings = (SwayLayerSettings) newSettings;
-            _boneToModify = _rigComponent.GetRigTransform(_settings.boneToModify);
             _headBone = _rigComponent.GetRigTransform(_settings.headBone);
 
             _moveSwayPositionSpring.Reset();

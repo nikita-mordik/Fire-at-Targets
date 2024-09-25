@@ -2,7 +2,12 @@
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Core;
+using KINEMATION.KAnimationCore.Runtime.Rig;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.ViewLayer
 {
@@ -34,5 +39,43 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.ViewLayer
             KAnimationMath.ModifyTransform(component, _ikHandRight, _settings.ikHandRight, Weight);
             KAnimationMath.ModifyTransform(component, _ikHandLeft, _settings.ikHandLeft, Weight);
         }
+
+#if UNITY_EDITOR
+        private Quaternion _rotationHandleCache = Quaternion.identity;
+        
+        public override void OnSceneGUI()
+        {
+            Transform space = _ikGunBone.transform;
+            
+            if (_settings.ikHandGun.space == ESpaceType.ParentBoneSpace)
+            {
+                space = _ikGunBone.parent;
+            }
+
+            if (_settings.ikHandGun.space == ESpaceType.ComponentSpace)
+            {
+                space = _owner.transform;
+            }
+            
+            if (_settings.ikHandGun.space == ESpaceType.WorldSpace)
+            {
+                space = null;
+            }
+            
+            Quaternion spaceRot = space == null ? Quaternion.identity : space.rotation;
+            Vector3 handlePos = Handles.PositionHandle(_ikGunBone.position, spaceRot);
+
+            if (space == null)
+            {
+                _settings.ikHandGun.pose.position += handlePos - _ikGunBone.position;
+                return;
+            }
+
+            Vector3 boneLocal = space.InverseTransformPoint(_ikGunBone.position);
+            handlePos = space.InverseTransformPoint(handlePos);
+
+            _settings.ikHandGun.pose.position += handlePos - boneLocal;
+        }
+#endif
     }
 }

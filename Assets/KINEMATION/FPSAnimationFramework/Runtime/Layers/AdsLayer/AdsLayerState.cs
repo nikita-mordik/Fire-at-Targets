@@ -3,7 +3,6 @@
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Layers.WeaponLayer;
 using KINEMATION.KAnimationCore.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Input;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
@@ -24,6 +23,8 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
         private float _aimPointPlayback;
 
         private int _isAimingPropertyIndex;
+
+        private Vector3 _targetDefaultPose;
 
         // Returns an additive ads pose in Component space.
         private KTransform GetAdsPose()
@@ -70,10 +71,10 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
             
             _settings = (AdsLayerSettings) newSettings;
             _aimTargetBone = _rigComponent.GetRigTransform(_settings.aimTargetBone);
-
+            
             _additivePose = GetAdsPose();
-
             _isAimingPropertyIndex = _inputController.GetPropertyIndex(_settings.isAimingProperty);
+            _targetDefaultPose = _aimTargetBone.localPosition;
         }
 
         public override void OnEntityUpdated(FPSAnimatorEntity newEntity)
@@ -98,6 +99,11 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
         protected override void OnEvaluateWeaponPose()
         {
             if (_entity == null) return;
+
+            if (_settings.cameraBlend > 0f)
+            {
+                _aimTargetBone.localPosition = _targetDefaultPose;
+            }
             
             if (_entity.defaultAimPoint != _cachedAimPoint)
             {
@@ -105,7 +111,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
                 _prevAimPoint = _aimPoint;
             }
             
-            float weight = KCurves.Ease(0f, 1f, _aimingWeight, _settings.aimingEaseMode) * _settings.alpha;
+            float weight = KCurves.Ease(0f, 1f, _aimingWeight, _settings.aimingEaseMode) * Weight;
             
             AdsBlend blend = _settings.positionBlend;
             KTransform pose = GetAdsPose();
@@ -123,18 +129,26 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
             absQ.z = Mathf.Lerp(absQ.z, addQ.z, blend.z);
 
             pose.rotation = Quaternion.Euler(absQ);
-
+            
+            KAnimationMath.MoveInSpace(_owner.transform, _weaponIkBone, pose.position, 
+                weight * (1f - _settings.cameraBlend));
             KAnimationMath.RotateInSpace(_owner.transform, _weaponIkBone, pose.rotation, weight);
-            KAnimationMath.MoveInSpace(_owner.transform, _weaponIkBone, pose.position, weight);
-
+            
             KTransform aimPoint = GetLocalAimPoint(_entity.defaultAimPoint);
-            _aimPoint = KTransform.EaseLerp(_prevAimPoint, aimPoint, _aimPointPlayback, _settings.aimingEaseMode);
+            _aimPoint = KTransform.EaseLerp(_prevAimPoint, aimPoint, _aimPointPlayback, _settings.aimPointEaseMode);
 
             Quaternion socketRotation = _aimPoint.rotation;
             Vector3 socketPosition = _aimPoint.position;
 
-            KAnimationMath.MoveInSpace(_owner.transform, _weaponIkBone, socketRotation * socketPosition, weight);
+            KAnimationMath.MoveInSpace(_owner.transform, _weaponIkBone, socketRotation * socketPosition, 
+                weight * (1f - _settings.cameraBlend));
             KAnimationMath.RotateInSpace(_owner.transform, _weaponIkBone, socketRotation, weight);
+            
+            if (_settings.cameraBlend > 0f)
+            {
+                KAnimationMath.MoveInSpace(_owner.transform, _aimTargetBone, 
+                    -(pose.position + socketRotation * socketPosition), weight * _settings.cameraBlend);
+            }
             
             _cachedAimPoint = _entity.defaultAimPoint;
         }

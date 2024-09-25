@@ -14,6 +14,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.BlendingLayer
     {
         public KRigElement elementToBlend;
         [Range(0f, 1f)] public float weight;
+        public bool cacheBlendedResult;
     }
     
     public class BlendingLayerSettings : FPSAnimatorLayerSettings

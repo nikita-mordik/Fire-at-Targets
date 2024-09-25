@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -13,10 +14,18 @@ namespace KINEMATION.ScriptableWidget
 {
     public class ScriptableComponentListWidget
     {
+        public float headerSpaceRatio = 0.5f;
+        
         public delegate void ComponentAction();
+        
+        public delegate void DrawElementHeader(SerializedProperty property, Rect rect);
+        public delegate void SelectionAction(int selectedIndex);
 
-        public ComponentAction OnComponentAdded;
-        public ComponentAction OnComponentRemoved;
+        public ComponentAction onComponentAdded;
+        public ComponentAction onComponentPasted;
+        public ComponentAction onComponentRemoved;
+        public DrawElementHeader onDrawComponentHeader;
+        public SelectionAction onComponentSelected;
         
         private SerializedObject _serializedObject;
         private SerializedProperty _componentsProperty;
@@ -38,28 +47,18 @@ namespace KINEMATION.ScriptableWidget
         private bool _useStandaloneWindow;
         private int _editorIndex = -1;
 
-        public ScriptableComponentListWidget(string friendlyComponentComponentName)
+        public ScriptableComponentListWidget(string friendlyComponentName)
         {
-            _friendlyComponentName = friendlyComponentComponentName;
-        }
-        
-        private ScriptableObject CreateNewComponent(Type type)
-        {
-            var effect = ScriptableObject.CreateInstance(type);
-            effect.hideFlags = HideFlags.HideInInspector | HideFlags.HideInHierarchy;
-            effect.name = type.Name;
-            return effect;
+            _friendlyComponentName = friendlyComponentName;
         }
 
-        private void AddComponent(object userData, string[] options, int selected)
+        public void AddComponent(Type type)
         {
             _serializedObject.Update();
             
-            Type selectedType = _componentTypes[selected];
+            ScriptableObject newComponent = CreateNewComponent(type);
             
-            ScriptableObject newComponent = CreateNewComponent(selectedType);
-            
-            Undo.RegisterCreatedObjectUndo(newComponent, "Add Volume Override");
+            Undo.RegisterCreatedObjectUndo(newComponent, "Add Component");
             AssetDatabase.AddObjectToAsset(newComponent, _asset);
             
             _componentsProperty.arraySize++;
@@ -67,16 +66,28 @@ namespace KINEMATION.ScriptableWidget
             componentProp.objectReferenceValue = newComponent;
 
             _editors.Add(Editor.CreateEditor(newComponent));
-
             _serializedObject.ApplyModifiedProperties();
             
             EditorUtility.SetDirty(_asset);
-            AssetDatabase.SaveAssets();
+            AssetDatabase.SaveAssetIfDirty(_asset);
             
-            OnComponentAdded?.Invoke();
+            onComponentAdded?.Invoke();
+        }
+        
+        private ScriptableObject CreateNewComponent(Type type)
+        {
+            var instance = ScriptableObject.CreateInstance(type);
+            instance.hideFlags = HideFlags.HideInInspector | HideFlags.HideInHierarchy;
+            instance.name = type.Name;
+            return instance;
         }
 
-        private void RemoveComponent(int index)
+        private void OnTypeSelected(object userData, string[] options, int selected)
+        {
+            AddComponent(_componentTypes[selected]);
+        }
+
+        public void RemoveComponent(int index)
         {
             if (_componentEditorWindow != null && _editors[index] == _componentEditorWindow.GetEditor())
             {
@@ -101,9 +112,9 @@ namespace KINEMATION.ScriptableWidget
             EditorUtility.SetDirty(_asset);
             AssetDatabase.SaveAssets();
             
-            OnComponentRemoved?.Invoke();
+            onComponentRemoved?.Invoke();
         }
-
+        
         private void CopyComponent(Object component)
         {
             string typeName = component.GetType().AssemblyQualifiedName;
@@ -113,8 +124,7 @@ namespace KINEMATION.ScriptableWidget
 
         private bool CanPaste(Object component)
         {
-            if (string.IsNullOrWhiteSpace(EditorGUIUtility.systemCopyBuffer))
-                return false;
+            if (string.IsNullOrWhiteSpace(EditorGUIUtility.systemCopyBuffer)) return false;
 
             string clipboard = EditorGUIUtility.systemCopyBuffer;
             int separator = clipboard.IndexOf('|');
@@ -146,6 +156,7 @@ namespace KINEMATION.ScriptableWidget
             if (!CanPaste(component)) return;
             
             PasteComponent(component);
+            onComponentPasted?.Invoke();
         }
 
         private void SetupReorderableList(string targetSerializedPropertyName)
@@ -160,11 +171,23 @@ namespace KINEMATION.ScriptableWidget
 
                 float singleHeight = EditorGUIUtility.singleLineHeight;
                 rect.y += 1;
-                Rect labelRect = new Rect(rect.x, rect.y, rect.width / 2, singleHeight);
-                Rect buttonRect = new Rect(rect.x + rect.width / 2, rect.y, rect.width / 2, singleHeight);
+
+                float labelWidth = rect.width * headerSpaceRatio;
+                float buttonWidth = rect.width * (1f - headerSpaceRatio);
+                
+                Rect labelRect = new Rect(rect.x, rect.y, labelWidth, singleHeight);
+                Rect buttonRect = new Rect(rect.x + labelWidth, rect.y, buttonWidth, singleHeight);
 
                 string elementName = element.objectReferenceValue.name;
-                EditorGUI.LabelField(labelRect, elementName);
+                if (onDrawComponentHeader != null)
+                {
+                    onDrawComponentHeader.Invoke(element, labelRect);
+                }
+                else
+                {
+                    EditorGUI.LabelField(labelRect, elementName);
+                }
+                
                 if (GUI.Button(buttonRect, "Edit Layer", EditorStyles.miniButton))
                 {
                     if (_useStandaloneWindow)
@@ -183,6 +206,8 @@ namespace KINEMATION.ScriptableWidget
                     {
                         _editorIndex = index;
                     }
+                    
+                    onComponentSelected?.Invoke(index);
                 }
                 
                 if (Event.current.type == EventType.MouseUp && Event.current.button == 1 
@@ -266,7 +291,6 @@ namespace KINEMATION.ScriptableWidget
         {
             if (!_isInitialized) return;
             
-            _serializedObject.Update();
             _componentsList.DoLayoutList();
 
             EditorGUILayout.Space();
@@ -282,21 +306,19 @@ namespace KINEMATION.ScriptableWidget
                 }
                 
                 EditorUtility.DisplayCustomMenu(new Rect(Event.current.mousePosition, Vector2.zero), 
-                    menuOptions, -1, AddComponent, null);
+                    menuOptions, -1, OnTypeSelected, null);
+            }
+
+            if (_useStandaloneWindow || _editorIndex < 0 || _editors.Count == 0)
+            {
+                return;
             }
             
             EditorGUILayout.Space();
-            
-            EditorGUILayout.BeginVertical(GUI.skin.box);
 
-            if (!_useStandaloneWindow && _editorIndex > -1 && _editors.Count > 0)
-            {
-                _editors[_editorIndex].OnInspectorGUI();
-            }
-            
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            _editors[_editorIndex].OnInspectorGUI();
             EditorGUILayout.EndVertical();
-            
-            _serializedObject.ApplyModifiedProperties();
         }
     }
 }

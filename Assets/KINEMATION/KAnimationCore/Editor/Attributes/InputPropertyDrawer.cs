@@ -66,6 +66,7 @@ namespace KINEMATION.KAnimationCore.Editor.Attributes
                     selectedIndex = i + indexOffset;
                 }
             }
+            indexOffset += count;
             
             count = config.floatProperties.Count;
             for (int i = 0; i < count; i++)

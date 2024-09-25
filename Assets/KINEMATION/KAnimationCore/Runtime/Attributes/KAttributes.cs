@@ -22,18 +22,27 @@ namespace KINEMATION.KAnimationCore.Runtime.Attributes
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class InputProperty : PropertyAttribute { }
-
+    
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-    public class ElementChainSelectorAttribute : PropertyAttribute
+    public class RigAssetSelectorAttribute : PropertyAttribute
     {
-        public string targetAssetName;
+        public string assetName;
         
-        public ElementChainSelectorAttribute(string rigName = "")
+        public RigAssetSelectorAttribute(string rigName = "")
         {
-            targetAssetName = rigName;
+            assetName = rigName;
         }
     }
 
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    public class ElementChainSelectorAttribute : RigAssetSelectorAttribute
+    {
+        public ElementChainSelectorAttribute(string rigName = "")
+        {
+            assetName = rigName;
+        }
+    }
+    
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class ReadOnlyAttribute : PropertyAttribute { }
 

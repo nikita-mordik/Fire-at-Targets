@@ -19,10 +19,9 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.CollisionLayer
         {
             _settings = (CollisionLayerSettings) newSettings;
             _weaponIkBone = _rigComponent.GetRigTransform(_settings.weaponIkBone);
-
             _mouseInputPropertyIndex = _inputController.GetPropertyIndex(FPSANames.MouseInput);
         }
-
+        
         public override void OnEvaluatePose()
         {
             Vector3 direction = _weaponIkBone.forward;
@@ -43,7 +42,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.CollisionLayer
             
             float alpha = KMath.ExpDecayAlpha(_settings.smoothingSpeed, Time.deltaTime);
             _blockingPose = KTransform.Lerp(_blockingPose, target, alpha);
-
+            
             KPose pose = new KPose()
             {
                 modifyMode = EModifyMode.Add,
@@ -53,5 +52,20 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.CollisionLayer
             
             KAnimationMath.ModifyTransform(_owner.transform, _weaponIkBone, pose, Weight);
         }
+        
+#if UNITY_EDITOR
+        public override void OnDrawGizmos()
+        {
+            if (_weaponIkBone == null || _settings == null) return;
+            
+            Vector3 direction = _weaponIkBone.forward;
+            Vector3 start = _weaponIkBone.position - direction * _settings.rayStartOffset;
+
+            var color = Gizmos.color;
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(start, start + direction * _settings.barrelLength);
+            Gizmos.color = color;
+        }
+#endif
     }
 }

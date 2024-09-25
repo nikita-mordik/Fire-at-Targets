@@ -18,10 +18,22 @@ namespace KINEMATION.KAnimationCore.Runtime.Rig
         public List<KRigElementChain> rigElementChains = new List<KRigElementChain>();
         public List<string> rigCurves = new List<string>();
 
+        public KRigElementChain GetElementChainByName(string chainName)
+        {
+            var chain = rigElementChains.Find(item => item.chainName.Equals(chainName));
+            return chain;
+        }
+
         public KTransformChain GetPopulatedChain(string chainName, KRigComponent rigComponent)
         {
             KTransformChain result = new KTransformChain();
             var targetChain = rigElementChains.Find(item => item.chainName.Equals(chainName));
+
+            if (targetChain == null)
+            {
+                Debug.LogError($"Rig `{name}`: `{chainName}` chain not found!");
+                return null;
+            }
 
             foreach (var element in targetChain.elementChain)
             {
@@ -34,6 +46,28 @@ namespace KINEMATION.KAnimationCore.Runtime.Rig
 #if UNITY_EDITOR
         public List<int> rigDepths = new List<int>();
         private List<Object> _rigObservers = new List<Object>();
+
+        public void ImportRig(KRigComponent rigComponent)
+        {
+            rigHierarchy.Clear();
+            rigDepths.Clear();
+            
+            rigComponent.RefreshHierarchy();
+            
+            var hierarchy = rigComponent.GetRigTransforms();
+            var depths = rigComponent.GetHierarchyDepths();
+            
+            for (int i = 0; i < hierarchy.Length; i++)
+            {
+                rigHierarchy.Add(new KRigElement(i, hierarchy[i].transform.name));
+                rigDepths.Add(depths[i]);
+            }
+            
+            NotifyObservers();
+
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssetIfDirty(this);
+        }
         
         public KRigElement GetElementByName(string targetName)
         {
@@ -63,7 +97,17 @@ namespace KINEMATION.KAnimationCore.Runtime.Rig
 
         public void NotifyObservers()
         {
-            foreach (var observer in _rigObservers) if (observer is IRigObserver obj) obj.OnRigUpdated();
+            List<Object> validObservers = new List<Object>();
+            foreach (var observer in _rigObservers)
+            {
+                if (observer is IRigObserver obj)
+                {
+                    obj.OnRigUpdated();
+                    validObservers.Add(observer);
+                }
+            }
+
+            _rigObservers = validObservers;
         }
 #endif
     }

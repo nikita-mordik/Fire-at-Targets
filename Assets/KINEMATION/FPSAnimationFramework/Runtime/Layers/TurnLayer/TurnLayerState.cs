@@ -11,6 +11,8 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.TurnLayer
         private TurnLayerSettings _settings;
         
         private Transform _characterRootBone;
+        private Transform _hipBone;
+        
         private int _turnInputProperty;
         private int _mouseDeltaProperty;
 
@@ -32,6 +34,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.TurnLayer
             _turnInputProperty = _inputController.GetPropertyIndex(_settings.turnInputProperty);
             _mouseDeltaProperty = _inputController.GetPropertyIndex(_settings.mouseDeltaInputProperty);
             _characterRootBone = _rigComponent.GetRigTransform(_settings.characterRootBone);
+            _hipBone = _rigComponent.GetRigTransform(_settings.characterHipBone);
 
             _animator = _owner.GetComponentInChildren<Animator>();
             _turnRightHash = Animator.StringToHash(_settings.animatorTurnRightTrigger);
@@ -76,6 +79,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.TurnLayer
         {
             Quaternion offset = Quaternion.Euler(0f, _turnAngle, 0f);
             KAnimationMath.RotateInSpace(_owner.transform, _characterRootBone, offset, 1f);
+
+            Vector3 localPosition = _characterRootBone.localPosition;
+            localPosition = offset * localPosition - localPosition;
+
+            if (_characterRootBone == _hipBone) return;
+            KAnimationMath.MoveInSpace(_owner.transform, _characterRootBone, localPosition, 1f);
         }
     }
 }

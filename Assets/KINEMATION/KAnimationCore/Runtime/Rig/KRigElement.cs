@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Designed by KINEMATION, 2024.
+
+using System;
 using UnityEngine;
 
 namespace KINEMATION.KAnimationCore.Runtime.Rig

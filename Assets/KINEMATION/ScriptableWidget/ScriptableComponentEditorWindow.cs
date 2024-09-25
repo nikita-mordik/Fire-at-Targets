@@ -1,8 +1,8 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace KINEMATION.ScriptableWidget
 {
@@ -45,7 +45,7 @@ namespace KINEMATION.ScriptableWidget
             GUIStyle paddedStyle = new GUIStyle()
             {
                 // Set the padding you want (left, right, top, bottom)
-                padding = new RectOffset(10, 0, 0, 0)
+                padding = new RectOffset(15, 5, 5, 5)
             };
             
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, paddedStyle);

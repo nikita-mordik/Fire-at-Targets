@@ -17,14 +17,8 @@ MonoBehaviour:
   rigHierarchy: []
   rigElementChains:
   - chainName: LeftHand
-    from:
-      name: 
-      index: 0
-      isVirtual: 0
-    to:
-      name: 
-      index: 0
-      isVirtual: 0
+    elementChain: []
+    isStandalone: 0
   rigCurves:
   - Overlay
   - WeaponBoneWeight

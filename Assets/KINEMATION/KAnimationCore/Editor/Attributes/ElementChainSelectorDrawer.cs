@@ -22,9 +22,9 @@ namespace KINEMATION.KAnimationCore.Editor.Attributes
                 EditorGUI.PropertyField(position, property, label, true);
                 return;
             }
-            
+
             KRig rig = (property.serializedObject.targetObject as IRigUser)?.GetRigAsset();
-            SerializedProperty assetProp = property.serializedObject.FindProperty(chainSelectorAttribute.targetAssetName);
+            SerializedProperty assetProp = property.serializedObject.FindProperty(chainSelectorAttribute.assetName);
             
             if (rig == null || assetProp != null)
             {

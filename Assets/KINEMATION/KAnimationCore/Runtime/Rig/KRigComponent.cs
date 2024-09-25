@@ -15,6 +15,22 @@ namespace KINEMATION.KAnimationCore.Runtime.Rig
 
 #if UNITY_EDITOR
         [SerializeField] private List<int> hierarchyDepths = new List<int>();
+
+        public bool CompareRig(KRig compareTo)
+        {
+            if (compareTo == null || hierarchy == null || compareTo.rigHierarchy.Count != hierarchy.Count)
+            {
+                return false;
+            }
+
+            int count = hierarchy.Count;
+            for (int i = 0; i < count; i++)
+            {
+                if (!compareTo.rigHierarchy[i].name.Equals(hierarchy[i].name)) return false;
+            }
+            
+            return true;
+        }
         
         public int[] GetHierarchyDepths()
         {

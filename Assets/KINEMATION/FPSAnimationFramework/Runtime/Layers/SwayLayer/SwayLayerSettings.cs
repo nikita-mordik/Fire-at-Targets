@@ -4,6 +4,8 @@ using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Rig;
 
+using KINEMATION.FPSAnimationFramework.Runtime.Layers.WeaponLayer;
+
 using UnityEngine;
 using System;
 
@@ -26,10 +28,8 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
         };
     }
     
-    public class SwayLayerSettings : FPSAnimatorLayerSettings
+    public class SwayLayerSettings : WeaponLayerSettings
     {
-        public KRigElement boneToModify = new KRigElement(-1, FPSANames.IkWeaponBone);
-        
         [Header("Free Aiming")]
         public KRigElement headBone;
         public float freeAimClamp;
@@ -66,7 +66,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
 #if UNITY_EDITOR
         public override void OnRigUpdated()
         {
-            UpdateRigElement(ref boneToModify);
+            base.OnRigUpdated();
             UpdateRigElement(ref headBone);
         }
 #endif

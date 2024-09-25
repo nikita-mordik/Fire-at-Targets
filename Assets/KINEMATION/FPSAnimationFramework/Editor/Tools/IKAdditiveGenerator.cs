@@ -43,7 +43,7 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Tools
 
             foreach (var binding in bindings)
             {
-                if (!binding.path.ToLower().EndsWith(_extractFrom.name))
+                if (!binding.path.EndsWith(_extractFrom.name))
                 {
                     continue;
                 }

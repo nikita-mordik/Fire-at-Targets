@@ -1,10 +1,11 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using System.Collections.Generic;
 using KINEMATION.KAnimationCore.Editor.Misc;
 using KINEMATION.KAnimationCore.Runtime.Rig;
 
+using System.Collections.Generic;
 using System.Linq;
+
 using UnityEditor;
 using UnityEngine;
 
@@ -16,15 +17,13 @@ namespace KINEMATION.KAnimationCore.Editor.Attributes
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-            
-            KRig rig = property.serializedObject.targetObject as KRig;
-            if (rig == null)
-            {
-                rig = (property.serializedObject.targetObject as IRigUser)?.GetRigAsset();
-            }
 
+            KRig rig = RigDrawerUtility.TryGetRigAsset(fieldInfo, property);
+            
             SerializedProperty elementChain = property.FindPropertyRelative("elementChain");
             SerializedProperty chainName = property.FindPropertyRelative("chainName");
+            SerializedProperty isStandalone = property.FindPropertyRelative("isStandalone");
+            
             if (rig != null)
             {
                 var rigHierarchy = rig.rigHierarchy;
@@ -36,13 +35,20 @@ namespace KINEMATION.KAnimationCore.Editor.Attributes
                 
                 Rect propertyFieldRect = new Rect(position.x + indentLevel, position.y,
                     labelWidth, EditorGUIUtility.singleLineHeight);
-
-                chainName.stringValue = EditorGUI.TextField(propertyFieldRect, chainName.stringValue);
                 
                 Rect buttonRect = new Rect(position.x + indentLevel + labelWidth, position.y,
                     totalWidth, EditorGUIUtility.singleLineHeight);
                 
-                if (GUI.Button(buttonRect, "Edit Chain"))
+                if (isStandalone.boolValue)
+                {
+                    buttonRect = position;
+                }
+                else
+                {
+                    chainName.stringValue = EditorGUI.TextField(propertyFieldRect, chainName.stringValue);
+                }
+                
+                if (GUI.Button(buttonRect, $"Edit {chainName.stringValue}"))
                 {
                     List<int> selectedIds = new List<int>();
                     

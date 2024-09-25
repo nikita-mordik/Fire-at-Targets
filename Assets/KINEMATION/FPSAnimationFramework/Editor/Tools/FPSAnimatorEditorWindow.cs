@@ -24,20 +24,30 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Tools
             {
                 new IKAdditiveGenerator(),
                 new CopyBoneModifier(),
-                new AvatarMaskModifier()
+                new AvatarMaskModifier(),
+                new ExtractCurvesModifier()
             };
         }
 
         private void OnGUI()
         {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.Space(15f);
+
+            EditorGUILayout.BeginVertical();
+            EditorGUILayout.Space(3f);
             _tab = GUILayout.Toolbar(_tab, new string[]
             {
                 "IK Extractor",
-                "Copy Bone Modifier",
-                "Avatar Mask Modifier"
+                "Copy Bone",
+                "Mask Editor",
+                "Extract Curves"
             });
 
             _editorTools[_tab].Render();
+            EditorGUILayout.EndVertical();
+            
+            EditorGUILayout.EndHorizontal();
         }
     }
 }

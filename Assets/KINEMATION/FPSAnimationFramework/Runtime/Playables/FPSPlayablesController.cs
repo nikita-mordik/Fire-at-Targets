@@ -6,6 +6,7 @@ using KINEMATION.KAnimationCore.Runtime.Input;
 
 using UnityEditor;
 using UnityEngine;
+
 using UnityEngine.Animations;
 using UnityEngine.Playables;
 
@@ -15,7 +16,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
     public class FPSPlayablesController : MonoBehaviour, IPlayablesController
     {
         [Header("General Settings")] 
-        [SerializeField] protected AvatarMask upperBodyMask;
+        [HideInInspector] public AvatarMask upperBodyMask;
 
         [SerializeField] [InputProperty]
         protected string playablesWeightProperty = FPSANames.PlayablesWeight;
@@ -37,8 +38,6 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
 
         protected AnimationLayerMixerPlayable _dynamicAnimationMixer;
         protected AnimationLayerMixerPlayable _masterMixer;
-        
-        protected AnimatorControllerPlayable _controllerPlayable;
         
         protected UserInputController _inputController;
         protected float _controllerWeight = 1f;
@@ -72,7 +71,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
             _playableGraph.Stop();
             _playableGraph.Destroy();
         }
-        
+
         public virtual bool InitializeController()
         {
             if (_playableGraph.IsValid())
@@ -97,15 +96,14 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
             _overlayPoseMixer = new FPSAnimatorMixer(_playableGraph, _maxPoseCount, 0);
             _slotMixer = new FPSAnimatorMixer(_playableGraph, _maxAnimCount, 1);
             _overrideMixer = new FPSAnimatorMixer(_playableGraph, _maxAnimCount, 1);
-
-            _controllerPlayable = AnimatorControllerPlayable.Create(_playableGraph,
-                _animator.runtimeAnimatorController);
             
             _slotMixer.mixer.ConnectInput(0, _overlayPoseMixer.mixer, 0, 1f);
             _overrideMixer.mixer.ConnectInput(0, _slotMixer.mixer, 0, 1f);
             _dynamicAnimationMixer.ConnectInput(0, _overrideMixer.mixer, 0, 1f);
+
+            var animatorOutput = _playableGraph.GetOutput(0);
             
-            _masterMixer.ConnectInput(0, _controllerPlayable, 0, 1f);
+            _masterMixer.ConnectInput(0, animatorOutput.GetSourcePlayable(), 0, 1f);
             _masterMixer.ConnectInput(1, _dynamicAnimationMixer, 0, 1f);
             
             _masterMixer.SetLayerMaskFromAvatarMask(0, new AvatarMask());
@@ -113,7 +111,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
             
             var output = AnimationPlayableOutput.Create(_playableGraph, "FPSAnimatorGraph", _animator);
             output.SetSourcePlayable(_masterMixer);
-
+                      
             _playableGraph.Play();
             _inputController = GetComponent<UserInputController>();
 
@@ -121,6 +119,16 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
             _playablesWeightPropertyIndex = _inputController.GetPropertyIndex(playablesWeightProperty);
             
             return true;
+        }
+
+        public virtual void UpdateAnimatorController(RuntimeAnimatorController newController)
+        {
+            if (newController == null)
+            {
+                return;
+            }
+            
+            _animator.runtimeAnimatorController = newController;
         }
         
         public void SetControllerWeight(float weight)

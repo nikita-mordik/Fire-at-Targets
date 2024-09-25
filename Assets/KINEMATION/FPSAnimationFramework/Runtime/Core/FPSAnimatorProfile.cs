@@ -17,7 +17,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         [Min(0f)] public float blendOutTime = 0f;
         public EaseMode easeMode;
         
-        public List<FPSAnimatorLayerSettings> settings;
+        public List<FPSAnimatorLayerSettings> settings = new List<FPSAnimatorLayerSettings>();
 
         public bool Equals(FPSAnimatorProfile anotherProfile)
         {
@@ -39,6 +39,11 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             return true;
         }
 
+        private void OnDestroy()
+        {
+            Debug.Log("The Profile is DESTROYED!");
+        }
+
         public void OnRigUpdated()
         {
 #if UNITY_EDITOR
@@ -47,13 +52,33 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
                 setting.rigAsset = rigAsset;
                 setting.OnRigUpdated();
             }
+
+            /*
+            // Force-update dependent assets.
+            foreach (var overrideProfile in _overrides)
+            {
+                overrideProfile.rigAsset = rigAsset;
+                overrideProfile.OnRigUpdated();
+            }*/
 #endif
         }
         
 #if UNITY_EDITOR
         private KRig _cachedRigAsset;
+        /*
+        private List<FPSAnimatorProfileOverride> _overrides = new List<FPSAnimatorProfile>();
+
+        public void RegisterOverride(FPSAnimatorProfile overrideProfile)
+        {
+            _overrides.Add(overrideProfile);
+        }
+
+        public void UnRegisterOverride(FPSAnimatorProfile overrideProfile)
+        {
+            _overrides.Remove(overrideProfile);
+        }*/
         
-        protected void OnValidate()
+        private void OnValidate()
         {
             // If the asset has changed, we must update the element indices.
             // If the asset was set to null, don't do anything

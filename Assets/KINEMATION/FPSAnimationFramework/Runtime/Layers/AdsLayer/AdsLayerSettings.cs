@@ -1,9 +1,12 @@
-﻿using System;
+﻿// Designed by KINEMATION, 2024.
+
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Layers.WeaponLayer;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Rig;
+
+using System;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
@@ -28,6 +31,8 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
 
         public EaseMode aimPointEaseMode;
         [Min(0.01f)] public float aimPointSpeed = 1f;
+        
+        [Range(0f, 1f)] public float cameraBlend = 0f;
         
         [InputProperty] public string isAimingProperty = FPSANames.IsAiming;
         

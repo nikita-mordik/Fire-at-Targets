@@ -8,10 +8,5 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
     {
         public FPSAnimatorProfile animatorProfile;
         public Transform defaultAimPoint;
-
-        public Transform GetAimPoint()
-        {
-            return defaultAimPoint;
-        }
     }
 }

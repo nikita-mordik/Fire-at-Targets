@@ -20,6 +20,11 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 
         // Only used to update the layer weight.
         private FPSAnimatorLayerSettings _internalSettings;
+
+        protected virtual FPSAnimatorLayerSettings GetSettings()
+        {
+            return _internalSettings;
+        }
         
         protected float GetCurveBlendValue(CurveBlend blend)
         {
@@ -40,7 +45,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 
         public void UpdateStateWeight()
         {
-            Weight = GetWeight(_internalSettings);
+            Weight = GetWeight(GetSettings());
         }
 
         // Returns the weight/alpha for this state based on the blending profile.
@@ -124,5 +129,15 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         public virtual void CachePoses(ref List<KPose> cachedPoses)
         {
         }
+
+#if UNITY_EDITOR
+        public virtual void OnDrawGizmos()
+        {
+        }
+        
+        public virtual void OnSceneGUI()
+        {
+        }
+#endif
     }
 }
