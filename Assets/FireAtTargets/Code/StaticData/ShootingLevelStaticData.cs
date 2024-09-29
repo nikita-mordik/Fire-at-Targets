@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FreedLOW.FireAtTargets.Code.StaticData
 {
-    [CreateAssetMenu(fileName = "ShootingLevelData", menuName = "StaticData/ShootingLevel")]
+    [CreateAssetMenu(fileName = "ShootingLevelData", menuName = "FireAtTargets/ShootingLevel")]
     public class ShootingLevelStaticData : ScriptableObject
     {
         public float RoundTime;

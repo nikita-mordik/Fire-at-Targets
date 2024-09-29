@@ -7,37 +7,47 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Body
+      name: BodyMat
     second: {fileID: 2100000, guid: e66fb68d98314b04b9618a9462880903, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Bottom
+      name: BottomsMat
     second: {fileID: 2100000, guid: 7948a7a669bd8944589566fb7d14f36b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Eyewear
+      name: EyelashesMat
     second: {fileID: 2100000, guid: c6571c9176d652b479b9ecef710cd0f3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Glove
+      name: EyesMat
+    second: {fileID: 2100000, guid: c6571c9176d652b479b9ecef710cd0f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyewearMat
+    second: {fileID: 2100000, guid: c6571c9176d652b479b9ecef710cd0f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GlovesMat
     second: {fileID: 2100000, guid: 803758d27b7794341806be21c76fa41b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Hat
+      name: HatsMat
     second: {fileID: 2100000, guid: 3e6f6e3704cab1c418144aafd10559c0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Shoes
+      name: ShoesMat
     second: {fileID: 2100000, guid: 3c5f9b6f52f2c4a409518644232e822e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Top
+      name: TopsMat
     second: {fileID: 2100000, guid: d06165c8cf809144997e0a35b00d55ae, type: 2}
   materials:
     materialImportMode: 2
@@ -71,7 +81,7 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 0.01
-    meshCompression: 0
+    meshCompression: 2
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1

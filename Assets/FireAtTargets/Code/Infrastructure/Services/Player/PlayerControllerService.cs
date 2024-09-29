@@ -1,4 +1,3 @@
-using Demo.Scripts.Runtime;
 using Demo.Scripts.Runtime.Character;
 using FreedLOW.FireAtTargets.Code.Weapon;
 using UnityEngine;
@@ -9,6 +8,9 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player
     {
         [SerializeField] private FPSController fpsController;
 
+        public void SetPosition(Transform spawnPoint) => 
+            transform.position = spawnPoint.position;
+
         public void InitializeWeapon(WeaponBehaviour weaponBehaviour)
         {
             var weapon = weaponBehaviour.GetComponent<Demo.Scripts.Runtime.Item.Weapon>();
@@ -18,24 +20,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player
         public void EquipWeapon()
         {
             //fpsController.EquipWeapon();
-        }
-
-        public void InitializePlayerGender(Gender gender)
-        {
-            switch (gender)
-            {
-                case Gender.Male:
-                    
-                    break;
-                case Gender.Female:
-                    
-                    break;
-            }
-        }
-
-        public void SetPosition(Transform spawnPoint)
-        {
-            transform.position = spawnPoint.position;
         }
     }
 }

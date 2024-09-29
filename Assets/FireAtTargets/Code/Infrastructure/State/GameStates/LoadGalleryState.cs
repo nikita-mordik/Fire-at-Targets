@@ -34,7 +34,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
 
         private async void OnLoad(Action action)
         {
-            InitializeHUD();
+            //InitializeHUD();
             InitializePool();
             
             action?.Invoke();

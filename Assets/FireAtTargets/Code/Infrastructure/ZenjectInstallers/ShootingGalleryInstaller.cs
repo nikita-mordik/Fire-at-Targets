@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point;
+using UnityEngine;
 using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
@@ -8,9 +10,17 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
     public class ShootingGalleryInstaller : MonoInstaller
     {
         public PlayerControllerService PlayerControllerService;
+        public List<MonoBehaviour> Initializers;
         
         public override void InstallBindings()
         {
+            foreach (var initializer in Initializers)
+            {
+                Container.BindInterfacesTo(initializer.GetType())
+                    .FromInstance(initializer)
+                    .AsSingle();
+            }
+            
             BindWeaponHandlerService();
             BindPointService();
             BindPlayerControllerService();
@@ -18,10 +28,10 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
         
         private void BindPlayerControllerService()
         {
-            Container.Bind<IPlayerControllerService>()
-                .To<PlayerControllerService>()
-                .FromComponentInHierarchy(PlayerControllerService)
-                .AsSingle();
+            // Container.Bind<IPlayerControllerService>()
+            //     .To<PlayerControllerService>()
+            //     .FromComponentInHierarchy(PlayerControllerService)
+            //     .AsSingle();
 
             // Container.Bind<IPlayerControllerService>()
             //     .To<PlayerControllerService>()

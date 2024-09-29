@@ -25,7 +25,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingServi
             this.instantiator = instantiator;
         }
         
-        public async void InitializePoolAsync(string assetsLabel)
+        public async UniTask InitializePoolAsync(string assetsLabel)
         {
             currentLabels.Add(assetsLabel);
             List<string> assetsListByLabel = await assetProvider.GetAssetsListByLabel<PoolObjectInfo>(assetsLabel);
@@ -35,15 +35,16 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingServi
                 listOfPoolObjects.Add(loadAsset);
             }
 
-            if (pools is null)
-                pools = new Dictionary<ObjectType, Pool>();
+            pools ??= new Dictionary<ObjectType, Pool>();
             
             var emptyGO = new GameObject();
+            
             poolContainer ??= new GameObject("Pool");
             
             foreach (var objectInfo in listOfPoolObjects)
             {
-                if (objectInfo.ObjectCount <= 0) continue;
+                if (objectInfo.ObjectCount <= 0) 
+                    continue;
                 
                 var container = Object.Instantiate(emptyGO, poolContainer.transform, false);
                 container.name = objectInfo.ObjectType.ToString();
