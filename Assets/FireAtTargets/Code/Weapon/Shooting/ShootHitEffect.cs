@@ -27,7 +27,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
         {
             var impactEffectInstance = await gameFactory.CreateShootParticle(ObjectType.MuzzleFlashOne);
             impactEffectInstance.transform.SetTransform(shootPointPosition, transform.rotation);
-            await BackEffectToPoolRoutine(impactEffectInstance, 4f);
+            await BackEffectToPoolWithDelay(impactEffectInstance, 4f);
         }
 
         public async void HitEffect(RaycastHit hit)
@@ -41,7 +41,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
             effectInstance.transform.SetTransform(hit.point, Quaternion.identity);
             //Instantiate(effect, hit.point, new Quaternion());
             effectInstance.transform.LookAt(hit.point + hit.normal);
-            await BackEffectToPoolRoutine(effectInstance, 15f);
+            await BackEffectToPoolWithDelay(effectInstance, 15f);
         }
 
         private GameObject GetImpactEffect(GameObject impactedGameObject)
@@ -54,7 +54,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
                 .FirstOrDefault();
         }
         
-        private async UniTask BackEffectToPoolRoutine(GameObject impactEffectInstance, float delay)
+        private async UniTask BackEffectToPoolWithDelay(GameObject impactEffectInstance, float delay)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(delay));
             poolService.BackObjectToPool(impactEffectInstance);

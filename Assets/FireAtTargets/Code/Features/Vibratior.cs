@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FreedLOW.FireAtTargets.Code.Extensions
+namespace FreedLOW.FireAtTargets.Code.Features
 {
     public static class Vibratior
     {

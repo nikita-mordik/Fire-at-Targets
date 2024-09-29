@@ -8,7 +8,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingServi
         /// <summary>
         /// Initializing pool
         /// </summary>
-        void InitializePoolAsync(string assetsLabel);
+        UniTask InitializePoolAsync(string assetsLabel);
         /// <summary>
         /// Get gameObject from Pool
         /// </summary>

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FreedLOW.FireAtTargets.Code.StaticData
 {
-    [CreateAssetMenu(fileName = "WeaponData", menuName = "StaticData/WeaponData")]
+    [CreateAssetMenu(fileName = "WeaponData", menuName = "FireAtTargets/WeaponData")]
     public class WeaponData : ScriptableObject
     {
         public int Damage;

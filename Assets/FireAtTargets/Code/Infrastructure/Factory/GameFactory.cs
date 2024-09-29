@@ -32,8 +32,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Factory
             return InstantiateInjectObject(asset);
         }
 
-        public async UniTask<GameObject> CreateShootParticle(ObjectType muzzleTyp) => 
-            await poolService.GetObjectFromPool(muzzleTyp);
+        public async UniTask<GameObject> CreateShootParticle(ObjectType muzzleType) => 
+            await poolService.GetObjectFromPool(muzzleType);
 
         public async UniTask<GameObject> CreateHitParticle(ObjectType hitType) => 
             await poolService.GetObjectFromPool(hitType);

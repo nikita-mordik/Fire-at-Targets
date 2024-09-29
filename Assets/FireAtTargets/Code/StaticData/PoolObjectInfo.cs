@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 
 namespace FreedLOW.FireAtTargets.Code.StaticData
 {
-    [CreateAssetMenu(fileName = "PoolObject", menuName = "StaticData/Pool")]
+    [CreateAssetMenu(fileName = "PoolObject", menuName = "FireAtTargets/Pool")]
     public class PoolObjectInfo : ScriptableObject
     {
         public ObjectType ObjectType;
