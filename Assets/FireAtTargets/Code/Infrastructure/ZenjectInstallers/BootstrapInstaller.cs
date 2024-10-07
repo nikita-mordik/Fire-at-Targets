@@ -15,7 +15,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
     {
         public override void InstallBindings()
         {
-            BindUnityTimeService();
             BindSceneLoaderService();
             BindGameStateMachine();
             BindPlayer();
@@ -23,6 +22,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             BindGameFactory();
             BindInputService();
             BindPoolService();
+            BindUnityTimeService();
         }
 
         private void BindPoolService()
@@ -75,19 +75,21 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
                 .AsSingle();
         }
         
-        
         private void BindInputService()
         {
             Container.Bind<IInputService>()
                 .To<InputService>()
-                .FromInstance(GetInputService())
+                .FromMethod(GetInputService)
                 .AsSingle();
         }
 
-        private static InputService GetInputService()
+        private InputService GetInputService(InjectContext context)
         {
             if (Application.isEditor)
-                return new StandaloneInputService();
+            {
+                var assetProvider = context.Container.Resolve<IAssetProvider>();
+                return new StandaloneInputService(assetProvider);
+            }
 
             return new MobileShootingGalleryInputService();
         }

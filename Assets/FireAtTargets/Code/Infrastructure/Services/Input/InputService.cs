@@ -16,14 +16,14 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         public abstract Vector2 MovementAxis { get; }
         public abstract Vector2 RotationAxis { get; }
 
-        public event Action OnShoot;
-        public event Action OnShootStop;
+        public event Action OnFire;
+        public event Action OnFireReleased;
         public event Action OnScope;
 
-        public virtual bool IsShootButtonDown() => 
+        public virtual bool IsFireButtonDown() => 
             SimpleInput.GetButtonDown(ShootButton);
 
-        public virtual bool IsShootButtonUp() => 
+        public virtual bool IsFireButtonUp() => 
             SimpleInput.GetButtonUp(ShootButton);
 
         public virtual bool IsReloadButtonDown() => 
@@ -32,17 +32,18 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         public virtual bool IsScopeButtonDown()
         {
             var isScopeButtonDown = SimpleInput.GetButtonDown(ScopeButton);
-            if (!isScopeButtonDown) return false;
+            if (!isScopeButtonDown) 
+                return false;
             
             OnScope?.Invoke();
             return true;
         }
 
-        public void InvokeOnShoot() => 
-            OnShoot?.Invoke();
+        public void InvokeOnFire() => 
+            OnFire?.Invoke();
 
-        public void InvokeOnShootStop() => 
-            OnShootStop?.Invoke();
+        public void InvokeOnFireReleased() => 
+            OnFireReleased?.Invoke();
 
         protected static Vector2 MobileMovementAxis() => 
             new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));

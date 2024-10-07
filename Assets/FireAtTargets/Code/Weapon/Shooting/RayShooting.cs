@@ -30,21 +30,21 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
 
         private void OnEnable()
         {
-            inputService.OnShoot += OnShoot;
+            inputService.OnFire += OnFire;
         }
 
         private void OnDisable()
         {
-            inputService.OnShoot -= OnShoot;
+            inputService.OnFire -= OnFire;
         }
 
         private void OnDrawGizmos()
         {
-            Gizmos.color=Color.magenta;
+            Gizmos.color = Color.magenta;
             Gizmos.DrawRay(shootPoint.position, shootPoint.forward * maxDistance);
         }
 
-        private void OnShoot()
+        private void OnFire()
         {
             shootAudio.PlayShoot();
             shootHitEffect.ShootEffect(shootPoint.position);

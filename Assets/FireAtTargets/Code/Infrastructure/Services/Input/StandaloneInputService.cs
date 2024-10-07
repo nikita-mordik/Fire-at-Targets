@@ -1,51 +1,80 @@
+using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
     public class StandaloneInputService : InputService
     {
-        private const string MouseX = "Mouse X";
-        private const string MouseY = "Mouse Y";
+        private InputAction moveAction;
+        private InputAction lookAction;
+        private InputAction fireAction;
+        private InputAction reloadAction;
+        private InputAction scopeAction;
         
-        public override Vector2 MovementAxis
+        public StandaloneInputService(IAssetProvider assetProvider)
         {
-            get
-            {
-                Vector2 axis = MobileMovementAxis();
-
-                if (axis == Vector2.zero)
-                    axis = UnityKeyboardAxis();
-                return axis;
-            }
-        }
-        public override Vector2 RotationAxis
-        {
-            get
-            {
-                Vector2 axis = MobileRotationAxis();
-
-                if (axis == Vector2.zero)
-                    axis = UnityMouseAxis();
-                return axis;
-            }
+            LoadInputActionAsset(assetProvider);
         }
 
-        public override bool IsShootButtonDown() => 
-            UnityEngine.Input.GetKeyDown(KeyCode.Mouse0);
-
-        public override bool IsShootButtonUp() => 
-            UnityEngine.Input.GetKeyUp(KeyCode.Mouse0);
+        public override Vector2 MovementAxis => moveAction.ReadValue<Vector2>();
+        public override Vector2 RotationAxis => lookAction.ReadValue<Vector2>();
 
         public override bool IsReloadButtonDown() => 
-            UnityEngine.Input.GetKeyDown(KeyCode.R);
+            reloadAction.triggered;
 
         public override bool IsScopeButtonDown() => 
-            UnityEngine.Input.GetKeyDown(KeyCode.Mouse1);
-
-        private static Vector2 UnityKeyboardAxis() => 
-            new Vector2(UnityEngine.Input.GetAxisRaw(Horizontal), UnityEngine.Input.GetAxisRaw(Vertical));
+            scopeAction.triggered;
         
-        private static Vector2 UnityMouseAxis() => 
-            new Vector2(UnityEngine.Input.GetAxis(MouseX), -UnityEngine.Input.GetAxis(MouseY));
+        private async void LoadInputActionAsset(IAssetProvider assetProvider)
+        {
+            var inputActionAsset = await assetProvider.Load<InputActionAsset>(AssetName.InputAsset);
+            if (inputActionAsset == null)
+            {
+                Debug.LogError("InputActionAsset not loaded!");
+                return;
+            }
+            
+            FindInputActions(inputActionAsset);
+            SubscribeActions();
+            EnableInputActions();
+        }
+
+        private void FindInputActions(InputActionAsset inputActionAsset)
+        {
+            var playerActionMap = inputActionAsset.FindActionMap("Gameplay");
+            moveAction = playerActionMap.FindAction("Move");
+            lookAction = playerActionMap.FindAction("Look");
+            fireAction = playerActionMap.FindAction("Fire");
+            reloadAction = playerActionMap.FindAction("Reload");
+            scopeAction = playerActionMap.FindAction("Aim");
+        }
+
+        private void SubscribeActions()
+        {
+            fireAction.performed += FireActionOnPerformed;
+        }
+
+        private void EnableInputActions()
+        {
+            moveAction.Enable();
+            lookAction.Enable();
+            fireAction.Enable();
+            reloadAction.Enable();
+            scopeAction.Enable();
+        }
+
+        private void FireActionOnPerformed(InputAction.CallbackContext callback)
+        {
+            if (callback.action.triggered)
+            {
+                InvokeOnFire();
+            }
+
+            if (callback.action.WasReleasedThisFrame())
+            {
+                InvokeOnFireReleased();
+            }
+        }
     }
 }

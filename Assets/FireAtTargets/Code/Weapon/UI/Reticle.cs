@@ -32,15 +32,15 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.UI
 
         private void Start()
         {
-            inputService.OnShoot += OnShoot;
-            inputService.OnShootStop += OnShootStop;
+            inputService.OnFire += OnFire;
+            inputService.OnFireReleased += OnFireReleased;
             inputService.OnScope += OnScope;
         }
 
         private void OnDestroy()
         {
-            inputService.OnShoot -= OnShoot;
-            inputService.OnShootStop -= OnShootStop;
+            inputService.OnFire -= OnFire;
+            inputService.OnFireReleased -= OnFireReleased;
             inputService.OnScope -= OnScope;
         }
 
@@ -58,12 +58,12 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.UI
             inputService.MovementAxis.x != 0 || inputService.MovementAxis.y != 0 ||
             inputService.RotationAxis.x != 0 || inputService.RotationAxis.y != 0;
 
-        private void OnShoot()
+        private void OnFire()
         {
             isShooting = true;
         }
 
-        private void OnShootStop()
+        private void OnFireReleased()
         {
             isShooting = false;
         }

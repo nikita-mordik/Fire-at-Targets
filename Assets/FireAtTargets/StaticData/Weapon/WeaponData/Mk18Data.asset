@@ -15,6 +15,7 @@ MonoBehaviour:
   Damage: 12
   FireMode: 1
   FireRate: 750
+  SupportsBurst: 1
   BurstAmount: 3
   MaxAmmo: 120
   StartAmmo: 25

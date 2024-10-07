@@ -2,7 +2,6 @@ using System;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.StaticData;
 using FreedLOW.FireAtTargets.Code.Weapon.Shooting;
-//using Kinemation.FPSFramework.Runtime.FPSAnimator;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +9,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 {
     public class WeaponBehaviour : MonoBehaviour
     {
-        //[SerializeField] private FPSAnimWeapon weapon;
+        [SerializeField] private Demo.Scripts.Runtime.Item.Weapon weapon;
         [SerializeField] private WeaponData weaponData;
         [SerializeField] private RayShooting rayShooting;
 
@@ -37,7 +36,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
         [Inject]
         private void Construct(IWeaponEventHandlerService weaponEventHandlerService)
         {
-            this._weaponEventHandlerService = weaponEventHandlerService;
+            _weaponEventHandlerService = weaponEventHandlerService;
         }
 
         private void Awake()
