@@ -16,7 +16,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         bool IsFireButtonUp();
         bool IsReloadButtonDown();
         bool IsScopeButtonDown();
-        void InvokeOnFire();
-        void InvokeOnFireReleased();
+        event Action OnScopeReleased;
     }
 }

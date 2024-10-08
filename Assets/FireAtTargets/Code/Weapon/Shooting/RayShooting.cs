@@ -14,28 +14,28 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
         [SerializeField] private ShootHitEffect shootHitEffect;
         [SerializeField] private ShootAudio shootAudio;
 
-        private readonly RaycastHit[] hits = new RaycastHit[1];
+        private readonly RaycastHit[] _hits = new RaycastHit[1];
         
-        private int damageAmount;
+        private int _damageAmount;
 
-        public int DamageAmount { set => damageAmount = value; }
+        public int DamageAmount { set => _damageAmount = value; }
         
-        private IInputService inputService;
+        private IInputService _inputService;
 
         [Inject]
         private void Construct(IInputService inputService)
         {
-            this.inputService = inputService;
+            _inputService = inputService;
         }
 
         private void OnEnable()
         {
-            inputService.OnFire += OnFire;
+            //_inputService.OnFire += OnFire;
         }
 
         private void OnDisable()
         {
-            inputService.OnFire -= OnFire;
+            //_inputService.OnFire -= OnFire;
         }
 
         private void OnDrawGizmos()
@@ -44,21 +44,21 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
             Gizmos.DrawRay(shootPoint.position, shootPoint.forward * maxDistance);
         }
 
-        private void OnFire()
+        public void OnFire()
         {
             shootAudio.PlayShoot();
             shootHitEffect.ShootEffect(shootPoint.position);
             
-            var hitCount = Physics.RaycastNonAlloc(shootPoint.position, shootPoint.forward, hits, maxDistance);
+            var hitCount = Physics.RaycastNonAlloc(shootPoint.position, shootPoint.forward, _hits, maxDistance);
             if (hitCount > 0)
             {
-                if (hits[0].collider.TryGetComponent<IMilitaryTarget>(out var militaryTarget))
+                if (_hits[0].collider.TryGetComponent<IMilitaryTarget>(out var militaryTarget))
                 {
-                    militaryTarget.Damage(damageAmount);
+                    militaryTarget.Damage(_damageAmount);
                 }
 
-                shootAudio.PlayHit(hits[0], shootPoint.forward);
-                shootHitEffect.HitEffect(hits[0]);
+                shootAudio.PlayHit(_hits[0], shootPoint.forward);
+                shootHitEffect.HitEffect(_hits[0]);
             }
         }
     }

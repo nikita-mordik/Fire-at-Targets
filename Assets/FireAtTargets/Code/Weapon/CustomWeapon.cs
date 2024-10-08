@@ -35,7 +35,6 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
         [SerializeField] private RecoilPatternSettings recoilPatternSettings;
         [SerializeField] private FPSCameraShake cameraShake;
         [SerializeField] private bool supportsAuto;
-        [SerializeField] private int burstLength;
 
         [Header("Attachments")] 
         [SerializeField] private AttachmentGroup<BaseAttachment> barrelAttachments = new();
@@ -63,34 +62,35 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
         private float _lastRecoilTime;
         private bool _supportsBurst;
         private int _bursts;
+        private int _burstLength;
         private FireMode _fireMode;
 
         private float _fireRate;
+        private int _startAmmo;
         private int _currentAmmo;
         private int _currentMaxAmmo;
 
         public int MaxAmmo { get; private set; }
-        public int StartAmmo { get; private set; }
         public int CurrentAmmo
         {
             get => _currentAmmo;
-            set
+            private set
             {
                 if (value < 0)
                     throw new Exception("Incorrect value!");
 
                 _currentAmmo = value;
-                //_weaponEventHandlerService.InvokeOnCurrentAmmoChanged(_currentAmmo);
+                _weaponEventHandlerService.InvokeOnCurrentAmmoChanged(_currentAmmo);
             }
         }
 
         private IWeaponEventHandlerService _weaponEventHandlerService;
 
-        // [Inject]
-        // private void Construct(IWeaponEventHandlerService weaponEventHandlerService)
-        // {
-        //     _weaponEventHandlerService = weaponEventHandlerService;
-        // }
+        [Inject]
+        private void Construct(IWeaponEventHandlerService weaponEventHandlerService)
+        {
+            _weaponEventHandlerService = weaponEventHandlerService;
+        }
 
         private void Awake()
         {
@@ -98,11 +98,12 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             _fireMode = weaponData.FireMode;
             _supportsBurst = weaponData.SupportsBurst;
             _bursts = weaponData.BurstAmount;
+            _burstLength = _bursts;
             rayShooting.DamageAmount = weaponData.Damage;
             MaxAmmo = weaponData.MaxAmmo;
             _currentMaxAmmo = MaxAmmo;
-            StartAmmo = weaponData.StartAmmo;
-            CurrentAmmo = StartAmmo;
+            _startAmmo = weaponData.StartAmmo;
+            CurrentAmmo = _startAmmo;
         }
 
         public override void OnEquip(GameObject parent)
@@ -144,6 +145,8 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             }
             
             _fpsAnimator.LinkAnimatorLayer(equipMotion);
+            
+            InvokeWhenEquip();
         }
 
         public override void OnUnEquip()
@@ -178,7 +181,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             }
             
             _lastRecoilTime = Time.unscaledTime;
-            _bursts = burstLength;
+            _bursts = _burstLength;
             
             OnFire();
             
@@ -221,11 +224,9 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
                 _fpsCameraController.PlayCameraAnimation(cameraReloadAnimation);
             }
             
-            CurrentAmmo = StartAmmo;
+            CurrentAmmo = _startAmmo;
             _currentMaxAmmo -= CurrentAmmo;
-            
-            // TODO: here invoke event OnReload
-            //_weaponEventHandlerService.InvokeOnReload(_currentMaxAmmo);
+            _weaponEventHandlerService.InvokeOnReload(_currentMaxAmmo);
             
             Invoke(nameof(OnActionEnded), reloadClip.clip.length * 0.85f);
 
@@ -354,6 +355,8 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             {
                 _recoilPattern.OnFireStart();
             }
+            
+            rayShooting.OnFire();
 
             if (_recoilAnimation.fireMode == FireMode.Semi)
             {
@@ -364,12 +367,31 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             if (_recoilAnimation.fireMode == FireMode.Burst)
             {
                 _bursts--;
+                CurrentAmmo--;
                 
                 if (_bursts == 0)
                 {
                     OnFireReleased();
+                    
+                    if (CurrentAmmo <= 0)
+                    {
+                        OnFireReleased();
+                        OnReload();
+                    }
+                    
                     return;
                 }
+            }
+            else
+            {
+                CurrentAmmo--;
+            }
+            
+            if (CurrentAmmo <= 0)
+            {
+                OnFireReleased();
+                OnReload();
+                return;
             }
             
             Invoke(nameof(OnFire), 60f / _fireRate);
@@ -380,7 +402,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             if (_fireMode == FireMode.Semi && _supportsBurst)
             {
                 _fireMode = FireMode.Burst;
-                _bursts = burstLength;
+                _bursts = _burstLength;
                 return;
             }
 
@@ -391,6 +413,12 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             }
 
             _fireMode = FireMode.Semi;
+        }
+
+        private void InvokeWhenEquip()
+        {
+            _weaponEventHandlerService.InvokeOnCurrentAmmoChanged(_currentAmmo);
+            _weaponEventHandlerService.InvokeOnReload(_currentMaxAmmo);
         }
     }
 }

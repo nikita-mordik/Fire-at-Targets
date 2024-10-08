@@ -8,12 +8,12 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
     {
         [SerializeField] private Transform uiRoot;
         
-        private IGameFactory gameFactory;
+        private IGameFactory _gameFactory;
 
         [Inject]
         private void Construct(IGameFactory gameFactory)
         {
-            this.gameFactory = gameFactory;
+            _gameFactory = gameFactory;
         }
         
         public void Initialize()
@@ -23,7 +23,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
         
         private async void InitializeHUD()
         {
-            var hud = await gameFactory.CreateHUD();
+            var hud = await _gameFactory.CreateHUD();
             hud.transform.SetParent(uiRoot);
         }
     }

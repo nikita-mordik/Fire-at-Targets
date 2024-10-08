@@ -12,13 +12,35 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         private const string ShootButton = "Shoot";
         private const string ReloadButton = "Reload";
         private const string ScopeButton = "Scope";
+
+        protected Action onFire;
+        protected Action onFireReleased;
+        protected Action onScope;
+        protected Action onScopeReleased;
         
         public abstract Vector2 MovementAxis { get; }
         public abstract Vector2 RotationAxis { get; }
 
-        public event Action OnFire;
-        public event Action OnFireReleased;
-        public event Action OnScope;
+        public event Action OnFire
+        {
+            add => onFire += value;
+            remove => onFire -= value;
+        }
+        public event Action OnFireReleased
+        {
+            add => onFireReleased += value;
+            remove => onFireReleased -= value;
+        }
+        public event Action OnScope
+        {
+            add => onScope += value;
+            remove => onScope -= value;
+        }
+        public event Action OnScopeReleased
+        {
+            add => onScopeReleased += value;
+            remove => onScopeReleased -= value;
+        }
 
         public virtual bool IsFireButtonDown() => 
             SimpleInput.GetButtonDown(ShootButton);
@@ -35,15 +57,9 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
             if (!isScopeButtonDown) 
                 return false;
             
-            OnScope?.Invoke();
+            onScope?.Invoke();
             return true;
         }
-
-        public void InvokeOnFire() => 
-            OnFire?.Invoke();
-
-        public void InvokeOnFireReleased() => 
-            OnFireReleased?.Invoke();
 
         protected static Vector2 MobileMovementAxis() => 
             new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));

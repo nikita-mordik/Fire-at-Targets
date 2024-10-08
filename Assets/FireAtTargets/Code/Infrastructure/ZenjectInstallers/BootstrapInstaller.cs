@@ -1,5 +1,6 @@
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
@@ -23,6 +24,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             BindInputService();
             BindPoolService();
             BindUnityTimeService();
+            BindWeaponHandlerService();
         }
 
         private void BindPoolService()
@@ -72,6 +74,13 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
         {
             Container.Bind<ITimeService>()
                 .To<UnityTimeService>()
+                .AsSingle();
+        }
+        
+        private void BindWeaponHandlerService()
+        {
+            Container.Bind<IWeaponEventHandlerService>()
+                .To<WeaponEventHandlerService>()
                 .AsSingle();
         }
         
