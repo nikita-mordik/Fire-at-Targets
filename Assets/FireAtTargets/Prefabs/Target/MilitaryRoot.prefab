@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &2367902907711441911
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &2588268671605904205
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &3045448955587289068
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &3264428268431031150
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,7 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &3656623572338171029
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,6 +799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootDownDuration: 0.5
   recoveryDuration: 2
+  shootDownRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &4397006530606911974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,7 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &4738572481603598487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,7 +1113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &5722625484920742853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,7 +1263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &5897293338191076920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,9 +1276,8 @@ GameObject:
   - component: {fileID: 5165991728344683787}
   - component: {fileID: 5237737106326010607}
   - component: {fileID: 927127205717275349}
-  - component: {fileID: 5181448795187206378}
-  - component: {fileID: 6089645384400104785}
-  - component: {fileID: 6251449554463284390}
+  - component: {fileID: 8644927179787229361}
+  - component: {fileID: 3567707643697042494}
   m_Layer: 8
   m_Name: Military Target
   m_TagString: Untagged
@@ -1372,34 +1372,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: dff5b14c21a72844db69f2eb20362be9, type: 3}
---- !u!54 &5181448795187206378
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897293338191076920}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &6089645384400104785
+--- !u!114 &8644927179787229361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1412,7 +1385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TypeOfMaterial: 4
---- !u!114 &6251449554463284390
+--- !u!114 &3567707643697042494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1425,7 +1398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &6293321407254695475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,7 +1548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &7388317178861853967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1710,7 +1683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &7459053850194976182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,7 +1833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _priority: 0
-  _material: {fileID: 11400000, guid: 5f449e46ab436f34492a4c02feca64a6, type: 2}
+  _material: {fileID: 11400000, guid: 67cc5151c04be2246a87a55084a04119, type: 2}
 --- !u!1 &7581703678156357370
 GameObject:
   m_ObjectHideFlags: 0

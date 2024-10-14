@@ -1,9 +1,9 @@
-using System;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using FreedLOW.FireAtTargets.Code.Extensions;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
+using Impact.Interactions.Decals;
 using UnityEngine;
 using Zenject;
 
@@ -13,21 +13,25 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
     {
         [SerializeField] private ImpactInfo[] impactElemets;
         
-        private IGameFactory gameFactory;
-        private IPrefabPoolService poolService;
+        private const float ShootEffectDelay = 4f;
+        private const float HitEffectDelay = 5f;
+        private const float DecalDelay = 6f;
+
+        private IGameFactory _gameFactory;
+        private IPrefabPoolService _poolService;
 
         [Inject]
         private void Construct(IGameFactory gameFactory, IPrefabPoolService poolService)
         {
-            this.poolService = poolService;
-            this.gameFactory = gameFactory;
+            _poolService = poolService;
+            _gameFactory = gameFactory;
         }
 
         public async void ShootEffect(Vector3 shootPointPosition)
         {
-            var impactEffectInstance = await gameFactory.CreateShootParticle(ObjectType.MuzzleFlashOne);
+            var impactEffectInstance = await _gameFactory.CreateShootParticle(ObjectType.MuzzleFlashOne);
             impactEffectInstance.transform.SetTransform(shootPointPosition, transform.rotation);
-            await BackEffectToPoolWithDelay(impactEffectInstance, 4f);
+            await BackEffectToPoolWithDelay(impactEffectInstance, ShootEffectDelay);
         }
 
         public async void HitEffect(RaycastHit hit)
@@ -37,11 +41,11 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
                 return;
 
             var poolObject = effect.GetComponent<IPoolObject>();
-            var effectInstance = await gameFactory.CreateHitParticle(poolObject.Type);
+            var effectInstance = await _gameFactory.CreateHitParticle(poolObject.Type);
             effectInstance.transform.SetTransform(hit.point, Quaternion.identity);
-            //Instantiate(effect, hit.point, new Quaternion());
             effectInstance.transform.LookAt(hit.point + hit.normal);
-            await BackEffectToPoolWithDelay(effectInstance, 15f);
+            await BackEffectToPoolWithDelay(effectInstance, HitEffectDelay);
+            await BackAllDecalsToPoolWithDelay(hit);
         }
 
         private GameObject GetImpactEffect(GameObject impactedGameObject)
@@ -49,15 +53,29 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
             var materialType = impactedGameObject.GetComponent<MaterialType>();
             if (materialType == null)
                 return null;
-            
-            return (from impactInfo in impactElemets where impactInfo.MaterialType == materialType.TypeOfMaterial select impactInfo.ImpactEffect)
+
+            return (from impactInfo in impactElemets
+                    where impactInfo.MaterialType == materialType.TypeOfMaterial
+                    select impactInfo.ImpactEffect)
                 .FirstOrDefault();
         }
         
         private async UniTask BackEffectToPoolWithDelay(GameObject impactEffectInstance, float delay)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(delay));
-            poolService.BackObjectToPool(impactEffectInstance);
+            await UniTask.WaitForSeconds(delay);
+            _poolService.BackObjectToPool(impactEffectInstance);
+        }
+        
+        private async UniTask BackAllDecalsToPoolWithDelay(RaycastHit hit)
+        {
+            await UniTask.WaitForSeconds(DecalDelay);
+            if (hit.transform.childCount > 0)
+            {
+                foreach (Transform child in hit.transform)
+                {
+                    child.GetComponent<ImpactDecal>()?.MakeAvailable();
+                }
+            }
         }
     }
 }

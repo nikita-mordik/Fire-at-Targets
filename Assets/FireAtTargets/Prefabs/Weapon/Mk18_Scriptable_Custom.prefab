@@ -145,7 +145,6 @@ MonoBehaviour:
     type: 2}
   cameraShake: {fileID: 11400000, guid: 5563e5a81879bf3488e215990ceb8724, type: 2}
   supportsAuto: 0
-  burstLength: 0
   barrelAttachments:
     attachments:
     - {fileID: 7844112609756934046}
@@ -193,6 +192,10 @@ MonoBehaviour:
   impactElemets:
   - MaterialType: 4
     ImpactEffect: {fileID: 138412, guid: 4fbc0156e9dd2ab41a17e56a2f515d2a, type: 3}
+  - MaterialType: 1
+    ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
+  - MaterialType: 6
+    ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
 --- !u!114 &3473346065313078797
 MonoBehaviour:
   m_ObjectHideFlags: 0
