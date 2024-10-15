@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a3815d91804b93acd76aa1c83ae6ad, type: 3}
-  m_Name: SVDData
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Effects_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  Damage: 20
-  FireMode: 0
-  FireRate: 350
-  BurstAmount: 0
-  MaxAmmo: 90
-  StartAmmo: 15
+  m_Group: {fileID: 11400000, guid: d36d5398fa455d343888efb931ac671d, type: 2}
+  m_StaticContent: 0

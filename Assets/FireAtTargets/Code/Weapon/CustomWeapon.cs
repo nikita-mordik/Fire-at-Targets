@@ -371,6 +371,14 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
             if (_recoilAnimation.fireMode == FireMode.Semi)
             {
+                CurrentAmmo--;
+                
+                if (CurrentAmmo <= 0)
+                {
+                    OnFireReleased();
+                    OnReload();
+                }
+
                 Invoke(nameof(OnFireReleased), 60f / _fireRate);
                 return;
             }

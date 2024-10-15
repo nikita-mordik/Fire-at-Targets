@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9a3815d91804b93acd76aa1c83ae6ad, type: 3}
-  m_Name: M4A1Data
+  m_Name: AK74NData
   m_EditorClassIdentifier: 
-  Damage: 30
-  FireMode: 1
-  FireRate: 600
-  BurstAmount: 3
-  MaxAmmo: 100
-  StartAmmo: 25
+  Damage: 13
+  FireMode: 2
+  FireRate: 650
+  SupportsBurst: 0
+  BurstAmount: 0
+  MaxAmmo: 120
+  StartAmmo: 30

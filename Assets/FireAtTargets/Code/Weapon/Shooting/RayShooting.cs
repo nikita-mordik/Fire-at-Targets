@@ -1,7 +1,5 @@
-using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using FreedLOW.FireAtTargets.Code.Target;
 using UnityEngine;
-using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
 {
@@ -19,24 +17,6 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
         private int _damageAmount;
 
         public int DamageAmount { set => _damageAmount = value; }
-        
-        private IInputService _inputService;
-
-        [Inject]
-        private void Construct(IInputService inputService)
-        {
-            _inputService = inputService;
-        }
-
-        private void OnEnable()
-        {
-            //_inputService.OnFire += OnFire;
-        }
-
-        private void OnDisable()
-        {
-            //_inputService.OnFire -= OnFire;
-        }
 
         private void OnDrawGizmos()
         {
@@ -50,16 +30,16 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
             shootHitEffect.ShootEffect(shootPoint.position);
             
             var hitCount = Physics.RaycastNonAlloc(shootPoint.position, shootPoint.forward, _hits, maxDistance);
-            if (hitCount > 0)
+            if (hitCount <= 0)
+                return;
+            
+            if (_hits[0].collider.TryGetComponent<IMilitaryTarget>(out var militaryTarget))
             {
-                if (_hits[0].collider.TryGetComponent<IMilitaryTarget>(out var militaryTarget))
-                {
-                    militaryTarget.Damage(_damageAmount);
-                }
-
-                shootAudio.PlayHit(_hits[0], shootPoint.forward);
-                shootHitEffect.HitEffect(_hits[0]);
+                militaryTarget.Damage(_damageAmount);
             }
+
+            shootAudio.PlayHit(_hits[0], shootPoint.forward);
+            shootHitEffect.HitEffect(_hits[0]);
         }
     }
 }

@@ -196,6 +196,8 @@ MonoBehaviour:
     ImpactEffect: {fileID: 180772, guid: 52aa1f2e1567b6e47b50df0d054982a7, type: 3}
   - MaterialType: 6
     ImpactEffect: {fileID: 108086, guid: e4ed01af280d76248a9d0e72030c40c6, type: 3}
+  - MaterialType: 8
+    ImpactEffect: {fileID: 168394, guid: 92422eb8369387a41a9a6259935757ac, type: 3}
 --- !u!114 &3473346065313078797
 MonoBehaviour:
   m_ObjectHideFlags: 0

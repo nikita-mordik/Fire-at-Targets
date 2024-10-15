@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
 {
+    [RequireComponent(typeof(AudioSource))]
     public class ShootAudio : MonoBehaviour
     {
         [SerializeField] private AudioSource weaponAudioSource;

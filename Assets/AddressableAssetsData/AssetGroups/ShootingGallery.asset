@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 9ae37f707f878e049abd30e12f318262
   m_SerializeEntries:
-  - m_GUID: b34aa85f69d239e4fa8397d4c9fc6a02
-    m_Address: PoolObjectMuzzle
+  - m_GUID: 1130a470e041f60448a7e6cae5968b70
+    m_Address: PoolObjectHit 4
     m_ReadOnly: 0
     m_SerializedLabels:
     - ShootingGalleryPool
@@ -29,14 +29,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - ShootingGalleryPool
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1130a470e041f60448a7e6cae5968b70
-    m_Address: PoolObjectHit 4
+  - m_GUID: 9e79d0364ca80cf4abdc8246231aee7e
+    m_Address: PoolObjectHit 1
     m_ReadOnly: 0
     m_SerializedLabels:
     - ShootingGalleryPool
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9e79d0364ca80cf4abdc8246231aee7e
-    m_Address: PoolObjectHit 1
+  - m_GUID: b34aa85f69d239e4fa8397d4c9fc6a02
+    m_Address: PoolObjectMuzzle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ShootingGalleryPool
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbdb602c00b1e1d478e6d5cdb552e41d
+    m_Address: PoolObjectHit 8
     m_ReadOnly: 0
     m_SerializedLabels:
     - ShootingGalleryPool
