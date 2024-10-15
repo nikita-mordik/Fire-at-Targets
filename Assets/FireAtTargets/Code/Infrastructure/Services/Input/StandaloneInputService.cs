@@ -1,51 +1,90 @@
+using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
     public class StandaloneInputService : InputService
     {
-        private const string MouseX = "Mouse X";
-        private const string MouseY = "Mouse Y";
+        private InputAction _moveAction;
+        private InputAction _lookAction;
+        private InputAction _fireAction;
+        private InputAction _reloadAction;
+        private InputAction _scopeAction;
         
-        public override Vector2 MovementAxis
+        public StandaloneInputService(IAssetProvider assetProvider)
         {
-            get
-            {
-                Vector2 axis = MobileMovementAxis();
-
-                if (axis == Vector2.zero)
-                    axis = UnityKeyboardAxis();
-                return axis;
-            }
-        }
-        public override Vector2 RotationAxis
-        {
-            get
-            {
-                Vector2 axis = MobileRotationAxis();
-
-                if (axis == Vector2.zero)
-                    axis = UnityMouseAxis();
-                return axis;
-            }
+            LoadInputActionAsset(assetProvider);
         }
 
-        public override bool IsShootButtonDown() => 
-            UnityEngine.Input.GetKeyDown(KeyCode.Mouse0);
-
-        public override bool IsShootButtonUp() => 
-            UnityEngine.Input.GetKeyUp(KeyCode.Mouse0);
+        public override Vector2 MovementAxis => _moveAction.ReadValue<Vector2>();
+        public override Vector2 RotationAxis => _lookAction.ReadValue<Vector2>();
 
         public override bool IsReloadButtonDown() => 
-            UnityEngine.Input.GetKeyDown(KeyCode.R);
+            _reloadAction.triggered;
 
         public override bool IsScopeButtonDown() => 
-            UnityEngine.Input.GetKeyDown(KeyCode.Mouse1);
-
-        private static Vector2 UnityKeyboardAxis() => 
-            new Vector2(UnityEngine.Input.GetAxisRaw(Horizontal), UnityEngine.Input.GetAxisRaw(Vertical));
+            _scopeAction.triggered;
         
-        private static Vector2 UnityMouseAxis() => 
-            new Vector2(UnityEngine.Input.GetAxis(MouseX), -UnityEngine.Input.GetAxis(MouseY));
+        private async void LoadInputActionAsset(IAssetProvider assetProvider)
+        {
+            var inputActionAsset = await assetProvider.Load<InputActionAsset>(AssetName.InputAsset);
+            if (inputActionAsset == null)
+            {
+                Debug.LogError("InputActionAsset not loaded!");
+                return;
+            }
+            
+            FindInputActions(inputActionAsset);
+            SubscribeActions();
+            EnableInputActions();
+        }
+
+        private void FindInputActions(InputActionAsset inputActionAsset)
+        {
+            var playerActionMap = inputActionAsset.FindActionMap("Gameplay");
+            _moveAction = playerActionMap.FindAction("Move");
+            _lookAction = playerActionMap.FindAction("Look");
+            _fireAction = playerActionMap.FindAction("Fire");
+            _reloadAction = playerActionMap.FindAction("Reload");
+            _scopeAction = playerActionMap.FindAction("Aim");
+        }
+
+        private void SubscribeActions()
+        {
+            _fireAction.started += FireActionOnStarted;
+            _fireAction.canceled += FireActionOnCanceled;
+            _scopeAction.started += ScopeActionOnStarted;
+            _scopeAction.canceled += ScopeActionOnCanceled;
+        }
+
+        private void EnableInputActions()
+        {
+            _moveAction.Enable();
+            _lookAction.Enable();
+            _fireAction.Enable();
+            _reloadAction.Enable();
+            _scopeAction.Enable();
+        }
+
+        private void FireActionOnStarted(InputAction.CallbackContext callback)
+        {
+            onFire?.Invoke();
+        }
+
+        private void FireActionOnCanceled(InputAction.CallbackContext callback)
+        {
+            onFireReleased?.Invoke();
+        }
+
+        private void ScopeActionOnStarted(InputAction.CallbackContext callback)
+        {
+            onScope?.Invoke();
+        }
+
+        private void ScopeActionOnCanceled(InputAction.CallbackContext callback)
+        {
+            onScopeReleased?.Invoke();
+        }
     }
 }

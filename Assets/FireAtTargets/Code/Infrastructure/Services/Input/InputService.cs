@@ -12,18 +12,40 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         private const string ShootButton = "Shoot";
         private const string ReloadButton = "Reload";
         private const string ScopeButton = "Scope";
+
+        protected Action onFire;
+        protected Action onFireReleased;
+        protected Action onScope;
+        protected Action onScopeReleased;
         
         public abstract Vector2 MovementAxis { get; }
         public abstract Vector2 RotationAxis { get; }
 
-        public event Action OnShoot;
-        public event Action OnShootStop;
-        public event Action OnScope;
+        public event Action OnFire
+        {
+            add => onFire += value;
+            remove => onFire -= value;
+        }
+        public event Action OnFireReleased
+        {
+            add => onFireReleased += value;
+            remove => onFireReleased -= value;
+        }
+        public event Action OnScope
+        {
+            add => onScope += value;
+            remove => onScope -= value;
+        }
+        public event Action OnScopeReleased
+        {
+            add => onScopeReleased += value;
+            remove => onScopeReleased -= value;
+        }
 
-        public virtual bool IsShootButtonDown() => 
+        public virtual bool IsFireButtonDown() => 
             SimpleInput.GetButtonDown(ShootButton);
 
-        public virtual bool IsShootButtonUp() => 
+        public virtual bool IsFireButtonUp() => 
             SimpleInput.GetButtonUp(ShootButton);
 
         public virtual bool IsReloadButtonDown() => 
@@ -32,17 +54,12 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         public virtual bool IsScopeButtonDown()
         {
             var isScopeButtonDown = SimpleInput.GetButtonDown(ScopeButton);
-            if (!isScopeButtonDown) return false;
+            if (!isScopeButtonDown) 
+                return false;
             
-            OnScope?.Invoke();
+            onScope?.Invoke();
             return true;
         }
-
-        public void InvokeOnShoot() => 
-            OnShoot?.Invoke();
-
-        public void InvokeOnShootStop() => 
-            OnShootStop?.Invoke();
 
         protected static Vector2 MobileMovementAxis() => 
             new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));

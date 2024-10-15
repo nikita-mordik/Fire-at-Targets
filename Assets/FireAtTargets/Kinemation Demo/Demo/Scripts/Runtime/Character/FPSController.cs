@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Demo.Scripts.Runtime.Character
 {
@@ -66,6 +67,14 @@ namespace Demo.Scripts.Runtime.Character
         private static int _inspectStartHash = Animator.StringToHash("InspectStart");
         private static int _inspectEndHash = Animator.StringToHash("InspectEnd");
         private static int _slideHash = Animator.StringToHash("Sliding");
+
+        private IInstantiator _instantiator;
+
+        [Inject]
+        private void Construct(IInstantiator instantiator)
+        {
+            _instantiator = instantiator;
+        }
 
         private void PlayTransitionMotion(FPSAnimatorLayerSettings layerSettings)
         {
@@ -128,7 +137,8 @@ namespace Demo.Scripts.Runtime.Character
 
             foreach (var prefab in settings.weaponPrefabs)
             {
-                var weapon = Instantiate(prefab, transform.position, Quaternion.identity);
+                //var weapon = Instantiate(prefab, transform.position, Quaternion.identity);
+                var weapon = _instantiator.InstantiatePrefab(prefab, transform.position, Quaternion.identity, null);
 
                 var weaponTransform = weapon.transform;
 

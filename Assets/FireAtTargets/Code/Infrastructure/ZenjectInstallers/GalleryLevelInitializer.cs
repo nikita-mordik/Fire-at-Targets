@@ -1,4 +1,6 @@
+using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
 using UnityEngine;
 using Zenject;
 
@@ -8,22 +10,27 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
     {
         [SerializeField] private Transform uiRoot;
         
-        private IGameFactory gameFactory;
+        private IGameFactory _gameFactory;
+        private IPrefabPoolService _poolService;
 
         [Inject]
-        private void Construct(IGameFactory gameFactory)
+        private void Construct(IGameFactory gameFactory, IPrefabPoolService poolService)
         {
-            this.gameFactory = gameFactory;
+            _gameFactory = gameFactory;
+            _poolService = poolService;
         }
         
-        public void Initialize()
+        public async void Initialize()
         {
             InitializeHUD();
+
+            // FOR TEST, THEN SHOULD DELETE THIS:
+            await _poolService.InitializePoolAsync(AssetLabel.ShootingGalleryPool);
         }
         
         private async void InitializeHUD()
         {
-            var hud = await gameFactory.CreateHUD();
+            var hud = await _gameFactory.CreateHUD();
             hud.transform.SetParent(uiRoot);
         }
     }

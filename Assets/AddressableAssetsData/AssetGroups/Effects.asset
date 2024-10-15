@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Effects
+  m_EditorClassIdentifier: 
+  m_GroupName: Effects
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 47491fb147ae84d4f96532062fd2908e
+  m_SerializeEntries:
+  - m_GUID: 1fad06db51ffb86458cb3de2b4fc05c2
+    m_Address: DirtImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4fbc0156e9dd2ab41a17e56a2f515d2a
+    m_Address: WoodImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50165a7e39a936f44ab5b824429e3417
+    m_Address: Foliage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52aa1f2e1567b6e47b50df0d054982a7
+    m_Address: MetalImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70293ccb9b36ad84ebb90509a675fc1e
+    m_Address: PlasterImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8f2fb118e4280164e90e13f92ad21c28
+    m_Address: WaterImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92422eb8369387a41a9a6259935757ac
+    m_Address: GlassImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4ed01af280d76248a9d0e72030c40c6
+    m_Address: ConcreteImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e70de6a15623744499bf326c13e310f0
+    m_Address: BrickImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9c851a5a12292f4d9a24acc3899803b
+    m_Address: RockImpact
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fdac2b543efe1164abc20e40e85905c2
+    m_Address: MuzzleFlash1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e09b71e4596812248bb8c3d0ff4a5b46, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 34412522549d43d47acde0289091281f, type: 2}
+    - {fileID: 11400000, guid: f6efd05c208abc644ab0fb100e5afb75, type: 2}

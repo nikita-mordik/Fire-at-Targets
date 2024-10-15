@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point;
 using UnityEngine;
@@ -21,7 +20,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
                     .AsSingle();
             }
             
-            BindWeaponHandlerService();
             BindPointService();
             BindPlayerControllerService();
         }
@@ -43,13 +41,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
         {
             Container.Bind<IPointService>()
                 .To<PointService>()
-                .AsSingle();
-        }
-
-        private void BindWeaponHandlerService()
-        {
-            Container.Bind<IWeaponEventHandlerService>()
-                .To<WeaponEventHandlerService>()
                 .AsSingle();
         }
     }

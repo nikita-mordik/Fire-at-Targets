@@ -27,7 +27,7 @@ namespace KINEMATION.KAnimationCore.Runtime.Rig
         public KTransformChain GetPopulatedChain(string chainName, KRigComponent rigComponent)
         {
             KTransformChain result = new KTransformChain();
-            var targetChain = rigElementChains.Find(item => item.chainName.Equals(chainName));
+            var targetChain = GetElementChainByName(chainName);
 
             if (targetChain == null)
             {

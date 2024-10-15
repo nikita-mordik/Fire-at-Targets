@@ -1,5 +1,6 @@
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
@@ -15,7 +16,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
     {
         public override void InstallBindings()
         {
-            BindUnityTimeService();
             BindSceneLoaderService();
             BindGameStateMachine();
             BindPlayer();
@@ -23,6 +23,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             BindGameFactory();
             BindInputService();
             BindPoolService();
+            BindUnityTimeService();
+            BindWeaponHandlerService();
         }
 
         private void BindPoolService()
@@ -75,19 +77,28 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
                 .AsSingle();
         }
         
+        private void BindWeaponHandlerService()
+        {
+            Container.Bind<IWeaponEventHandlerService>()
+                .To<WeaponEventHandlerService>()
+                .AsSingle();
+        }
         
         private void BindInputService()
         {
             Container.Bind<IInputService>()
                 .To<InputService>()
-                .FromInstance(GetInputService())
+                .FromMethod(GetInputService)
                 .AsSingle();
         }
 
-        private static InputService GetInputService()
+        private InputService GetInputService(InjectContext context)
         {
             if (Application.isEditor)
-                return new StandaloneInputService();
+            {
+                var assetProvider = context.Container.Resolve<IAssetProvider>();
+                return new StandaloneInputService(assetProvider);
+            }
 
             return new MobileShootingGalleryInputService();
         }

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a3815d91804b93acd76aa1c83ae6ad, type: 3}
   m_Name: FALData
   m_EditorClassIdentifier: 
-  Damage: 10
-  FireMode: 2
-  FireRate: 650
+  Damage: 20
+  FireMode: 0
+  FireRate: 250
+  SupportsBurst: 0
   BurstAmount: 0
-  MaxAmmo: 120
-  StartAmmo: 20
+  MaxAmmo: 90
+  StartAmmo: 15

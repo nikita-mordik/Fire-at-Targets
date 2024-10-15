@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecd4675b635efd41bcbcb0a0eeb3b6e, type: 3}
+  m_Name: Wood
+  m_EditorClassIdentifier: 
+  _tagLibrary: {fileID: 11400000, guid: 0f721be14c9d97e4a891f3a9e411bff6, type: 2}
+  _materialTagsMask:
+    _value: 1
+    _tagLibrary: {fileID: 0}
+  _interactionSets:
+  - _name: Footsteps Left
+    _includeTagsFilter:
+      TagMask:
+        _value: 4
+        _tagLibrary: {fileID: 0}
+      ExactMatch: 0
+    _excludeTagsFilter:
+      TagMask:
+        _value: 0
+        _tagLibrary: {fileID: 0}
+      ExactMatch: 0
+    _interactions:
+    - {fileID: 11400000, guid: 7732870dc2aa4b7418a4d936c04a7f71, type: 2}
+  - _name: Footsteps Right
+    _includeTagsFilter:
+      TagMask:
+        _value: 8
+        _tagLibrary: {fileID: 0}
+      ExactMatch: 0
+    _excludeTagsFilter:
+      TagMask:
+        _value: 0
+        _tagLibrary: {fileID: 0}
+      ExactMatch: 0
+    _interactions:
+    - {fileID: 11400000, guid: 46bea104c3984fd47b27cdec44e318e4, type: 2}
+  - _name: Bullet Impact
+    _includeTagsFilter:
+      TagMask:
+        _value: 16
+        _tagLibrary: {fileID: 0}
+      ExactMatch: 0
+    _excludeTagsFilter:
+      TagMask:
+        _value: 0
+        _tagLibrary: {fileID: 0}
+      ExactMatch: 0
+    _interactions:
+    - {fileID: 11400000, guid: dfee6f29de7cbeb40ac14faed6b0442d, type: 2}
+    - {fileID: 11400000, guid: 66ba1527f087e7143880954b6db71b73, type: 2}
+    - {fileID: 11400000, guid: 4687364b105aad940bfb6f03da93fc20, type: 2}
+  _fallbackTagMask:
+    _value: 0
+    _tagLibrary: {fileID: 0}
