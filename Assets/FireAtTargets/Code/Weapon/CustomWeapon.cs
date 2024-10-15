@@ -70,6 +70,8 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
         private int _currentAmmo;
         private int _currentMaxAmmo;
 
+        private bool _isCurrentlyReload;
+
         public int MaxAmmo { get; private set; }
         public int CurrentAmmo
         {
@@ -77,7 +79,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             private set
             {
                 if (value < 0)
-                    throw new Exception("Incorrect value!");
+                    throw new Exception("Incorrect ammo value!");
 
                 _currentAmmo = value;
                 _weaponEventHandlerService.InvokeOnCurrentAmmoChanged(_currentAmmo);
@@ -174,11 +176,12 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         public override bool OnFirePressed()
         {
+            if (_isCurrentlyReload || CurrentAmmo <= 0)
+                return false;
+            
             // Do not allow firing faster than the allowed fire rate.
             if (Time.unscaledTime - _lastRecoilTime < 60f / _fireRate)
-            {
                 return false;
-            }
             
             _lastRecoilTime = Time.unscaledTime;
             _bursts = _burstLength;
@@ -206,10 +209,13 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         public override bool OnReload()
         {
-            if (!FPSAnimationAsset.IsValid(reloadClip))
-            {
+            if (_currentMaxAmmo <= 0)
                 return false;
-            }
+            
+            if (!FPSAnimationAsset.IsValid(reloadClip))
+                return false;
+
+            _isCurrentlyReload = true;
             
             _playablesController.PlayAnimation(reloadClip, 0f);
             
@@ -254,7 +260,8 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         public override void OnCycleScope()
         {
-            if (scopeGroups.Count == 0) return;
+            if (scopeGroups.Count == 0) 
+                return;
             
             _scopeIndex++;
             _scopeIndex = _scopeIndex > scopeGroups.Count - 1 ? 0 : _scopeIndex;
@@ -283,7 +290,9 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
                 return;
             }
 
-            if (scopeGroups.Count == 0) return;
+            if (scopeGroups.Count == 0) 
+                return;
+            
             scopeGroups[_scopeIndex].CycleAttachments(_fpsAnimator);
             UpdateAimPoint();
         }
@@ -299,7 +308,6 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             {
                 var scope = scopeGroups[_scopeIndex].GetActiveAttachment();
                 fov *= scope.aimFovZoom;
-
                 sensitivityMultiplier = scopeGroups[_scopeIndex].GetActiveAttachment().sensitivityMultiplier;
             }
 
@@ -309,7 +317,8 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         private void UpdateAimPoint()
         {
-            if (scopeGroups.Count == 0) return;
+            if (scopeGroups.Count == 0) 
+                return;
 
             var scope = scopeGroups[_scopeIndex].GetActiveAttachment().aimPoint;
             _fpsAnimatorEntity.defaultAimPoint = scope;
@@ -323,7 +332,8 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             }
             
             _scopeIndex = 0;
-            if (scopeGroups.Count == 0) return;
+            if (scopeGroups.Count == 0) 
+                return;
 
             UpdateAimPoint();
             UpdateTargetFOV(false);
@@ -331,16 +341,17 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         private void OnActionEnded()
         {
-            if (_fpsController == null) return;
+            if (_fpsController == null) 
+                return;
+
+            _isCurrentlyReload = false;
             _fpsController.ResetActionState();
         }
 
         private void OnFire()
         {
-            if (_weaponAnimator != null)
-            {
+            if (_weaponAnimator != null) 
                 _weaponAnimator.Play("Fire", 0, 0f);
-            }
             
             _fpsCameraController.PlayCameraShake(cameraShake);
             
