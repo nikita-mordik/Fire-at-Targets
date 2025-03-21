@@ -18,11 +18,13 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
 
         public int DamageAmount { set => _damageAmount = value; }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.magenta;
             Gizmos.DrawRay(shootPoint.position, shootPoint.forward * maxDistance);
-        }
+        }  
+#endif
 
         public void OnFire()
         {

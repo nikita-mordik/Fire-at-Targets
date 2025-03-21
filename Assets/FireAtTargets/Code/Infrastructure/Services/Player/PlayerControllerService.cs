@@ -1,25 +1,15 @@
-using Demo.Scripts.Runtime.Character;
-using FreedLOW.FireAtTargets.Code.Weapon;
+using FreedLOW.FireAtTargets.Code.Character;
 using UnityEngine;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player
 {
     public class PlayerControllerService : MonoBehaviour, IPlayerControllerService
     {
-        [SerializeField] private FPSController fpsController;
+        [SerializeField] private CustomFPSController _fpsController;
 
-        public void SetPosition(Transform spawnPoint) => 
-            transform.position = spawnPoint.position;
-
-        public void InitializeWeapon(WeaponBehaviour weaponBehaviour)
+        public void SetPositionAndRotation(Transform spawnPoint)
         {
-            var weapon = weaponBehaviour.GetComponent<Demo.Scripts.Runtime.Item.Weapon>();
-            //fpsController.Weapons.Add(weapon);
-        }
-
-        public void EquipWeapon()
-        {
-            //fpsController.EquipWeapon();
+            transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
         }
     }
 }
