@@ -22,9 +22,9 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AttachHandLayer
         public KTransform handPoseOffset = KTransform.Identity;
         [Range(0f, 1f)] public float overridePoseWeight = 0f;
 
-        public override FPSAnimatorLayerState CreateState()
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new AttachHandLayerState();
+            return new AttachHandLayerJob();
         }
 
 #if UNITY_EDITOR

@@ -1,3 +1,10 @@
 ﻿fileFormatVersion: 2
 guid: 2adf425779df498e88df63285c683e45
 timeCreated: 1713854084
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Runtime/Attributes/ShowStandaloneAttribute.cs
+  uploadId: 737569

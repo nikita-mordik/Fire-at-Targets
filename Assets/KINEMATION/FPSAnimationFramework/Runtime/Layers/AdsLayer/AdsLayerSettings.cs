@@ -34,11 +34,11 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer
         
         [Range(0f, 1f)] public float cameraBlend = 0f;
         
-        [InputProperty] public string isAimingProperty = FPSANames.IsAiming;
+        [InputProperty] public string isAimingProperty = FPSANames.IsAiming; 
         
-        public override FPSAnimatorLayerState CreateState()
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new AdsLayerState();
+            return new AdsLayerJob();
         }
 
 #if UNITY_EDITOR

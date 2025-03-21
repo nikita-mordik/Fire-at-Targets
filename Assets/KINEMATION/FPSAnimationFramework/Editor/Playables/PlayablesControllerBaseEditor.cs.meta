@@ -1,3 +1,10 @@
 ﻿fileFormatVersion: 2
 guid: 1aa87f7932264410976a0713c880c149
 timeCreated: 1711290272
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Editor/Playables/PlayablesControllerBaseEditor.cs
+  uploadId: 737569

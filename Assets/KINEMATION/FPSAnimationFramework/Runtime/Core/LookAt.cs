@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 {
+    [Tooltip("Computes Vector2 input to look at a target in world space.")]
     public class LookAt : MonoBehaviour
     {
         [Range(0f, 1f)] public float lookAtWeight = 1f;

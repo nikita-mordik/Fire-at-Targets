@@ -50,9 +50,9 @@ namespace Impact
             get
             {
                 if (PhysicsType == PhysicsType.Physics2D)
-                    return Rigidbody2D.velocity;
+                    return Rigidbody2D.linearVelocity;
                 else if (PhysicsType == PhysicsType.Physics3D)
-                    return Rigidbody3D.velocity;
+                    return Rigidbody3D.linearVelocity;
 
                 Debug.LogError("Enable to get CurrentVelocity in ImpactRigidbodyWrapper. Please ensure that you have Rigidbody or Rigidbody2D components on your Impact Object Rigidbody objects.");
                 return Vector3.zero;
@@ -152,13 +152,13 @@ namespace Impact
             if (PhysicsType == PhysicsType.Physics3D)
             {
                 WorldCenterOfMass = Rigidbody3D.worldCenterOfMass;
-                Velocity = Rigidbody3D.velocity;
+                Velocity = Rigidbody3D.linearVelocity;
                 AngularVelocity = Rigidbody3D.angularVelocity;
             }
             else if (PhysicsType == PhysicsType.Physics2D)
             {
                 WorldCenterOfMass = Rigidbody2D.worldCenterOfMass;
-                Velocity = Rigidbody2D.velocity;
+                Velocity = Rigidbody2D.linearVelocity;
                 AngularVelocity = new Vector3(0, 0, Rigidbody2D.angularVelocity);
             }
         }

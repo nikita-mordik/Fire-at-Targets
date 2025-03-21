@@ -4,11 +4,14 @@ using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Input;
 
-using UnityEditor;
 using UnityEngine;
 
 using UnityEngine.Animations;
 using UnityEngine.Playables;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
 {
@@ -31,7 +34,6 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
         
         protected Animator _animator;
         
-        protected PlayableGraph _playableGraph;
         protected FPSAnimatorMixer _overlayPoseMixer;
         protected FPSAnimatorMixer _slotMixer;
         protected FPSAnimatorMixer _overrideMixer;
@@ -41,8 +43,20 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
         
         protected UserInputController _inputController;
         protected float _controllerWeight = 1f;
-
         protected int _playablesWeightPropertyIndex;
+        
+        private PlayableGraph _playableGraph;
+        private AnimationPlayableOutput _playableOutput;
+
+        public Animator GetAnimator()
+        {
+            return _animator;
+        }
+
+        public PlayableGraph GetPlayableGraph()
+        {
+            return _playableGraph;
+        }
 
         protected virtual void Update()
         {
@@ -70,6 +84,30 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
 
             _playableGraph.Stop();
             _playableGraph.Destroy();
+        }
+
+        private void RebuildMasterMixer()
+        {
+            _masterMixer.DisconnectInput(0);
+            var animatorOutput = _playableGraph.GetOutput(0);
+            _masterMixer.ConnectInput(0, animatorOutput.GetSourcePlayable(), 0, 1f);
+        }
+
+        private void BuildOutput()
+        {
+            if (_playableOutput.IsOutputValid())
+            {
+                _playableGraph.DestroyOutput(_playableOutput);
+            }
+            
+            _playableOutput = AnimationPlayableOutput.Create(_playableGraph, "FPSAnimatorGraph", _animator);
+            _playableOutput.SetSourcePlayable(_masterMixer);
+        }
+
+        public void RebuildPlayables()
+        {
+            RebuildMasterMixer();
+            BuildOutput();
         }
 
         public virtual bool InitializeController()
@@ -109,8 +147,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
             _masterMixer.SetLayerMaskFromAvatarMask(0, new AvatarMask());
             _masterMixer.SetLayerMaskFromAvatarMask(1, upperBodyMask);
             
-            var output = AnimationPlayableOutput.Create(_playableGraph, "FPSAnimatorGraph", _animator);
-            output.SetSourcePlayable(_masterMixer);
+            BuildOutput();
                       
             _playableGraph.Play();
             _inputController = GetComponent<UserInputController>();

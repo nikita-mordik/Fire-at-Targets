@@ -1,3 +1,10 @@
 ﻿fileFormatVersion: 2
 guid: 9861c1a9af9b4f6c9fe07e8768acf6ad
 timeCreated: 1705218407
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Runtime/Layers/BlendingLayer/BlendingLayerSettings.cs
+  uploadId: 737569

@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.Playables;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
 {
@@ -18,6 +19,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
         public bool IsPlaying();
 
         public float GetCurveValue(string curveName, bool isAnimator = false);
+
+        public Animator GetAnimator();
+
+        public PlayableGraph GetPlayableGraph();
+
+        public void RebuildPlayables();
         
 #if UNITY_EDITOR
         public void StartEditorPreview();

@@ -1,6 +1,5 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using System;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Core;
@@ -16,7 +15,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Camera
         [SerializeField] private Transform cameraBone;
         [SerializeField, InputProperty] protected string mouseInputProperty = FPSANames.MouseInput;
         [SerializeField] protected EaseMode fovEaseMode;
-        [SerializeField] [Min(0f)] protected float fovSpeed;
+        [SerializeField] [Min(0f)] protected float fovSpeed = 5f;
         protected UserInputController _inputController;
         protected FPSCameraShake _activeShake;
 

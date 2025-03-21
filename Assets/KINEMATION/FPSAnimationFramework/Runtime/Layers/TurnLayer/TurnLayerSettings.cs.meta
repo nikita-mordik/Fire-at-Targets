@@ -9,3 +9,10 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Runtime/Layers/TurnLayer/TurnLayerSettings.cs
+  uploadId: 737569

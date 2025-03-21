@@ -22,12 +22,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.BlendingLayer
         public AnimationClip desiredPose;
         public List<BlendingLayerElement> blendingElements = new List<BlendingLayerElement>();
         public bool blendPosition;
-        
-        public override FPSAnimatorLayerState CreateState()
+
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new BlendingLayerState();
+            return new BlendingLayerJob();
         }
-        
+
 #if UNITY_EDITOR
         public override void OnRigUpdated()
         {

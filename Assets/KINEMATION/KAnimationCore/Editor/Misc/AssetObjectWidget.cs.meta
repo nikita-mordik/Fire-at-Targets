@@ -1,3 +1,10 @@
 fileFormatVersion: 2
 guid: bea5203406494b3880cef647734069f5
 timeCreated: 1722236084
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/KAnimationCore/Editor/Misc/AssetObjectWidget.cs
+  uploadId: 737569

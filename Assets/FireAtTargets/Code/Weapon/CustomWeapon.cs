@@ -11,6 +11,7 @@ using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
 using KINEMATION.KAnimationCore.Runtime.Input;
+using KINEMATION.ProceduralRecoilAnimationSystem.Runtime;
 using UnityEngine;
 using Zenject;
 

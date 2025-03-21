@@ -1,4 +1,4 @@
-// Designed by KINEMATION, 2024.
+// Designed by KINEMATION, 2025.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
@@ -33,7 +33,6 @@ namespace Demo.Scripts.Runtime.Character
     [RequireComponent(typeof(CharacterController), typeof(FPSMovement))]
     public class FPSController : MonoBehaviour
     {
-        //~ Legacy Controller Interface
         [SerializeField] private FPSControllerSettings settings;
 
         private FPSMovement _movementComponent;
@@ -48,8 +47,6 @@ namespace Demo.Scripts.Runtime.Character
         private FPSActionState _actionState;
 
         private Animator _animator;
-        
-        //~ Legacy Controller Interface
 
         // ~Scriptable Animation System Integration
         private FPSAnimator _fpsAnimator;
@@ -155,9 +152,12 @@ namespace Demo.Scripts.Runtime.Character
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            Application.targetFrameRate = 144;
+            
+            _fpsAnimator = GetComponent<FPSAnimator>();
+            _fpsAnimator.Initialize();
 
             _weaponBone = GetComponentInChildren<KRigComponent>().GetRigTransform(settings.weaponBone);
-            _fpsAnimator = GetComponent<FPSAnimator>();
             _animator = GetComponent<Animator>();
             
             _userInput = GetComponent<UserInputController>();

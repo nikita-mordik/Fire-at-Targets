@@ -124,7 +124,7 @@ namespace Impact.Demo
         private void FixedUpdate()
         {
             characterRigidbody.MoveRotation(Quaternion.Euler(0, smoothedCharacterRotation.y, 0));
-            characterRigidbody.velocity = new Vector3(smoothedMovement.x, characterRigidbody.velocity.y, smoothedMovement.z);
+            characterRigidbody.linearVelocity = new Vector3(smoothedMovement.x, characterRigidbody.linearVelocity.y, smoothedMovement.z);
 
             updateGrounded();
 
@@ -214,8 +214,8 @@ namespace Impact.Demo
                     pickupDistance = Mathf.Max(3, hit.distance);
                     pickedUpObject = hit.rigidbody;
                     pickedUpObject.useGravity = false;
-                    pickedUpObject.drag = pickedUpDrag;
-                    pickedUpObject.angularDrag = pickedUpDrag;
+                    pickedUpObject.linearDamping = pickedUpDrag;
+                    pickedUpObject.angularDamping = pickedUpDrag;
 
                     return true;
                 }
@@ -240,8 +240,8 @@ namespace Impact.Demo
             if (pickedUpObject != null)
             {
                 pickedUpObject.useGravity = true;
-                pickedUpObject.drag = 0;
-                pickedUpObject.angularDrag = 0.05f;
+                pickedUpObject.linearDamping = 0;
+                pickedUpObject.angularDamping = 0.05f;
                 pickedUpObject.AddForce(cameraTransform.forward * force);
                 pickedUpObject = null;
             }

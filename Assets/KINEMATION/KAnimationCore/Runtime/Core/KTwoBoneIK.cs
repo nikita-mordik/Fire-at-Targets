@@ -120,16 +120,4 @@ namespace KINEMATION.KAnimationCore.Runtime.Core
             ikData.tip.rotation = tRotation;
         }
     }
-
-    public struct KTwoBoneIKJob : IJobParallelFor
-    {
-        public NativeArray<KTwoBoneIkData> twoBoneIkJobData;
-
-        public void Execute(int index)
-        {
-            var twoBoneIkData = twoBoneIkJobData[index];
-            KTwoBoneIK.Solve(ref twoBoneIkData);
-            twoBoneIkJobData[index] = twoBoneIkData;
-        }
-    }
 }

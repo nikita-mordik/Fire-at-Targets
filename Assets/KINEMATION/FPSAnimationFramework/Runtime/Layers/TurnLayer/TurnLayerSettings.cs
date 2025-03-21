@@ -22,9 +22,9 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.TurnLayer
         public string animatorTurnRightTrigger;
         public string animatorTurnLeftTrigger;
 
-        public override FPSAnimatorLayerState CreateState()
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new TurnLayerState();
+            return new TurnLayerJob();
         }
 
 #if UNITY_EDITOR

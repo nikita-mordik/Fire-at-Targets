@@ -1,3 +1,10 @@
 ﻿fileFormatVersion: 2
 guid: 1b3ccac29af4438596c596412bc1d424
 timeCreated: 1707902009
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Runtime/Layers/AdditiveLayer/AdditiveLayerSettings.cs
+  uploadId: 737569

@@ -18,10 +18,10 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdditiveLayer
         [CurveSelector(false, false)]
         public string aimingInputProperty = FPSANames.AimingWeight;
         [Range(0f, 1f)] public float adsScalar = 1f;
-        
-        public override FPSAnimatorLayerState CreateState()
+
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new AdditiveLayerState();
+            return new AdditiveLayerJob();
         }
 
 #if UNITY_EDITOR

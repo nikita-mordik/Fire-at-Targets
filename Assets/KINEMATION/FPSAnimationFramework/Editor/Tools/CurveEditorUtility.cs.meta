@@ -1,3 +1,10 @@
 fileFormatVersion: 2
 guid: d53500e1ef3a4c998d2e0bd0584054c4
 timeCreated: 1698254081
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Editor/Tools/CurveEditorUtility.cs
+  uploadId: 737569

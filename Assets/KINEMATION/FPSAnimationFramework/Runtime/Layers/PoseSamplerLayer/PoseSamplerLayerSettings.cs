@@ -5,7 +5,10 @@ using KINEMATION.FPSAnimationFramework.Runtime.Playables;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Rig;
+
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Playables;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
 {
@@ -41,9 +44,9 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
         [CurveSelector(false, true, false)]
         public string weaponBoneWeight = FPSANames.Curve_WeaponBoneWeight;
 
-        public override FPSAnimatorLayerState CreateState()
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new PoseSamplerLayerState();
+            return new PoseSamplerJob();
         }
 
 #if UNITY_EDITOR

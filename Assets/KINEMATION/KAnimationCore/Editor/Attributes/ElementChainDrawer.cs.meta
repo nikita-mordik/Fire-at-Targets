@@ -1,3 +1,10 @@
 ﻿fileFormatVersion: 2
 guid: 1a14bd657f5c4df59493632603d3441f
 timeCreated: 1711355637
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/KAnimationCore/Editor/Attributes/ElementChainDrawer.cs
+  uploadId: 737569
