@@ -90,13 +90,15 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             {
                 Container.Bind<IInputService>()
                     .To<MobileInputService>()
-                    .AsSingle();
+                    .AsSingle()
+                    .NonLazy();
             }
             else
             {
                 Container.Bind<IInputService>()
                     .To<StandaloneInputService>()
-                    .AsSingle();
+                    .AsSingle()
+                    .NonLazy();
             }
         }
     }

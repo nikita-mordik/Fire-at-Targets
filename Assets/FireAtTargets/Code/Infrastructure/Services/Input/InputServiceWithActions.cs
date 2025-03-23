@@ -17,7 +17,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         protected InputAction ScopeAction;
 
         private bool _isAiming;
-        
+
         public override Vector2 MovementAxis { get; }
         public override Vector2 RotationAxis { get; }
 
@@ -29,14 +29,14 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 
         private async UniTaskVoid LoadInputActionAsset()
         {
-            var asset = await _assetProvider.Load<InputActionAsset>(AssetName.InputAsset);
-            if (!asset)
+            InputActionAsset = await _assetProvider.Load<InputActionAsset>(AssetName.InputAsset);
+            if (!InputActionAsset)
             {
                 Debug.LogError("Failed to load InputActionAsset!");
                 return;
             }
 
-            var actionMap = asset.FindActionMap("Gameplay");
+            var actionMap = InputActionAsset.FindActionMap("Gameplay");
             MoveAction = actionMap.FindAction("Move");
             LookAction = actionMap.FindAction("Look");
             FireAction = actionMap.FindAction("Fire");

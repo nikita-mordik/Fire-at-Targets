@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
@@ -7,6 +8,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
     {
         Vector2 MovementAxis { get; }
         Vector2 RotationAxis { get; }
+        InputActionAsset InputActionAsset { get; }
 
         event Action OnFire;
         event Action OnFireReleased;
