@@ -3130,9 +3130,9 @@ GameObject:
   - component: {fileID: 5879229226559339057}
   - component: {fileID: 3795652765332857565}
   - component: {fileID: 1775925253408605132}
-  - component: {fileID: 7095555553881344782}
   - component: {fileID: 4725191858504690020}
   - component: {fileID: 6936717919522017284}
+  - component: {fileID: 6292395302893869777}
   m_Layer: 0
   m_Name: FPSGenericPlayer
   m_TagString: Untagged
@@ -3289,19 +3289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recoilSettings: {fileID: 11400000, guid: be2be2c72d4648d4d9c1626c6fae08bc, type: 2}
   deltaLookInputProperty: MouseDeltaInput
---- !u!114 &7095555553881344782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8043286474434123627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed2e60975b014a14bee2ee51f674b480, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSettings: {fileID: 11400000, guid: a7578b1062aa71443838e2309f690374, type: 2}
 --- !u!114 &4725191858504690020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3422,6 +3409,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 777d56703875e344e9d2991a06db5f3e, type: 2}
+--- !u!114 &6292395302893869777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8043286474434123627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f126d7bba5a04c6aaacebdcddb397ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementSettings: {fileID: 11400000, guid: a7578b1062aa71443838e2309f690374, type: 2}
 --- !u!1 &8230597823634049739
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Character
 {
-    [RequireComponent(typeof(CharacterController), typeof(FPSMovement))]
+    [RequireComponent(typeof(CharacterController), typeof(CustomFPSMovement))]
     public class CustomFPSController : MonoBehaviour
     {
         [SerializeField] private FPSControllerSettings _settings;
@@ -22,7 +22,7 @@ namespace FreedLOW.FireAtTargets.Code.Character
         private static readonly int InspectEndHash = Animator.StringToHash("InspectEnd");
         private static readonly int SlideHash = Animator.StringToHash("Sliding");
 
-        private FPSMovement _movementComponent;
+        private CustomFPSMovement _movementComponent;
 
         private Transform _weaponBone;
         private Vector2 _playerInput;
@@ -114,29 +114,29 @@ namespace FreedLOW.FireAtTargets.Code.Character
 
         private void InitializeMovement()
         {
-            _movementComponent = GetComponent<FPSMovement>();
+            _movementComponent = GetComponent<CustomFPSMovement>();
             
-            _movementComponent.onJump = () => { PlayTransitionMotion(_settings.jumpingMotion); };
-            _movementComponent.onLanded = () => { PlayTransitionMotion(_settings.jumpingMotion); };
+            _movementComponent.OnJumping = () => { PlayTransitionMotion(_settings.jumpingMotion); };
+            _movementComponent.OnLanded = () => { PlayTransitionMotion(_settings.jumpingMotion); };
 
-            _movementComponent.onCrouch = OnCrouch;
-            _movementComponent.onUncrouch = OnUncrouch;
+            _movementComponent.OnCrouching = OnCrouch;
+            _movementComponent.OnUncrouch = OnUncrouch;
 
-            _movementComponent.onSprintStarted = OnSprintStarted;
-            _movementComponent.onSprintEnded = OnSprintEnded;
+            _movementComponent.OnSprintStarted = OnSprintStarted;
+            _movementComponent.OnSprintEnded = OnSprintEnded;
 
-            _movementComponent.onSlideStarted = OnSlideStarted;
+            _movementComponent.OnSlideStarted = OnSlideStarted;
 
-            _movementComponent._slideActionCondition += () => !HasActiveAction();
-            _movementComponent._sprintActionCondition += () => !HasActiveAction();
-            _movementComponent._proneActionCondition += () => !HasActiveAction();
+            _movementComponent.SlideActionCondition += () => !HasActiveAction();
+            _movementComponent.SprintActionCondition += () => !HasActiveAction();
+            _movementComponent.ProneActionCondition += () => !HasActiveAction();
             
-            _movementComponent.onStopMoving = () =>
+            _movementComponent.OnStopMoving = () =>
             {
                 PlayTransitionMotion(_settings.stopMotion);
             };
             
-            _movementComponent.onProneEnded = () =>
+            _movementComponent.OnProneEnded = () =>
             {
                 _userInput.SetValue(FPSANames.PlayablesWeight, 1f);
             };
