@@ -12130,15 +12130,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FPSGenericPlayer
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4725191858504690020, guid: 7dfd6af6bf035564d91046ccd937f7af, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8043286474434123627, guid: 7dfd6af6bf035564d91046ccd937f7af,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1257114851}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfd6af6bf035564d91046ccd937f7af, type: 3}
 --- !u!1001 &316406791
 PrefabInstance:
@@ -43017,37 +43012,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f7e4f111daec4c4090db58dc5ea9d6d, type: 3}
---- !u!1 &1257114838 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8043286474434123627, guid: 7dfd6af6bf035564d91046ccd937f7af,
-    type: 3}
-  m_PrefabInstance: {fileID: 313208122}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1257114840 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6936717919522017284, guid: 7dfd6af6bf035564d91046ccd937f7af,
-    type: 3}
-  m_PrefabInstance: {fileID: 313208122}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257114838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0c3249bfb25491ba1eab52c010da0ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1257114851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257114838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d57f72e2497d4a22b0779ced59218263, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fpsController: {fileID: 1257114840}
 --- !u!1001 &1257768075
 PrefabInstance:
   m_ObjectHideFlags: 0
