@@ -9,7 +9,7 @@
                     "name": "Fire",
                     "type": "Value",
                     "id": "a7145557-7d88-42dc-bd8f-6e4eb520848e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -72,7 +72,7 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "6da9626a-ab5a-4764-863a-e397a04f3c77",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -117,7 +117,7 @@
                     "name": "Slide",
                     "type": "Button",
                     "id": "75a2a6e4-7eb2-4557-a086-e73034f5d88b",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -217,6 +217,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3e098420-b2a3-483b-adfb-c6714dca886c",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2ffaf32f-a733-401b-aa6d-29a88a4e4b53",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -302,6 +313,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ac6db8e8-65f9-4117-a96c-c12a38c8a771",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

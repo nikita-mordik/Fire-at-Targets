@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
-    public class StandaloneInputService : InputServiceWithActions
+    public class MobileInputService : InputServiceWithActions
     {
-        protected StandaloneInputService(IAssetProvider assetProvider) : base(assetProvider)
+        protected MobileInputService(IAssetProvider assetProvider) : base(assetProvider)
         {
         }
         

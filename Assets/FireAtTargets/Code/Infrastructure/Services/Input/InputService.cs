@@ -7,8 +7,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
     {
         protected const string Vertical = "Vertical";
         protected const string Horizontal = "Horizontal";
-        private const string VerticalRotation = "VerticalRotation";
-        private const string HorizontalRotation = "HorizontalRotation";
         private const string ShootButton = "Shoot";
         private const string ReloadButton = "Reload";
         private const string ScopeButton = "Scope";
@@ -60,11 +58,5 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
             onScope?.Invoke();
             return true;
         }
-
-        protected static Vector2 MobileMovementAxis() => 
-            new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
-        
-        protected static Vector2 MobileRotationAxis() => 
-            new Vector2(SimpleInput.GetAxis(HorizontalRotation), SimpleInput.GetAxis(VerticalRotation));
     }
 }

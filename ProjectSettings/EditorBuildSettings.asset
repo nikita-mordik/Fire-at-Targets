@@ -9,8 +9,12 @@ EditorBuildSettings:
     path: Assets/FireAtTargets/Scenes/Boot.unity
     guid: e575a98dd71509849aadafff370ca5fb
   - enabled: 0
+    path: Assets/FireAtTargets/Scenes/Menu.unity
+    guid: db6a137f652b03c47ba5a15f5857690e
+  - enabled: 0
     path: Assets/FireAtTargets/Scenes/ShootingGallery.unity
     guid: c2a7ee7300527ab489faf707a0d892a8
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 5d6065e16f899554892cbfe3717671b7,
       type: 2}
+  m_UseUCBPForAssetBundles: 0
