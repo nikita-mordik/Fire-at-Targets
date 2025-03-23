@@ -2,13 +2,13 @@ using Cysharp.Threading.Tasks;
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
     public class InputServiceWithActions : InputService
     {
-        public override Vector2 MovementAxis { get; }
-        public override Vector2 RotationAxis { get; }
+        private readonly IAssetProvider _assetProvider;
         
         protected InputAction MoveAction;
         protected InputAction LookAction;
@@ -16,7 +16,10 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         protected InputAction ReloadAction;
         protected InputAction ScopeAction;
 
-        private readonly IAssetProvider _assetProvider;
+        private bool _isAiming;
+        
+        public override Vector2 MovementAxis { get; }
+        public override Vector2 RotationAxis { get; }
 
         protected InputServiceWithActions(IAssetProvider assetProvider)
         {
@@ -48,8 +51,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         {
             FireAction.started += FireActionOnStarted;
             FireAction.canceled += FireActionOnCanceled;
-            ScopeAction.started += ScopeActionOnStarted;
-            ScopeAction.canceled += ScopeActionOnCanceled;
+            ScopeAction.performed += ScopeActionOnPerformed;
+            ReloadAction.started += ReloadActionOnStarted;
         }
 
         protected virtual void EnableInputActions()
@@ -71,14 +74,25 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
             onFireReleased?.Invoke();
         }
 
-        private void ScopeActionOnStarted(InputAction.CallbackContext callback)
+        private void ScopeActionOnPerformed(InputAction.CallbackContext callback)
         {
-            onScope?.Invoke();
+            if (callback.interaction is PressInteraction)
+            {
+                _isAiming = !_isAiming;
+                if (_isAiming)
+                {
+                    onScope?.Invoke();
+                }
+                else
+                {
+                    onScopeReleased?.Invoke();
+                }
+            }
         }
 
-        private void ScopeActionOnCanceled(InputAction.CallbackContext callback)
+        private void ReloadActionOnStarted(InputAction.CallbackContext callback)
         {
-            onScopeReleased?.Invoke();
+            onReload?.Invoke();
         }
     }
 }

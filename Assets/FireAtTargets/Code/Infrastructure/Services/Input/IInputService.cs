@@ -12,6 +12,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
         event Action OnFireReleased;
         event Action OnScope;
         event Action OnScopeReleased;
+        event Action OnReload;
         
         bool IsFireButtonDown();
         bool IsFireButtonUp();

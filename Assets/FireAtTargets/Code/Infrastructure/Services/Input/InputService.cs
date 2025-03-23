@@ -5,16 +5,11 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 {
     public abstract class InputService : IInputService
     {
-        protected const string Vertical = "Vertical";
-        protected const string Horizontal = "Horizontal";
-        private const string ShootButton = "Shoot";
-        private const string ReloadButton = "Reload";
-        private const string ScopeButton = "Scope";
-
         protected Action onFire;
         protected Action onFireReleased;
         protected Action onScope;
         protected Action onScopeReleased;
+        protected Action onReload;
         
         public abstract Vector2 MovementAxis { get; }
         public abstract Vector2 RotationAxis { get; }
@@ -39,22 +34,32 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
             add => onScopeReleased += value;
             remove => onScopeReleased -= value;
         }
+        public event Action OnReload
+        {
+            add => onReload += value;
+            remove => onReload -= value;
+        }
 
-        public virtual bool IsFireButtonDown() => 
-            SimpleInput.GetButtonDown(ShootButton);
+        public virtual bool IsFireButtonDown()
+        {
+            onFire?.Invoke();
+            return true;
+        }
 
-        public virtual bool IsFireButtonUp() => 
-            SimpleInput.GetButtonUp(ShootButton);
+        public virtual bool IsFireButtonUp()
+        {
+            onFireReleased?.Invoke();
+            return true;
+        }
 
-        public virtual bool IsReloadButtonDown() => 
-            SimpleInput.GetButtonDown(ReloadButton);
+        public virtual bool IsReloadButtonDown()
+        {
+            onReload?.Invoke();
+            return true;
+        }
 
         public virtual bool IsScopeButtonDown()
         {
-            var isScopeButtonDown = SimpleInput.GetButtonDown(ScopeButton);
-            if (!isScopeButtonDown) 
-                return false;
-            
             onScope?.Invoke();
             return true;
         }

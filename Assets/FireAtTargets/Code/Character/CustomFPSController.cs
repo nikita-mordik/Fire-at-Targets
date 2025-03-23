@@ -59,8 +59,8 @@ namespace FreedLOW.FireAtTargets.Code.Character
         private void Start()
         {
 #if UNITY_EDITOR
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = false;
+            // Cursor.lockState = CursorLockMode.Locked;
 #endif
             Time.timeScale = _settings.timeScale;
             Application.targetFrameRate = 144;
@@ -329,14 +329,15 @@ namespace FreedLOW.FireAtTargets.Code.Character
             if (IsSprinting()) 
                 return;
 
-            if (value.isPressed && !IsAiming())
+            bool isPressed = value.isPressed;
+            if (isPressed && !IsAiming())
             {
-                if (GetActiveItem().OnAimPressed()) _aimState = FPSAimState.Aiming;
+                if (GetActiveItem().OnAimPressed()) 
+                    _aimState = FPSAimState.Aiming;
+                
                 PlayTransitionMotion(_settings.aimingMotion);
-                return;
             }
-
-            if (!value.isPressed && IsAiming())
+            else if (isPressed && IsAiming())
             {
                 DisableAim();
                 PlayTransitionMotion(_settings.aimingMotion);
