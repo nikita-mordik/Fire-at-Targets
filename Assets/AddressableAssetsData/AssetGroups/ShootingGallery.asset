@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: ShootingGallery
   m_EditorClassIdentifier: 
   m_GroupName: ShootingGallery
-  m_Data:
-    m_SerializedData: []
   m_GUID: 9ae37f707f878e049abd30e12f318262
   m_SerializeEntries:
   - m_GUID: 1130a470e041f60448a7e6cae5968b70
@@ -46,6 +44,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - ShootingGalleryPool
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2a7ee7300527ab489faf707a0d892a8
+    m_Address: ShootingGallery
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e09b71e4596812248bb8c3d0ff4a5b46, type: 2}
