@@ -25,11 +25,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.ViewLayer
             element = new KRigElement(-1, FPSANames.IkLeftHand),
             pose = KTransform.Identity
         };
-        
-        public override FPSAnimatorLayerState CreateState()
+
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new ViewLayerState();
+            return new ViewLayerJob();
         }
+
 #if UNITY_EDITOR
         public override void OnRigUpdated()
         {

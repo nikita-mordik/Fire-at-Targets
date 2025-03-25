@@ -1,3 +1,10 @@
 ﻿fileFormatVersion: 2
 guid: 1bf197d16fb145cabe548d0a318942ea
 timeCreated: 1705083677
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Runtime/Layers/AdsLayer/AdsLayerSettings.cs
+  uploadId: 737569

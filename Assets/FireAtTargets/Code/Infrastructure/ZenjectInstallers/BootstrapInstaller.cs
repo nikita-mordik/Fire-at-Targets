@@ -86,21 +86,20 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
         
         private void BindInputService()
         {
-            Container.Bind<IInputService>()
-                .To<InputService>()
-                .FromMethod(GetInputService)
-                .AsSingle();
-        }
-
-        private InputService GetInputService(InjectContext context)
-        {
-            if (Application.isEditor)
+            if (Application.isMobilePlatform)
             {
-                var assetProvider = context.Container.Resolve<IAssetProvider>();
-                return new StandaloneInputService(assetProvider);
+                Container.Bind<IInputService>()
+                    .To<MobileInputService>()
+                    .AsSingle()
+                    .NonLazy();
             }
-
-            return new MobileShootingGalleryInputService();
+            else
+            {
+                Container.Bind<IInputService>()
+                    .To<StandaloneInputService>()
+                    .AsSingle()
+                    .NonLazy();
+            }
         }
     }
 }

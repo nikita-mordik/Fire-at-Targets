@@ -1,4 +1,4 @@
-using Demo.Scripts.Runtime.Character;
+using FreedLOW.FireAtTargets.Code.Character;
 using Impact;
 using Impact.Triggers;
 using UnityEngine;
@@ -7,7 +7,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player
 {
     public class PlayerWalkAudio : MonoBehaviour
     {
-        [SerializeField] private FPSController fpsController;
+        [SerializeField] private CustomFPSController _fpsController;
         
         [Header("Footsteps")]
         [SerializeField] private ImpactTag footstepLeftTag;

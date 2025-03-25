@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: f7dab161dc68469f8897b83ece6c089b
+timeCreated: 1731865897
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Runtime/Layers/PoseOffsetLayer/PoseOffsetJob.cs
+  uploadId: 737569

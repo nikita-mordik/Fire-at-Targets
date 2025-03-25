@@ -23,24 +23,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 
         protected virtual FPSAnimatorLayerSettings GetSettings()
         {
-            return _internalSettings;
-        }
-        
-        protected float GetCurveBlendValue(CurveBlend blend)
-        {
-            float value = 0f;
-            
-            if (blend.source == ECurveSource.Input)
-            {
-                value = _inputController.GetValue<float>(blend.name);
-            }
-            else
-            {
-                value = _playablesController.GetCurveValue(blend.name, blend.source == ECurveSource.Animator);
-            }
-
-            value = Mathf.Clamp01(value);
-            return blend.mode == ECurveBlendMode.Direct ? value : 1f - value;
+            return _internalSettings; 
         }
 
         public void UpdateStateWeight()
@@ -63,7 +46,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             // Scale the weight based on the curve values.
             foreach (var blend in settings.curveBlending)
             {
-                float value = GetCurveBlendValue(blend);
+                float value = blend.ComputeBlendValue(_inputController, _playablesController);
                 value = Mathf.Lerp(blend.clampMin, 1f, value);
                 weight *= value;
             }

@@ -25,10 +25,20 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.IkLayer
         
         public KRigElement rightFootHint = new KRigElement(-1, FPSANames.IkRightKnee);
         public KRigElement leftFootHint = new KRigElement(-1, FPSANames.IkLeftKnee);
-        
-        public override FPSAnimatorLayerState CreateState()
+
+        [Header("Humanoid IK")]
+        [Tooltip("If true, the layer will rotate feet around the root to compensate the turn rotation.")]
+        public bool offsetFeetTargets = true;
+
+        [Header("Control Weight")]
+        [Range(0f, 1f)] public float rightHandWeight = 1f;
+        [Range(0f, 1f)] public float leftHandWeight = 1f;
+        [Range(0f, 1f)] public float rightFootWeight = 1f;
+        [Range(0f, 1f)] public float leftFootWeight = 1f;
+
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new IkLayerState();
+            return new IkLayerJob();
         }
 
 #if UNITY_EDITOR

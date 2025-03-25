@@ -1,4 +1,4 @@
-using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
+using KINEMATION.ProceduralRecoilAnimationSystem.Runtime;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace FreedLOW.FireAtTargets.Code.StaticData
         public FireMode FireMode;
         public float FireRate;
         public bool SupportsBurst;
-        [ShowIf("SupportsBurst")]public int BurstAmount;
+        [ShowIf("SupportsBurst")] public int BurstAmount;
         public int MaxAmmo;
         public int StartAmmo;
     }

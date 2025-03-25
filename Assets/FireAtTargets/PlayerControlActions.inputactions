@@ -1,5 +1,5 @@
 {
-    "name": "PlayerControls",
+    "name": "PlayerControlActions",
     "maps": [
         {
             "name": "Gameplay",
@@ -9,7 +9,7 @@
                     "name": "Fire",
                     "type": "Value",
                     "id": "a7145557-7d88-42dc-bd8f-6e4eb520848e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -27,7 +27,7 @@
                     "name": "ThrowGrenade",
                     "type": "Button",
                     "id": "b511db82-e7e2-4fee-9dd2-adca766702f4",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -72,7 +72,7 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "6da9626a-ab5a-4764-863a-e397a04f3c77",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -117,7 +117,7 @@
                     "name": "Slide",
                     "type": "Button",
                     "id": "75a2a6e4-7eb2-4557-a086-e73034f5d88b",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -153,7 +153,7 @@
                     "name": "ToggleAttachmentEditing",
                     "type": "Button",
                     "id": "398a09d8-df40-4ed5-a831-65e9f9201c81",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -175,7 +175,7 @@
                     "name": "",
                     "id": "5c0b9f01-1432-4419-b38f-4bba84dade75",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Aim",
@@ -210,6 +210,17 @@
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "ScaleVector2(x=0.1,y=0.1)",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e098420-b2a3-483b-adfb-c6714dca886c",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
                     "groups": "",
                     "action": "Look",
                     "isComposite": false,
@@ -302,6 +313,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ac6db8e8-65f9-4117-a96c-c12a38c8a771",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

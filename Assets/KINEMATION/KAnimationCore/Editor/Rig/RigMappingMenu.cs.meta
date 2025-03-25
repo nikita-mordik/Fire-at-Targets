@@ -1,3 +1,10 @@
 fileFormatVersion: 2
 guid: 34bf35b5a2cd4145b620c133c2a54346
 timeCreated: 1721131260
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/KAnimationCore/Editor/Rig/RigMappingMenu.cs
+  uploadId: 737569

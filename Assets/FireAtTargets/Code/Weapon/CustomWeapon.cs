@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Demo.Scripts.Runtime.AttachmentSystem;
-using Demo.Scripts.Runtime.Character;
 using Demo.Scripts.Runtime.Item;
+using FreedLOW.FireAtTargets.Code.Character;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.StaticData;
 using FreedLOW.FireAtTargets.Code.Weapon.Shooting;
@@ -11,6 +11,7 @@ using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
 using KINEMATION.KAnimationCore.Runtime.Input;
+using KINEMATION.ProceduralRecoilAnimationSystem.Runtime;
 using UnityEngine;
 using Zenject;
 
@@ -44,7 +45,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
         private static readonly int CurveEquip = Animator.StringToHash("CurveEquip");
         private static readonly int CurveUnequip = Animator.StringToHash("CurveUnequip");
         
-        private FPSController _fpsController;
+        private CustomFPSController _fpsController;
         private Animator _controllerAnimator;
         private UserInputController _userInputController;
         private IPlayablesController _playablesController;
@@ -110,13 +111,13 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         public override void OnEquip(GameObject parent)
         {
-            if (parent == null) 
+            if (!parent) 
                 return;
             
             _fpsAnimator = parent.GetComponent<FPSAnimator>();
             _fpsAnimatorEntity = GetComponent<FPSAnimatorEntity>();
             
-            _fpsController = parent.GetComponent<FPSController>();
+            _fpsController = parent.GetComponent<CustomFPSController>();
             _weaponAnimator = GetComponentInChildren<Animator>();
             
             _controllerAnimator = parent.GetComponent<Animator>();
@@ -141,10 +142,8 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             
             _recoilAnimation.Init(recoilData, _fireRate, _fireMode);
 
-            if (_recoilPattern != null)
-            {
+            if (_recoilPattern) 
                 _recoilPattern.Init(recoilPatternSettings);
-            }
             
             _fpsAnimator.LinkAnimatorLayer(equipMotion);
             

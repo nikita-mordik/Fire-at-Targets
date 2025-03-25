@@ -57,10 +57,10 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
         
         [InputProperty]
         public string mouseDeltaInputProperty = FPSANames.MouseDeltaInput;
-        
-        public override FPSAnimatorLayerState CreateState()
+
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new SwayLayerState();
+            return new SwayLayerJob();
         }
 
 #if UNITY_EDITOR

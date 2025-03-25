@@ -31,9 +31,9 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.IkMotionLayer
         [Range(0f, 2f)] public float playRate = 1f;
         public bool autoBlendOut = true;
 
-        public override FPSAnimatorLayerState CreateState()
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new IkMotionLayerState();
+            return new IkMotionLayerJob();
         }
 
 #if UNITY_EDITOR

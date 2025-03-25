@@ -20,9 +20,55 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         [NonSerialized] protected FPSBoneController _boneController;
         [NonSerialized] protected UserInputController _inputController;
         [NonSerialized] protected FPSCameraController _cameraController;
+
+        protected bool _isInitialized;
+
+        private bool _wasAnimatorEnabled;
+        private Animator _animator;
         
         protected virtual void Start()
         {
+            Initialize();
+        }
+
+        protected virtual void Update()
+        {
+            if (_animator.isActiveAndEnabled != _wasAnimatorEnabled && !_wasAnimatorEnabled)
+            {
+                RebuildPlayables();
+            }
+            
+            _wasAnimatorEnabled = _animator.isActiveAndEnabled;
+            
+            if (_boneController == null) return;
+            _boneController.UpdateController();
+        }
+
+        protected virtual void LateUpdate()
+        {
+            if(_boneController != null) _boneController.LateUpdateController();
+            if (_cameraController != null) _cameraController.UpdateCamera();
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if (_boneController == null) return;
+            _boneController.Dispose();
+        }
+
+        public void RebuildPlayables()
+        {
+            playablesController.RebuildPlayables();
+            _boneController.RebuildPlayables();
+        }
+
+        public void Initialize()
+        {
+            if (_isInitialized) return;
+
+            _animator = GetComponent<Animator>();
+            _wasAnimatorEnabled = _animator.isActiveAndEnabled;
+            
             _boneController = GetComponent<FPSBoneController>();
             _inputController = GetComponent<UserInputController>();
             playablesController = GetComponent<IPlayablesController>();
@@ -35,43 +81,9 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             if(_cameraController != null) _cameraController.Initialize();
             
             _boneController.LinkAnimatorProfile(animatorProfile);
+            _isInitialized = true;
         }
 
-        protected virtual void Update()
-        {
-            if (_boneController == null) return;
-            _boneController.GameThreadUpdate();
-        }
-
-        protected virtual void LateUpdate()
-        {
-            if (_boneController == null && _cameraController != null)
-            {
-                _cameraController.UpdateCamera();
-                return;
-            }
-            
-            // Caches the active pose in case of blending.
-            _boneController.CachePose();
-            // Apply procedural animation.
-            _boneController.EvaluatePose();
-            // Blends in the cached pose.
-            _boneController.ApplyCachedPose();
-            
-            if (_cameraController != null)
-            {
-                _cameraController.UpdateCamera();
-            }
-            
-            _boneController.PostEvaluatePose();
-        }
-
-        protected virtual void OnDestroy()
-        {
-            if (_boneController == null) return;
-            _boneController.Dispose();
-        }
-        
         public void UnlinkAnimatorProfile()
         {
             if (_boneController == null) return;
@@ -86,8 +98,8 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             
             if (itemEntity.GetComponent<FPSAnimatorEntity>() is var entity && entity != null)
             {
-                LinkAnimatorProfile(entity.animatorProfile);
                 _boneController.UpdateEntity(entity);
+                LinkAnimatorProfile(entity.animatorProfile);
             }
         }
 

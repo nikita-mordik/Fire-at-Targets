@@ -1,3 +1,10 @@
 fileFormatVersion: 2
 guid: ec30e67390824f849d4b29e697621e67
 timeCreated: 1698253661
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Editor/Tools/CopyBoneModifier.cs
+  uploadId: 737569

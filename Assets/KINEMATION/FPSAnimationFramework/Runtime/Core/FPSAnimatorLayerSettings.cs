@@ -3,10 +3,15 @@
 using KINEMATION.FPSAnimationFramework.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.FPSAnimationFramework.Runtime.Playables;
+using KINEMATION.KAnimationCore.Runtime.Input;
 
 using System;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Playables;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 {
@@ -30,6 +35,28 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         public ECurveBlendMode mode;
         [Range(0f, 1f)] public float clampMin;
         [HideInInspector] public ECurveSource source;
+
+        public float ComputeBlendValue(UserInputController inputController, IPlayablesController playablesController)
+        {
+            if (string.IsNullOrEmpty(name) || name.Equals("None"))
+            {
+                return 1f;
+            }
+            
+            float value = 0f;
+            
+            if (source == ECurveSource.Input)
+            {
+                value = inputController.GetValue<float>(name);
+            }
+            else
+            {
+                value = playablesController.GetCurveValue(name, source == ECurveSource.Animator);
+            }
+
+            value = Mathf.Clamp01(value);
+            return mode == ECurveBlendMode.Direct ? value : 1f - value;
+        }
     }
     
     [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/fundamentals/animator-layer")]
@@ -41,9 +68,15 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         
         [Tooltip("Will call OnUpdateSettings on the layer state if true.")]
         public bool linkDynamically;
-        
+
+        public virtual IAnimationLayerJob CreateAnimationJob()
+        {
+            return null;
+        }
+
+        [Obsolete("Use CreateAnimationJob instead.")]
         public virtual FPSAnimatorLayerState CreateState() { return null; }
-        
+
         public KRig GetRigAsset() { return rigAsset; }
         
         public virtual void OnRigUpdated()

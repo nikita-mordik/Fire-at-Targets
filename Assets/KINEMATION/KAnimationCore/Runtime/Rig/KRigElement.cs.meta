@@ -1,3 +1,10 @@
 ﻿fileFormatVersion: 2
 guid: ba9819a027d34b42a29b91a6cdaa5bbf
 timeCreated: 1704271222
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/KAnimationCore/Runtime/Rig/KRigElement.cs
+  uploadId: 737569

@@ -1,3 +1,10 @@
 fileFormatVersion: 2
 guid: a3d31625508c4de68a93572fed1bad26
 timeCreated: 1709801092
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Editor/Tools/IKAdditiveGenerator.cs
+  uploadId: 737569

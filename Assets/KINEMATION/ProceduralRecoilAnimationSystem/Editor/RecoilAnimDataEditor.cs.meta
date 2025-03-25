@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 377cab1633f649ad91907e67feba2eae
+timeCreated: 1739167363
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/ProceduralRecoilAnimationSystem/Editor/RecoilAnimDataEditor.cs
+  uploadId: 737569

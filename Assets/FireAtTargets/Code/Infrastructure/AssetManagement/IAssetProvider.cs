@@ -17,6 +17,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement
         UniTask<TAsset[]> LoadAll<TAsset>(List<string> keys) where TAsset : class;
         UniTask WarmupAssetsByLabel(string label);
         UniTask ReleaseAssetsByLabel(string label);
+        void ReleaseAsset(string key);
         void Cleanup();
     }
 }

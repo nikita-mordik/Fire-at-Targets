@@ -9,7 +9,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement
 {
     public class AssetProvider : IAssetProvider
     {
-        private readonly Dictionary<string, AsyncOperationHandle> assetRequests = new();
+        private readonly Dictionary<string, AsyncOperationHandle> _assetRequests = new();
 
         public async UniTask InitializeAsync() => 
             await Addressables.InitializeAsync().ToUniTask();
@@ -22,10 +22,10 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement
 
         public async UniTask<TAsset> Load<TAsset>(string key) where TAsset : class
         {
-            if (!assetRequests.TryGetValue(key, out var handle))
+            if (!_assetRequests.TryGetValue(key, out var handle))
             {
                 handle = Addressables.LoadAssetAsync<TAsset>(key);
-                assetRequests.Add(key, handle);
+                _assetRequests.Add(key, handle);
             }
 
             await handle.ToUniTask();
@@ -73,22 +73,31 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement
             
             foreach (var assetKey in assetsList)
             {
-                if (assetRequests.TryGetValue(assetKey, out var handler))
+                if (_assetRequests.TryGetValue(assetKey, out var handler))
                 {
                     Addressables.Release(handler);
-                    assetRequests.Remove(assetKey);
+                    _assetRequests.Remove(assetKey);
                 }
+            }
+        }
+
+        public void ReleaseAsset(string key)
+        {
+            if (_assetRequests.TryGetValue(key, out var handler))
+            {
+                Addressables.Release(handler);
+                _assetRequests.Remove(key);
             }
         }
 
         public void Cleanup()
         {
-            foreach (var assetRequest in assetRequests)
+            foreach (var assetRequest in _assetRequests)
             {
                 Addressables.Release(assetRequest.Value);
             }
             
-            assetRequests.Clear();
+            _assetRequests.Clear();
         }
     }
 }

@@ -21,9 +21,9 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.CollisionLayer
         [Min(0f)] public float rayStartOffset = 0f;
         [Min(0f)] public float barrelLength = 0f;
         
-        public override FPSAnimatorLayerState CreateState()
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new CollisionLayerState();
+            return new CollisionLayerJob();
         }
 
 #if UNITY_EDITOR

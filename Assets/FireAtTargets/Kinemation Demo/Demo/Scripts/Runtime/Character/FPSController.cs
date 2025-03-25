@@ -1,4 +1,4 @@
-// Designed by KINEMATION, 2024.
+// Designed by KINEMATION, 2025.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 namespace Demo.Scripts.Runtime.Character
 {
@@ -33,7 +32,6 @@ namespace Demo.Scripts.Runtime.Character
     [RequireComponent(typeof(CharacterController), typeof(FPSMovement))]
     public class FPSController : MonoBehaviour
     {
-        //~ Legacy Controller Interface
         [SerializeField] private FPSControllerSettings settings;
 
         private FPSMovement _movementComponent;
@@ -48,8 +46,6 @@ namespace Demo.Scripts.Runtime.Character
         private FPSActionState _actionState;
 
         private Animator _animator;
-        
-        //~ Legacy Controller Interface
 
         // ~Scriptable Animation System Integration
         private FPSAnimator _fpsAnimator;
@@ -67,14 +63,6 @@ namespace Demo.Scripts.Runtime.Character
         private static int _inspectStartHash = Animator.StringToHash("InspectStart");
         private static int _inspectEndHash = Animator.StringToHash("InspectEnd");
         private static int _slideHash = Animator.StringToHash("Sliding");
-
-        private IInstantiator _instantiator;
-
-        [Inject]
-        private void Construct(IInstantiator instantiator)
-        {
-            _instantiator = instantiator;
-        }
 
         private void PlayTransitionMotion(FPSAnimatorLayerSettings layerSettings)
         {
@@ -137,8 +125,7 @@ namespace Demo.Scripts.Runtime.Character
 
             foreach (var prefab in settings.weaponPrefabs)
             {
-                //var weapon = Instantiate(prefab, transform.position, Quaternion.identity);
-                var weapon = _instantiator.InstantiatePrefab(prefab, transform.position, Quaternion.identity, null);
+                var weapon = Instantiate(prefab, transform.position, Quaternion.identity);
 
                 var weaponTransform = weapon.transform;
 
@@ -155,9 +142,12 @@ namespace Demo.Scripts.Runtime.Character
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            Application.targetFrameRate = 144;
+            
+            _fpsAnimator = GetComponent<FPSAnimator>();
+            _fpsAnimator.Initialize();
 
             _weaponBone = GetComponentInChildren<KRigComponent>().GetRigTransform(settings.weaponBone);
-            _fpsAnimator = GetComponent<FPSAnimator>();
             _animator = GetComponent<Animator>();
             
             _userInput = GetComponent<UserInputController>();

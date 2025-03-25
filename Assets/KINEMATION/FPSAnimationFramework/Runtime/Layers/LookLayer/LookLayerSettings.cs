@@ -2,10 +2,11 @@
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.KAnimationCore.Runtime.Attributes;
 
 using System;
 using System.Collections.Generic;
-using KINEMATION.KAnimationCore.Runtime.Attributes;
+
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
@@ -91,9 +92,9 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.LookLayer
             }
         }
 
-        public override FPSAnimatorLayerState CreateState()
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new LookLayerState();
+            return new LookLayerJob();
         }
 
 #if UNITY_EDITOR

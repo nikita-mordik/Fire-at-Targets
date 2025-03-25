@@ -1,10 +1,11 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using System;
-using System.Collections.Generic;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Attributes;
 using KINEMATION.KAnimationCore.Runtime.Rig;
+
+using System;
+using System.Collections.Generic;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseOffsetLayer
 {
@@ -19,10 +20,10 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseOffsetLayer
     public class PoseOffsetLayerSettings : FPSAnimatorLayerSettings
     {
         public List<PoseOffset> poseOffsets = new List<PoseOffset>();
-        
-        public override FPSAnimatorLayerState CreateState()
+
+        public override IAnimationLayerJob CreateAnimationJob()
         {
-            return new PoseOffsetLayerState();
+            return new PoseOffsetJob();
         }
 
 #if UNITY_EDITOR

@@ -86,6 +86,7 @@ Material:
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _TintColor: {r: 0.7794118, g: 0.44843817, b: 0.32666522, a: 0.15686275}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &3596733504085612169
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -98,4 +99,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 9

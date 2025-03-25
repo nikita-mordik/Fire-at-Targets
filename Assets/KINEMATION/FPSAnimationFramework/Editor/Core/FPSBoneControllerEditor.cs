@@ -14,10 +14,5 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Core
         {
             _boneController = target as FPSBoneController;
         }
-
-        private void OnSceneGUI()
-        {
-            _boneController.OnSceneGUI();
-        }
     }
 }

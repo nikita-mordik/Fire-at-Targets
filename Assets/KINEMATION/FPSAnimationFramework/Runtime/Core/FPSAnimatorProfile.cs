@@ -39,9 +39,19 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             return true;
         }
 
-        private void OnDestroy()
+        public bool IsValid()
         {
-            Debug.Log("The Profile is DESTROYED!");
+            bool isValid = true;
+            foreach (var setting in settings)
+            {
+                if (setting == null)
+                {
+                    isValid = false;
+                    break;
+                }
+            }
+
+            return isValid && settings.Count > 0;
         }
 
         public void OnRigUpdated()
@@ -52,32 +62,11 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
                 setting.rigAsset = rigAsset;
                 setting.OnRigUpdated();
             }
-
-            /*
-            // Force-update dependent assets.
-            foreach (var overrideProfile in _overrides)
-            {
-                overrideProfile.rigAsset = rigAsset;
-                overrideProfile.OnRigUpdated();
-            }*/
 #endif
         }
         
 #if UNITY_EDITOR
         private KRig _cachedRigAsset;
-        /*
-        private List<FPSAnimatorProfileOverride> _overrides = new List<FPSAnimatorProfile>();
-
-        public void RegisterOverride(FPSAnimatorProfile overrideProfile)
-        {
-            _overrides.Add(overrideProfile);
-        }
-
-        public void UnRegisterOverride(FPSAnimatorProfile overrideProfile)
-        {
-            _overrides.Remove(overrideProfile);
-        }*/
-        
         private void OnValidate()
         {
             // If the asset has changed, we must update the element indices.

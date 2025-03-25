@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using KINEMATION.KAnimationCore.Runtime.Rig;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
-using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
 using KINEMATION.FPSAnimationFramework.Runtime.Camera;
 using KINEMATION.KAnimationCore.Runtime.Input;
 
-using System.IO;
 using KINEMATION.KAnimationCore.Editor.Misc;
+using KINEMATION.ProceduralRecoilAnimationSystem.Runtime;
+
+
+using System.IO;
+
 using UnityEditor;
 using UnityEngine;
 

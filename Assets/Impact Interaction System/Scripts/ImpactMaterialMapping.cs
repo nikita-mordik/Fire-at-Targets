@@ -6,7 +6,7 @@ namespace Impact
     [System.Serializable]
     public class ImpactPhysicMaterialMapping
     {
-        public PhysicMaterial PhysicMaterial;
+        public PhysicsMaterial PhysicMaterial;
         public ImpactMaterialBase ImpactMaterial;
     }
 

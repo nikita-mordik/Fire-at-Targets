@@ -4,8 +4,15 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
-  executionOrder: 30
+  executionOrder: 15
   icon: {fileID: 2800000, guid: 6fd4d99d3a1edc7408fe599214be6059, type: 3}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.8.1
+  assetPath: Assets/KINEMATION/FPSAnimationFramework/Runtime/Core/FPSAnimator.cs
+  uploadId: 737569

@@ -1,193 +1,366 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using KINEMATION.KAnimationCore.Runtime.Core;
 using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.FPSAnimationFramework.Runtime.Playables;
+using KINEMATION.KAnimationCore.Runtime.Input;
+using KINEMATION.KAnimationCore.Runtime.Core;
 
-using System;
 using System.Collections.Generic;
+using System;
+using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Experimental.Animations;
+using UnityEngine.Playables;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 {
-    public struct CachedPose
+    public struct AnimationBlendingJob : IAnimationJob
     {
-        public KPose[] poses;
+        public NativeArray<TransformStreamPose> poses;
+        public bool cachePose;
         public float blendTime;
-        public float blendAmount;
-        public float blendPlayback;
         public EaseMode easeMode;
+        
+        private float _playback;
+        private bool _blendCachedPose;
+
+        public void Setup(Animator animator, KRigComponent rigComponent)
+        {
+            var hierarchy = rigComponent.GetRigTransforms();
+            int count = hierarchy.Length;
+            
+            poses = new NativeArray<TransformStreamPose>(count, Allocator.Persistent);
+            
+            for (int i = 0; i < count; i++)
+            {
+                poses[i] = new TransformStreamPose()
+                {
+                    handle = animator.BindStreamTransform(hierarchy[i]),
+                    pose = KTransform.Identity
+                };
+            }
+        }
+
+        public void ProcessAnimation(AnimationStream stream)
+        {
+            int count = poses.Length;
+            
+            if (_playback >= blendTime) _blendCachedPose = false;
+            
+            if (_blendCachedPose)
+            {
+                _playback += stream.deltaTime;
+                
+                for (int i = 0; i < count; i++)
+                {
+                    var element = poses[i];
+                    
+                    float weight = KCurves.Ease(0f, 1f, Mathf.Clamp01(_playback / blendTime), easeMode);
+                    var activePose = AnimLayerJobUtility.GetTransformFromHandle(stream, element.handle, false);
+                    activePose = KTransform.Lerp(element.pose, activePose, weight);
+
+                    element.handle.SetLocalPosition(stream, activePose.position);
+                    element.handle.SetLocalRotation(stream, activePose.rotation);
+                }
+            }
+            
+            if (cachePose)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var element = poses[i];
+                    element.pose = AnimLayerJobUtility.GetTransformFromHandle(stream, element.handle, false);
+                    poses[i] = element;
+                }
+
+                _blendCachedPose = true;
+                cachePose = false;
+                _playback = 0f;
+            }
+        }
+
+        public void ProcessRootMotion(AnimationStream stream)
+        {
+        }
+    }
+    
+    public struct AnimationLayer
+    {
+        public AnimationScriptPlayable playable;
+        public IAnimationLayerJob job;
+    }
+
+    public struct VirtualElementHandle
+    {
+        [ReadOnly] public TransformStreamHandle targetHandle;
+        public TransformStreamHandle ikTargetHandle;
+    }
+
+    public struct VirtualElementJob : IAnimationJob
+    {
+        public NativeArray<VirtualElementHandle> handles;
+
+        public void Setup(Animator animator, GameObject root)
+        {
+            var virtualElements = root.GetComponentsInChildren<KVirtualElement>();
+            int count = virtualElements.Length;
+
+            handles = new NativeArray<VirtualElementHandle>(count, Allocator.Persistent);
+            for (int i = 0; i < count; i++)
+            {
+                handles[i] = new VirtualElementHandle()
+                {
+                    targetHandle = animator.BindStreamTransform(virtualElements[i].targetBone),
+                    ikTargetHandle = animator.BindStreamTransform(virtualElements[i].transform)
+                };
+            }
+        }
+        
+        public void ProcessAnimation(AnimationStream stream)
+        {
+            foreach (var handle in handles)
+            {
+                AnimLayerJobUtility.CopyBone(stream, handle.targetHandle, handle.ikTargetHandle);
+            }
+        }
+
+        public void ProcessRootMotion(AnimationStream stream)
+        {
+        }
     }
     
     [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/workflow/components")]
     public class FPSBoneController : MonoBehaviour
     {
         protected KRigComponent _rigComponent;
+        protected IPlayablesController _playablesController;
+        protected UserInputController _inputController;
         protected FPSAnimatorProfile _activeProfile;
-        protected List<FPSAnimatorLayerState> _layerStates;
-        
-        // Cached pose from the previous profile.
-        protected List<CachedPose> _cachedPoses;
-        // What bones will be affected by blending out.
-        protected HashSet<int> _blendBonesIndexes;
-        // Character original pose before applying IK. Only used when blending.
-        protected Dictionary<int, KTransform> _sourcePose;
 
-        protected bool IsBlendingOut()
+        protected FPSAnimatorEntity _entity;
+        
+        protected List<AnimationLayer> _animationLayers;
+        protected AnimationPlayableOutput _proceduralOutput;
+
+        protected AnimationBlendingJob _blendingJob;
+        protected AnimationScriptPlayable _blendingPlayable;
+        protected FPSAnimatorProfile _newProfile;
+        protected LayerJobData _layerJobData;
+
+        protected bool _linkLayers = false;
+
+        protected VirtualElementJob _virtualElementJob;
+        protected AnimationScriptPlayable _virtualElementPlayable;
+
+        protected List<FPSAnimatorLayerSettings> _settingsToLink = new List<FPSAnimatorLayerSettings>();
+
+        protected void UnlinkAnimationLayers()
         {
-            return _cachedPoses.Count > 0;
+            foreach (var layer in _animationLayers)
+            {
+                layer.job.Destroy();
+                if(layer.playable.IsValid()) layer.playable.Destroy();
+            }
+            
+            _blendingPlayable.DisconnectInput(0);
+            _animationLayers.Clear();
+        }
+
+        protected void LinkAnimationLayers()
+        {
+            _activeProfile = _newProfile;
+            
+            // 1. Destroy existing layers.
+            UnlinkAnimationLayers();
+            
+            // 2. Allocate new features.
+            foreach (var setting in _newProfile.settings)
+            {
+                var job = setting.CreateAnimationJob();
+                if (job == null) continue;
+                
+                job.Initialize(_layerJobData, setting);
+                job.UpdateEntity(_entity);
+                
+                var playable = job.CreatePlayable(_playablesController.GetPlayableGraph());
+                
+                _animationLayers.Add(new AnimationLayer()
+                {
+                    job = job,
+                    playable = playable
+                });
+            }
+            
+            // 3. Chain new animation layers.
+            int count = _animationLayers.Count;
+            for (int i = 1; i < count; ++i)
+            {
+                _animationLayers[i].playable.AddInput(_animationLayers[i - 1].playable, 0);
+            }
+
+            _animationLayers[0].playable.AddInput(_virtualElementPlayable, 0);
+            _blendingPlayable.ConnectInput(0, _animationLayers[count - 1].playable, 0, 1f);
+            
+            // 4. Update source playable.
+            _proceduralOutput.SetSourcePlayable(_blendingPlayable);
+
+            // 5. Link queued animation layers.
+            foreach (var setting in _settingsToLink) LinkAnimatorLayer(setting);
+            _settingsToLink.Clear();
+        }
+        
+        protected float GetLayerWeight(FPSAnimatorLayerSettings settings)
+        {
+            // Enable by default.
+            float weight = 1f;
+
+            // Invalid settings.
+            if (settings == null)
+            {
+                return 0f;
+            }
+
+            // Scale the weight based on the curve values.
+            foreach (var blend in settings.curveBlending)
+            {
+                float value = blend.ComputeBlendValue(_inputController, _playablesController);
+                value = Mathf.Lerp(blend.clampMin, 1f, value);
+                weight *= value;
+            }
+
+            // Finally scale the result by the global settings alpha.
+            return Mathf.Clamp01(weight * settings.alpha);
+        }
+        
+        protected void BuildPlayableOutput()
+        {
+            if (_proceduralOutput.IsOutputValid())
+            {
+                _playablesController.GetPlayableGraph().DestroyOutput(_proceduralOutput);
+            }
+            
+            _proceduralOutput = AnimationPlayableOutput.Create(_playablesController.GetPlayableGraph(), 
+                "ProceduralAnimationOutput", _playablesController.GetAnimator());
+            _proceduralOutput.SetAnimationStreamSource(AnimationStreamSource.PreviousInputs);
+        }
+
+        public void RebuildPlayables()
+        {
+            BuildPlayableOutput();
+            _proceduralOutput.SetSourcePlayable(_blendingPlayable);
         }
 
         public void Initialize()
         {
             _rigComponent = GetComponentInChildren<KRigComponent>();
             _rigComponent.Initialize();
-            
-            _layerStates = new List<FPSAnimatorLayerState>();
-            
-            _cachedPoses = new List<CachedPose>();
-            _sourcePose = new Dictionary<int, KTransform>();
 
-            _blendBonesIndexes = new HashSet<int>();
+            _playablesController = GetComponent<FPSPlayablesController>();
+            _inputController = GetComponent<UserInputController>();
 
+            _animationLayers = new List<AnimationLayer>();
+
+            BuildPlayableOutput();
+
+            _blendingJob = new AnimationBlendingJob();
+            _blendingJob.Setup(_playablesController.GetAnimator(), _rigComponent);
+            
+            _blendingPlayable = AnimationScriptPlayable.Create(_playablesController.GetPlayableGraph(), _blendingJob, 1);
+            
+            _virtualElementJob = new VirtualElementJob();
+            _virtualElementJob.Setup(_playablesController.GetAnimator(), gameObject);
+            
+            _virtualElementPlayable =
+                AnimationScriptPlayable.Create(_playablesController.GetPlayableGraph(), _virtualElementJob);
+            
+            _layerJobData = new LayerJobData()
+            {
+                animator = _playablesController.GetAnimator(),
+                rootHandle = _playablesController.GetAnimator().BindSceneTransform(transform),
+                rigComponent = _rigComponent,
+                inputController = _inputController,
+                playablesController = _playablesController
+            };
+            
             if (_rigComponent == null)
             {
                 Debug.LogError("FPSAnimatorBoneController: no RigComponent found!");
             }
         }
 
-        public virtual void GameThreadUpdate()
+        public virtual void UpdateController()
         {
-            foreach (var state in _layerStates)
+            if (_linkLayers)
             {
-                state.OnGameThreadUpdate();
+                if (_newProfile == null)
+                {
+                    UnlinkAnimationLayers();
+                }
+                else
+                {
+                    LinkAnimationLayers();
+                }
+
+                _linkLayers = false;
             }
-        }
 
-        public virtual void CachePose()
-        {
-            if (!IsBlendingOut()) return;
-
-            _sourcePose.Clear();
-
-            // Update the source pose by getting the transforms directly from the hierarchy.
-            foreach (var index in _blendBonesIndexes)
-            {
-                Transform reference = _rigComponent.GetRigTransform(index);
-                _sourcePose.Add(index, new KTransform(reference));
-            }
-        }
-
-        public virtual void EvaluatePose()
-        {
-            _rigComponent.AnimateVirtualElements();
-
-            foreach (var state in _layerStates)
-            {
-                state.OnPreEvaluatePose();
-            }
-            
-            // Apply the active animator states.
-            foreach (var state in _layerStates)
-            {
-                state.UpdateStateWeight();
-                state.OnEvaluatePose();
-            }
-        }
-
-        public virtual void PostEvaluatePose()
-        {
-            // Apply the active animator states.
-            foreach (var state in _layerStates)
-            {
-                state.OnPostEvaluatedPose();
-            }
-        }
-
-        public virtual void ApplyCachedPose()
-        {
-            // ReSharper Disable All
-            if (!IsBlendingOut()) return;
-
-            int count = _cachedPoses.Count;
-            List<int> posesToDispose = new List<int>();
+            int count = _animationLayers.Count;
 
             for (int i = 0; i < count; i++)
             {
-                CachedPose cachedPose = _cachedPoses[i];
-                float weight = cachedPose.blendAmount;
-                
-                if (Mathf.Approximately(weight, 1f))
-                {
-                    posesToDispose.Add(i);
-                    continue;
-                }
-
-                foreach (var pose in cachedPose.poses)
-                {
-                    Transform boneReference = _rigComponent.GetRigTransform(pose.element);
-                    
-                    KTransform activePose = new KTransform(boneReference);
-                    KTransform sourcePose = _sourcePose[pose.element.index];
-
-                    // Apply the cached pose first.
-                    boneReference.position = sourcePose.position;
-                    boneReference.rotation = sourcePose.rotation;
-                    
-                    // Apply the cached pose.
-                    KAnimationMath.ModifyTransform(transform, boneReference, pose);
-                    boneReference.position = activePose.position;
-
-                    // Interpolate.
-                    boneReference.rotation = Quaternion.Slerp(boneReference.rotation, activePose.rotation, 
-                        cachedPose.blendAmount);
-                }
-
-                cachedPose.blendPlayback = Mathf.Clamp(cachedPose.blendPlayback + Time.deltaTime, 0f, 
-                    cachedPose.blendTime);
-                
-                float normalizedTime = Mathf.Clamp01(cachedPose.blendPlayback / cachedPose.blendTime);
-                cachedPose.blendAmount = KCurves.Ease(0f, 1f, normalizedTime, cachedPose.easeMode);
-
-                _cachedPoses[i] = cachedPose;
+                var layer = _animationLayers[i];
+                layer.job.OnPreGameThreadUpdate();
             }
 
-            // Remove the blended out poses.
-            foreach (var index in posesToDispose)
+            for (int i = 0; i < count; i++)
             {
-                _cachedPoses.RemoveAt(index);
+                var layer = _animationLayers[i];
+                float weight = GetLayerWeight(layer.job.GetSettingAsset());
+                layer.job.UpdatePlayableJobData(layer.playable, weight);
             }
+        }
 
-            if (_cachedPoses.Count == 0)
+        public virtual void LateUpdateController()
+        {
+            if (_blendingJob.cachePose)
             {
-                _blendBonesIndexes.Clear();
+                _linkLayers = true;
+                _blendingJob.cachePose = false;
+                return;
+            }
+            
+            int count = _animationLayers.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                _animationLayers[i].job.LateUpdate();
             }
         }
 
         public void UnlinkAnimatorProfile()
         {
-            int count = _activeProfile.settings.Count;
-            List<KPose> bonePoses = new List<KPose>();
+            if (_activeProfile == null) return;
             
-            for (int i = 0; i < count; i++)
+            _newProfile = null;
+            if (Mathf.Approximately(_activeProfile.blendOutTime, 0f))
             {
-                var activeSetting = _activeProfile.settings[i];
+                _activeProfile = null;
+                UnlinkAnimationLayers();
                 
-                _layerStates[i].RegisterBones(ref _blendBonesIndexes);
-                _layerStates[i].CachePoses(ref bonePoses);
-                _layerStates[i].OnDestroyed();
+                _blendingJob.cachePose = false;
+                _blendingJob.blendTime = 0f;
+                _blendingPlayable.SetJobData(_blendingJob);
+                return;
             }
             
-            _cachedPoses.Add(new CachedPose()
-            {
-                blendAmount = 0f,
-                blendPlayback = 0f,
-                blendTime = _activeProfile.blendOutTime,
-                poses = bonePoses.ToArray(),
-                easeMode = _activeProfile.easeMode
-            });
+            var job = _blendingPlayable.GetJobData<AnimationBlendingJob>();
+
+            _blendingJob.cachePose = true;
+            job.cachePose = true;
+            job.blendTime = _activeProfile.blendInTime;
             
-            _layerStates.Clear();
-            _activeProfile = null;
+            _blendingPlayable.SetJobData(job);
         }
 
         public void LinkAnimatorProfile(FPSAnimatorProfile newProfile)
@@ -198,116 +371,68 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
                 return;
             }
 
-            if (newProfile.Equals(_activeProfile)) return;
-            
-            // Maps the setting to the target state.
-            Dictionary<Type, FPSAnimatorLayerSettings> linkedSettingsMap 
-                = new Dictionary<Type, FPSAnimatorLayerSettings>();
-            
-            // Maps the setting type to the state.
-            Dictionary<Type, FPSAnimatorLayerState> linkedStatesMap 
-                = new Dictionary<Type, FPSAnimatorLayerState>();
+            if (newProfile.Equals(_newProfile)) return;
+            if (!newProfile.IsValid())
+            {
+                UnlinkAnimatorProfile();
+                return;
+            }
 
-            // Get a map of types and settings from the new profile.
-            foreach (var layerSettings in newProfile.settings)
-            {
-                linkedSettingsMap.TryAdd(layerSettings.GetType(), layerSettings);
-            }
-            
-            if (_activeProfile == null || !KAnimationMath.IsWeightRelevant(newProfile.blendInTime))
-            {
-                Dispose();
-            }
-            else
-            {
-                int count = _activeProfile.settings.Count;
-                List<KPose> bonePoses = new List<KPose>();
-                
-                for (int i = 0; i < count; i++)
-                {
-                    var activeSetting = _activeProfile.settings[i];
+            _newProfile = newProfile;
 
-                    if (linkedSettingsMap.TryGetValue(activeSetting.GetType(), out var newSetting)
-                        && newSetting.linkDynamically)
-                    {
-                        // If types are the same, map the type to the desired state.
-                        linkedStatesMap.TryAdd(activeSetting.GetType(), _layerStates[i]);
-                        continue;
-                    }
-                    
-                    // No collision - Cache and Destroy the layer.
-                    _layerStates[i].RegisterBones(ref _blendBonesIndexes);
-                    _layerStates[i].CachePoses(ref bonePoses);
-                    _layerStates[i].OnDestroyed();
-                }
-                
-                // Finally add the Cached Pose to the pending list.
-                _cachedPoses.Add(new CachedPose()
-                {
-                    blendAmount = 0f,
-                    blendPlayback = 0f,
-                    blendTime = newProfile.blendInTime,
-                    poses = bonePoses.ToArray(),
-                    easeMode = newProfile.easeMode
-                });
-            }
-            
-            _layerStates.Clear();
-            _activeProfile = newProfile;
-            
-            foreach (var setting in _activeProfile.settings)
+            if (_activeProfile == null || Mathf.Approximately(newProfile.blendInTime, 0f))
             {
-                // If the setting type is in the map, we must dynamically link it.
-                if (linkedStatesMap.TryGetValue(setting.GetType(), out var layerState))
-                {
-                    layerState.OnLayerLinked(setting);
-                    _layerStates.Add(layerState);
-                    continue;
-                }
-                
-                var state = setting.CreateState();
-                state.InitializeComponents(gameObject, setting);
-                state.InitializeState(setting);
-                state.RegisterBones(ref _blendBonesIndexes);
-                _layerStates.Add(state);
+                LinkAnimationLayers();
+
+                _blendingJob.cachePose = false;
+                _blendingJob.blendTime = 0f;
+                _blendingPlayable.SetJobData(_blendingJob);
+                return;
             }
+
+            var job = _blendingPlayable.GetJobData<AnimationBlendingJob>();
+
+            _blendingJob.cachePose = true;
+            job.cachePose = true;
+            job.blendTime = newProfile.blendInTime;
+            job.easeMode = newProfile.easeMode;
+            
+            _blendingPlayable.SetJobData(job);
         }
 
         // Will find and update settings for the current active animator state.
         public void LinkAnimatorLayer(FPSAnimatorLayerSettings newSettings)
         {
-            int count = _layerStates.Count;
-
-            for (int i = 0; i < count; i++)
+            if (_activeProfile != _newProfile)
             {
-                if (_activeProfile.settings[i].GetType() == newSettings.GetType())
-                {
-                    _layerStates[i].OnLayerLinked(newSettings);
-                }
+                if (_newProfile != null) _settingsToLink.Add(newSettings);
+                return;
+            }
+            
+            Type newSettingType = newSettings.GetType();
+            
+            foreach (var layer in _animationLayers)
+            {
+                if (layer.job.GetSettingAsset().GetType() == newSettingType) layer.job.OnLayerLinked(newSettings);
             }
         }
 
         public void UpdateEntity(FPSAnimatorEntity newEntity)
         {
-            foreach (var state in _layerStates) state.OnEntityUpdated(newEntity);
+            _entity = newEntity;
         }
 
         public void Dispose()
         {
-            foreach (var state in _layerStates) state.OnDestroyed();
-            _layerStates.Clear();
+            foreach (var layer in _animationLayers)
+            {
+                layer.job.Destroy();
+                layer.playable.Destroy();
+            }
+            
+            _animationLayers.Clear();
+            if (_blendingJob.poses.IsCreated) _blendingJob.poses.Dispose();
+            if (_virtualElementJob.handles.IsCreated) _virtualElementJob.handles.Dispose();
         }
-        
-#if UNITY_EDITOR
-        public void OnSceneGUI()
-        {
-        }
-        
-        private void OnDrawGizmos()
-        {
-            if (_layerStates == null) return;
-            foreach (var state in _layerStates) state.OnDrawGizmos();
-        }
-#endif
     }
 }
