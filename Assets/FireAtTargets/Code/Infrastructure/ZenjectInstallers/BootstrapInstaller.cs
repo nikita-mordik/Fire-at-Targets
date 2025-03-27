@@ -5,6 +5,7 @@ using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.SceneLoader;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Weapon;
 using FreedLOW.FireAtTargets.Code.Infrastructure.State;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Time;
 using UnityEngine;
@@ -24,7 +25,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             BindInputService();
             BindPoolService();
             BindUnityTimeService();
-            BindWeaponHandlerService();
+            BindWeaponServices();
         }
 
         private void BindPoolService()
@@ -60,7 +61,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             Container.Bind<IStateMachine>()
                 .FromSubContainerResolve()
                 .ByInstaller<StateMachineInstaller>()
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindSceneLoaderService()
@@ -77,8 +79,12 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
                 .AsSingle();
         }
         
-        private void BindWeaponHandlerService()
+        private void BindWeaponServices()
         {
+            Container.Bind<ISelectWeaponService>()
+                .To<SelectWeaponService>()
+                .AsSingle();
+            
             Container.Bind<IWeaponEventHandlerService>()
                 .To<WeaponEventHandlerService>()
                 .AsSingle();

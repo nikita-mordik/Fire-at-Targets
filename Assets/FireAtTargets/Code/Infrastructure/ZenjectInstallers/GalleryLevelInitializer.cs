@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
@@ -8,7 +9,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
 {
     public class GalleryLevelInitializer : MonoBehaviour, IInitializable
     {
-        [SerializeField] private Transform uiRoot;
+        [SerializeField] private Transform _uiRoot;
         
         private IGameFactory _gameFactory;
         private IPrefabPoolService _poolService;
@@ -22,16 +23,16 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
         
         public async void Initialize()
         {
-            InitializeHUD();
+            InitializeHUD().Forget();
 
             // FOR TEST, THEN SHOULD DELETE THIS:
-            await _poolService.InitializePoolAsync(AssetLabel.ShootingGalleryPool);
+            //await _poolService.InitializePoolAsync(AssetLabel.ShootingGalleryPool);
         }
         
-        private async void InitializeHUD()
+        private async UniTaskVoid InitializeHUD()
         {
             var hud = await _gameFactory.CreateHUD();
-            hud.transform.SetParent(uiRoot);
+            hud.transform.SetParent(_uiRoot);
         }
     }
 }

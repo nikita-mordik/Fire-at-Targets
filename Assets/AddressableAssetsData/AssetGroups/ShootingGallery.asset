@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: ShootingGallery
   m_EditorClassIdentifier: 
   m_GroupName: ShootingGallery
-  m_Data:
-    m_SerializedData: []
   m_GUID: 9ae37f707f878e049abd30e12f318262
   m_SerializeEntries:
   - m_GUID: 1130a470e041f60448a7e6cae5968b70

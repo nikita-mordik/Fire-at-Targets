@@ -1,13 +1,9 @@
-using System.Collections.Generic;
 using Demo.Scripts.Runtime.Character;
-using Demo.Scripts.Runtime.Item;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
 using KINEMATION.KAnimationCore.Runtime.Input;
-using KINEMATION.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Character
 {
@@ -15,6 +11,8 @@ namespace FreedLOW.FireAtTargets.Code.Character
     public class CustomFPSController : MonoBehaviour
     {
         [SerializeField] private FPSControllerSettings _settings;
+        [SerializeField] private CharacterWeaponController _weaponController;
+        [SerializeField] private bool _isLockCursor;
         
         private static readonly int FullBodyWeightHash = Animator.StringToHash("FullBodyWeight");
         private static readonly int ProneWeightHash = Animator.StringToHash("ProneWeight");
@@ -24,23 +22,16 @@ namespace FreedLOW.FireAtTargets.Code.Character
 
         private CustomFPSMovement _movementComponent;
 
-        private Transform _weaponBone;
         private Vector2 _playerInput;
-
-        private int _activeWeaponIndex;
-        private int _previousWeaponIndex;
 
         private FPSAimState _aimState;
         private FPSActionState _actionState;
 
         private Animator _animator;
 
-        // ~Scriptable Animation System Integration
         private FPSAnimator _fpsAnimator;
         private UserInputController _userInput;
-        // ~Scriptable Animation System Integration
 
-        private List<FPSItem> _instantiatedWeapons;
         private Vector2 _lookDeltaInput;
 
         private RecoilPattern _recoilPattern;
@@ -48,34 +39,19 @@ namespace FreedLOW.FireAtTargets.Code.Character
         
         private bool _isLeaning;
 
-        private IInstantiator _instantiator;
-
-        [Inject]
-        private void Construct(IInstantiator instantiator)
-        {
-            _instantiator = instantiator;
-        }
-
         private void Start()
         {
-#if UNITY_EDITOR
-            // Cursor.visible = false;
-            // Cursor.lockState = CursorLockMode.Locked;
-#endif
+            if (_isLockCursor)
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
             Time.timeScale = _settings.timeScale;
             Application.targetFrameRate = 144;
             
-            _fpsAnimator = GetComponent<FPSAnimator>();
-            _fpsAnimator.Initialize();
-
-            _weaponBone = GetComponentInChildren<KRigComponent>().GetRigTransform(_settings.weaponBone);
-            _animator = GetComponent<Animator>();
-            
-            _userInput = GetComponent<UserInputController>();
-            _recoilPattern = GetComponent<RecoilPattern>();
-
+            GetComponents();
             InitializeMovement();
-            InitializeWeapons();
 
             _actionState = FPSActionState.None;
             EquipWeapon();
@@ -87,6 +63,14 @@ namespace FreedLOW.FireAtTargets.Code.Character
         {
             UpdateLookInput();
             OnMovementUpdated();
+        }
+
+        private void GetComponents()
+        {
+            _fpsAnimator = GetComponent<FPSAnimator>();
+            _animator = GetComponent<Animator>();
+            _userInput = GetComponent<UserInputController>();
+            _recoilPattern = GetComponent<RecoilPattern>();
         }
 
         private void PlayTransitionMotion(FPSAnimatorLayerSettings layerSettings)
@@ -142,29 +126,11 @@ namespace FreedLOW.FireAtTargets.Code.Character
             };
         }
 
-        private void InitializeWeapons()
-        {
-            _instantiatedWeapons = new List<FPSItem>();
-
-            foreach (var prefab in _settings.weaponPrefabs)
-            {
-                var weapon = _instantiator.InstantiatePrefab(prefab, transform.position, Quaternion.identity, null);
-                
-                var weaponTransform = weapon.transform;
-                weaponTransform.parent = _weaponBone;
-                weaponTransform.localPosition = Vector3.zero;
-                weaponTransform.localRotation = Quaternion.identity;
-
-                _instantiatedWeapons.Add(weapon.GetComponent<FPSItem>());
-                weapon.gameObject.SetActive(false);
-            }
-        }
-
         private void UnequipWeapon()
         {
             DisableAim();
             _actionState = FPSActionState.WeaponChange;
-            GetActiveItem().OnUnEquip();
+            _weaponController.OnUnEquipWeapon();
         }
 
         public void ResetActionState()
@@ -174,44 +140,30 @@ namespace FreedLOW.FireAtTargets.Code.Character
 
         private void EquipWeapon()
         {
-            if (_instantiatedWeapons.Count == 0) 
-                return;
-
-            _instantiatedWeapons[_previousWeaponIndex].gameObject.SetActive(false);
-            GetActiveItem().gameObject.SetActive(true);
-            GetActiveItem().OnEquip(gameObject);
-
+            _weaponController.EquipWeapon();
             _actionState = FPSActionState.None;
         }
 
         private void DisableAim()
         {
-            if (GetActiveItem().OnAimReleased()) 
+            if (_weaponController.GetActiveItem().OnAimReleased()) 
                 _aimState = FPSAimState.None;
         }
         
         private void OnFirePressed()
-        {
-            if (_instantiatedWeapons.Count == 0 || HasActiveAction()) 
+        { 
+            if (!_weaponController.HasWeapon() || HasActiveAction()) 
                 return;
             
-            GetActiveItem().OnFirePressed();
+            _weaponController.GetActiveItem().OnFirePressed();
         }
 
         private void OnFireReleased()
         {
-            if (_instantiatedWeapons.Count == 0) 
+            if (!_weaponController.HasWeapon()) 
                 return;
             
-            GetActiveItem().OnFireReleased();
-        }
-
-        private FPSItem GetActiveItem()
-        {
-            if (_instantiatedWeapons.Count == 0) 
-                return null;
-            
-            return _instantiatedWeapons[_activeWeaponIndex];
+            _weaponController.GetActiveItem().OnFireReleased();
         }
         
         private void OnSlideStarted()
@@ -244,20 +196,6 @@ namespace FreedLOW.FireAtTargets.Code.Character
         private void OnUncrouch()
         {
             PlayTransitionMotion(_settings.crouchingMotion);
-        }
-        
-        private void StartWeaponChange(int newIndex)
-        {
-            if (newIndex == _activeWeaponIndex || newIndex > _instantiatedWeapons.Count - 1)
-                return;
-
-            UnequipWeapon();
-
-            OnFireReleased();
-            Invoke(nameof(EquipWeapon), _settings.equipDelay);
-
-            _previousWeaponIndex = _activeWeaponIndex;
-            _activeWeaponIndex = newIndex;
         }
         
         private void UpdateLookInput()
@@ -296,7 +234,7 @@ namespace FreedLOW.FireAtTargets.Code.Character
 #if ENABLE_INPUT_SYSTEM
         public void OnReload()
         {
-            if (IsSprinting() || HasActiveAction() || !GetActiveItem().OnReload()) 
+            if (IsSprinting() || HasActiveAction() || !_weaponController.GetActiveItem().OnReload()) 
                 return;
             
             _actionState = FPSActionState.PlayingAnimation;
@@ -304,7 +242,7 @@ namespace FreedLOW.FireAtTargets.Code.Character
 
         public void OnThrowGrenade()
         {
-            if (IsSprinting()|| HasActiveAction() || !GetActiveItem().OnGrenadeThrow()) 
+            if (IsSprinting()|| HasActiveAction() || !_weaponController.GetActiveItem().OnGrenadeThrow()) 
                 return;
             
             _actionState = FPSActionState.PlayingAnimation;
@@ -332,7 +270,7 @@ namespace FreedLOW.FireAtTargets.Code.Character
             bool isPressed = value.isPressed;
             if (isPressed && !IsAiming())
             {
-                if (GetActiveItem().OnAimPressed()) 
+                if (_weaponController.GetActiveItem().OnAimPressed()) 
                     _aimState = FPSAimState.Aiming;
                 
                 PlayTransitionMotion(_settings.aimingMotion);
@@ -342,17 +280,6 @@ namespace FreedLOW.FireAtTargets.Code.Character
                 DisableAim();
                 PlayTransitionMotion(_settings.aimingMotion);
             }
-        }
-
-        public void OnChangeWeapon()
-        {
-            if (_movementComponent.PoseState == FPSPoseState.Prone) 
-                return;
-            
-            if (HasActiveAction() || _instantiatedWeapons.Count == 0) 
-                return;
-            
-            StartWeaponChange(_activeWeaponIndex + 1 > _instantiatedWeapons.Count - 1 ? 0 : _activeWeaponIndex + 1);
         }
 
         public void OnLook(InputValue value)
@@ -371,13 +298,13 @@ namespace FreedLOW.FireAtTargets.Code.Character
             if (!IsAiming())
                 return;
             
-            GetActiveItem().OnCycleScope();
+            _weaponController.GetActiveItem().OnCycleScope();
             PlayTransitionMotion(_settings.aimingMotion);
         }
 
         public void OnChangeFireMode()
         {
-            GetActiveItem().OnChangeFireMode();
+            _weaponController.GetActiveItem().OnChangeFireMode();
         }
 
         public void OnToggleAttachmentEditing()
@@ -402,7 +329,7 @@ namespace FreedLOW.FireAtTargets.Code.Character
             if (!value.isPressed || _actionState != FPSActionState.AttachmentEditing) 
                 return;
             
-            GetActiveItem().OnAttachmentChanged((int) value.Get<float>());
+            _weaponController.GetActiveItem().OnAttachmentChanged((int) value.Get<float>());
         }
 #endif
     }

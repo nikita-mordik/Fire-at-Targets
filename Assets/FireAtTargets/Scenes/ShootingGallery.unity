@@ -12135,6 +12135,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfd6af6bf035564d91046ccd937f7af, type: 3}
+--- !u!114 &313208123 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2723319718856603024, guid: 7dfd6af6bf035564d91046ccd937f7af,
+    type: 3}
+  m_PrefabInstance: {fileID: 313208122}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e88bed65bd647fab4f69196c9a15f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &316406791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35027,7 +35039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db3f8ca4361489d93d09d31f4245ad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerControllerService: {fileID: 0}
   Initializers:
   - {fileID: 1027537645}
 --- !u!114 &1027537643
@@ -35045,6 +35056,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1027537642}
+  - {fileID: 313208123}
   _installerPrefabs: []
   _findSiblingMonoInstallers: 0
   _autoRun: 1
@@ -35090,7 +35102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55fc15d814f04ac98b89874ad5c31e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiRoot: {fileID: 339181194}
+  _uiRoot: {fileID: 339181194}
 --- !u!1001 &1031586455
 PrefabInstance:
   m_ObjectHideFlags: 0

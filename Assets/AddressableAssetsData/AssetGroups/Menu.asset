@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Menu
   m_EditorClassIdentifier: 
   m_GroupName: Menu
-  m_Data:
-    m_SerializedData: []
   m_GUID: 9408744414a8ecb4fb51bc386b0f9ad9
   m_SerializeEntries: []
   m_ReadOnly: 0
