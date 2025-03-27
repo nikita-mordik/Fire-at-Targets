@@ -3306,6 +3306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 777d56703875e344e9d2991a06db5f3e, type: 2}
   _weaponController: {fileID: 4943213304327635065}
+  _isLockCursor: 0
 --- !u!114 &6292395302893869777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3333,6 +3334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fpsController: {fileID: 6936717919522017284}
   _fpsAnimator: {fileID: 2470956452202649628}
+  _characterInput: {fileID: 3047020667410615401}
 --- !u!114 &2723319718856603024
 MonoBehaviour:
   m_ObjectHideFlags: 0

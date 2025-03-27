@@ -45,11 +45,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - ShootingGalleryPool
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c2a7ee7300527ab489faf707a0d892a8
-    m_Address: ShootingGallery
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e09b71e4596812248bb8c3d0ff4a5b46, type: 2}
   m_SchemaSet:
