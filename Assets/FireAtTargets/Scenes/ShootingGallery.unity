@@ -12130,23 +12130,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: FPSGenericPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 8043286474434123627, guid: 7dfd6af6bf035564d91046ccd937f7af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dfd6af6bf035564d91046ccd937f7af, type: 3}
---- !u!114 &313208123 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2723319718856603024, guid: 7dfd6af6bf035564d91046ccd937f7af,
-    type: 3}
-  m_PrefabInstance: {fileID: 313208122}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e88bed65bd647fab4f69196c9a15f73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &316406791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12736,8 +12729,8 @@ GameObject:
   m_Component:
   - component: {fileID: 339181194}
   m_Layer: 0
-  m_Name: UIRoot
-  m_TagString: Untagged
+  m_Name: SceneRoot
+  m_TagString: SceneRoot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35056,7 +35049,6 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1027537642}
-  - {fileID: 313208123}
   _installerPrefabs: []
   _findSiblingMonoInstallers: 0
   _autoRun: 1

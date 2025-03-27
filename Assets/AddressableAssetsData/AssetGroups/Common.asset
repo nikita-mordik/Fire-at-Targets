@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Common
   m_EditorClassIdentifier: 
   m_GroupName: Common
-  m_Data:
-    m_SerializedData: []
   m_GUID: 485969679db01cf4e8008ae5559aa7ba
   m_SerializeEntries:
+  - m_GUID: 7dfd6af6bf035564d91046ccd937f7af
+    m_Address: FPSGenericPlayer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d4d8b4cb06d81ba489fd2e18b3fe2667
     m_Address: PlayerControlActions
     m_ReadOnly: 0

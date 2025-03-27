@@ -8,15 +8,17 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player
     {
         [SerializeField] private CustomFPSController _fpsController;
         [SerializeField] private FPSAnimator _fpsAnimator;
-        
-        public void SetPositionAndRotation(Transform spawnPoint)
-        {
-            transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
-        }
+        [SerializeField] private CharacterWeaponController _weaponController;
 
         public void Initialize()
         {
             _fpsAnimator.Initialize();
+            _weaponController.Initialize();
+        }
+        
+        public void SetPositionAndRotation(Transform spawnPoint)
+        {
+            transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
         }
     }
 }

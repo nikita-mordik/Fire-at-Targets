@@ -7,10 +7,10 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Factory
 {
     public interface IGameFactory
     {
-        UniTask<GameObject> CreatePlayer();
-        UniTask<GameObject> CreateHUD();
-        UniTask<GameObject> CreateShootParticle(ObjectType muzzleType);
-        UniTask<GameObject> CreateHitParticle(ObjectType hitType);
+        UniTask<GameObject> CreatePlayerAsync();
+        UniTask<GameObject> CreateHUDAsync();
+        UniTask<GameObject> CreateShootParticleAsync(ObjectType muzzleType);
+        UniTask<GameObject> CreateHitParticleAsync(ObjectType hitType);
         void CleanUp();
     }
 }
