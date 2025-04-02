@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using FreedLOW.FireAtTargets.Code.Common;
+using FreedLOW.FireAtTargets.Code.Extensions;
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
@@ -34,7 +35,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
 
         public void Exit()
         {
-            _hud.transform.GetChild(0).gameObject.SetActive(true);
+            CanvasGroup hudCanvasGroup = _hud.transform.GetChild(0).GetComponent<CanvasGroup>();
+            hudCanvasGroup.DoState(true);
         }
 
         private async void OnLoad(Action action)
