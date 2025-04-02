@@ -1,46 +1,55 @@
 using Cysharp.Threading.Tasks;
-using FreedLOW.FireAtTargets.Code.Extensions;
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        private readonly IAssetProvider assetProvider;
-        private readonly IInstantiator instantiator;
-        private readonly IPrefabPoolService poolService;
+        private readonly IAssetProvider _assetProvider;
+        private readonly IInstantiator _instantiator;
+        private readonly IPrefabPoolService _poolService;
+
+        private GameObject _characterGameObject;
+        private GameObject _hudGameObject;
 
         public GameFactory(IAssetProvider assetProvider, IInstantiator instantiator, IPrefabPoolService poolService)
         {
-            this.assetProvider = assetProvider;
-            this.instantiator = instantiator;
-            this.poolService = poolService;
+            _assetProvider = assetProvider;
+            _instantiator = instantiator;
+            _poolService = poolService;
         }
         
-        public UniTask<GameObject> CreatePlayer()
+        public async UniTask<GameObject> CreatePlayerAsyncAt(Transform at)
         {
-            throw new System.NotImplementedException();
+            var asset = await _assetProvider.LoadAsset(AssetName.Character);
+            _characterGameObject = InstantiateInjectObject(asset);
+            IPlayerControllerService playerControllerService = _characterGameObject.GetComponent<IPlayerControllerService>();
+            playerControllerService.Initialize();
+            playerControllerService.SetPositionAndRotation(at);
+            return _characterGameObject;
         }
 
-        public async UniTask<GameObject> CreateHUD()
+        public async UniTask<GameObject> CreateHUDAsync()
         {
-            var asset = await assetProvider.LoadAsset(AssetName.HUDLabel);
-            return InstantiateInjectObject(asset);
+            var asset = await _assetProvider.LoadAsset(AssetName.HUDLabel);
+            _hudGameObject = InstantiateInjectObject(asset);
+            return _hudGameObject;
         }
 
-        public async UniTask<GameObject> CreateShootParticle(ObjectType muzzleType) => 
-            await poolService.GetObjectFromPool(muzzleType);
+        public async UniTask<GameObject> CreateShootParticleAsync(ObjectType muzzleType) => 
+            await _poolService.GetObjectFromPool(muzzleType);
 
-        public async UniTask<GameObject> CreateHitParticle(ObjectType hitType) => 
-            await poolService.GetObjectFromPool(hitType);
+        public async UniTask<GameObject> CreateHitParticleAsync(ObjectType hitType) => 
+            await _poolService.GetObjectFromPool(hitType);
 
         public void CleanUp()
         {
-            throw new System.NotImplementedException();
+            Object.Destroy(_characterGameObject);
+            Object.Destroy(_hudGameObject);
         }
 
         private static GameObject InstantiateObject(GameObject asset) => 
@@ -50,6 +59,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Factory
             Object.Instantiate(asset, position, rotation);
 
         private GameObject InstantiateInjectObject(GameObject asset) => 
-            instantiator.InstantiatePrefab(asset);
+            _instantiator.InstantiatePrefab(asset);
     }
 }

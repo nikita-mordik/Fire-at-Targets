@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Demo.Scripts.Runtime.Character;
 using Demo.Scripts.Runtime.Item;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Weapon;
+using FreedLOW.FireAtTargets.Code.Weapon;
 using KINEMATION.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 using Zenject;
@@ -17,15 +19,18 @@ namespace FreedLOW.FireAtTargets.Code.Character
 
         private ISelectWeaponService _selectWeaponService;
         private IInstantiator _instantiator;
+        private IWeaponEventHandlerService _weaponEventService;
 
         [Inject]
-        private void Construct(ISelectWeaponService selectWeaponService, IInstantiator instantiator)
+        private void Construct(ISelectWeaponService selectWeaponService, IInstantiator instantiator,
+            IWeaponEventHandlerService weaponEventService)
         {
             _selectWeaponService = selectWeaponService;
             _instantiator = instantiator;
+            _weaponEventService = weaponEventService;
         }
 
-        private void Awake()
+        public void Initialize()
         {
             SetupWeapon();
         }
@@ -45,6 +50,7 @@ namespace FreedLOW.FireAtTargets.Code.Character
             
             _instantiatedWeapons[0].gameObject.SetActive(true);
             _instantiatedWeapons[0].OnEquip(gameObject);
+            _weaponEventService.InvokeOnWeaponEquip(_instantiatedWeapons[0].GetComponent<CustomWeapon>());
         }
 
         public void OnUnEquipWeapon()

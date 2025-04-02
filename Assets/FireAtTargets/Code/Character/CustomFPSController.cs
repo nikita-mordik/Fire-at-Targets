@@ -54,8 +54,6 @@ namespace FreedLOW.FireAtTargets.Code.Character
             InitializeMovement();
 
             _actionState = FPSActionState.None;
-            EquipWeapon();
-
             _sensitivityMultiplierPropertyIndex = _userInput.GetPropertyIndex("SensitivityMultiplier");
         }
 
@@ -63,6 +61,11 @@ namespace FreedLOW.FireAtTargets.Code.Character
         {
             UpdateLookInput();
             OnMovementUpdated();
+        }
+        
+        public void ResetActionState()
+        {
+            _actionState = FPSActionState.None;
         }
 
         private void GetComponents()
@@ -131,11 +134,6 @@ namespace FreedLOW.FireAtTargets.Code.Character
             DisableAim();
             _actionState = FPSActionState.WeaponChange;
             _weaponController.OnUnEquipWeapon();
-        }
-
-        public void ResetActionState()
-        {
-            _actionState = FPSActionState.None;
         }
 
         private void EquipWeapon()

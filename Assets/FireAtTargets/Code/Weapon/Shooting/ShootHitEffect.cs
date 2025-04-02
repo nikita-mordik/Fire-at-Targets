@@ -29,7 +29,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
 
         public async void ShootEffect(Vector3 shootPointPosition)
         {
-            var impactEffectInstance = await _gameFactory.CreateShootParticle(ObjectType.MuzzleFlashOne);
+            var impactEffectInstance = await _gameFactory.CreateShootParticleAsync(ObjectType.MuzzleFlashOne);
             impactEffectInstance.transform.SetTransform(shootPointPosition, transform.rotation);
             await BackEffectToPoolWithDelay(impactEffectInstance, ShootEffectDelay);
         }
@@ -41,7 +41,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.Shooting
                 return;
 
             var poolObject = effect.GetComponent<IPoolObject>();
-            var effectInstance = await _gameFactory.CreateHitParticle(poolObject.Type);
+            var effectInstance = await _gameFactory.CreateHitParticleAsync(poolObject.Type);
             effectInstance.transform.SetTransform(hit.point, Quaternion.identity);
             effectInstance.transform.LookAt(hit.point + hit.normal);
             await BackEffectToPoolWithDelay(effectInstance, HitEffectDelay);

@@ -97,16 +97,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         private void Awake()
         {
-            _fireRate = weaponData.FireRate;
-            _fireMode = weaponData.FireMode;
-            _supportsBurst = weaponData.SupportsBurst;
-            _bursts = weaponData.BurstAmount;
-            _burstLength = _bursts;
-            rayShooting.DamageAmount = weaponData.Damage;
-            MaxAmmo = weaponData.MaxAmmo;
-            _currentMaxAmmo = MaxAmmo;
-            _startAmmo = weaponData.StartAmmo;
-            CurrentAmmo = _startAmmo;
+            SetupWeaponData();
         }
 
         public override void OnEquip(GameObject parent)
@@ -297,6 +288,20 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
         }
         
         public bool HasMagazineAmmo() => _currentMaxAmmo > 0;
+        
+        private void SetupWeaponData()
+        {
+            _fireRate = weaponData.FireRate;
+            _fireMode = weaponData.FireMode;
+            _supportsBurst = weaponData.SupportsBurst;
+            _bursts = weaponData.BurstAmount;
+            _burstLength = _bursts;
+            rayShooting.DamageAmount = weaponData.Damage;
+            MaxAmmo = weaponData.MaxAmmo;
+            _currentMaxAmmo = MaxAmmo;
+            _startAmmo = weaponData.StartAmmo;
+            CurrentAmmo = _startAmmo;
+        }
 
         private void UpdateTargetFOV(bool isAiming)
         {

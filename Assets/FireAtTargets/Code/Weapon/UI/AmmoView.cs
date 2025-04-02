@@ -7,7 +7,7 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.UI
 {
     public class AmmoView : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI ammoText;
+        [SerializeField] private TextMeshProUGUI _ammoText;
 
         private int _currentAmmo;
         private int _magazineCountAmmo;
@@ -24,12 +24,14 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.UI
         {
             _weaponEventHandlerService.OnCurrentAmmoChanged += OnCurrentAmmoChanged;
             _weaponEventHandlerService.OnReload += OnReload;
+            _weaponEventHandlerService.OnWeaponEquip += OnWeaponEquip;
         }
 
         private void OnDisable()
         {
             _weaponEventHandlerService.OnCurrentAmmoChanged -= OnCurrentAmmoChanged;
             _weaponEventHandlerService.OnReload -= OnReload;
+            _weaponEventHandlerService.OnWeaponEquip -= OnWeaponEquip;
         }
 
         private void OnCurrentAmmoChanged(int value)
@@ -43,10 +45,17 @@ namespace FreedLOW.FireAtTargets.Code.Weapon.UI
             _magazineCountAmmo = value;
             UpdateAmmoView();
         }
+        
+        private void OnWeaponEquip(CustomWeapon weapon)
+        {
+            _currentAmmo = weapon.CurrentAmmo;
+            _magazineCountAmmo = weapon.MaxAmmo;
+            UpdateAmmoView();
+        }
 
         private void UpdateAmmoView()
         {
-            ammoText.text = $"{_currentAmmo} / {_magazineCountAmmo}";
+            _ammoText.text = $"{_currentAmmo} / {_magazineCountAmmo}";
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using FreedLOW.FireAtTargets.Code.Weapon;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event
 {
@@ -6,8 +7,10 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event
     {
         event Action<int> OnCurrentAmmoChanged;
         event Action<int> OnReload;
+        event Action<CustomWeapon> OnWeaponEquip; 
         
         void InvokeOnCurrentAmmoChanged(int currentAmmo);
         void InvokeOnReload(int currentMaxAmmo);
+        void InvokeOnWeaponEquip(CustomWeapon weapon);
     }
 }

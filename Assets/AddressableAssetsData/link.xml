@@ -10,7 +10,6 @@
     <type fullname="FreedLOW.FireAtTargets.Code.Character.CustomFPSMovement" preserve="all" />
     <type fullname="FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player.PlayerControllerService" preserve="all" />
     <type fullname="FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService.PoolObject" preserve="all" />
-    <type fullname="FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers.CharacterInstaller" preserve="all" />
     <type fullname="FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers.GalleryLevelInitializer" preserve="all" />
     <type fullname="FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers.ShootingGalleryInstaller" preserve="all" />
     <type fullname="FreedLOW.FireAtTargets.Code.StaticData.PoolObjectInfo" preserve="all" />
@@ -75,8 +74,8 @@
     <type fullname="Impact.Materials.ImpactMaterial" preserve="all" />
     <type fullname="Impact.Objects.ImpactObjectSingleMaterial" preserve="all" />
     <type fullname="Impact.TagLibrary.ImpactTagLibrary" preserve="all" />
-    <type fullname="Impact.ImpactPhysicMaterialMapping" preserve="nothing" serialized="true" />
     <type fullname="Impact.ImpactTag" preserve="nothing" serialized="true" />
+    <type fullname="Impact.ImpactPhysicMaterialMapping" preserve="nothing" serialized="true" />
     <type fullname="Impact.ImpactTagMask" preserve="nothing" serialized="true" />
     <type fullname="Impact.Materials.ImpactMaterialInteractionSet" preserve="nothing" serialized="true" />
     <type fullname="Impact.Materials.ImpactMaterialInteractionSet/TagMaskFilter" preserve="nothing" serialized="true" />
