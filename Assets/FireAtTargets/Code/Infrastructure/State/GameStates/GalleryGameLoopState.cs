@@ -1,16 +1,19 @@
 using System;
 using Cysharp.Threading.Tasks;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
 {
     public class GalleryGameLoopState : IState
     {
-        private readonly IPrefabPoolService poolService;
+        private readonly IPrefabPoolService _poolService;
+        private readonly IGameFactory _gameFactory;
 
-        public GalleryGameLoopState(IPrefabPoolService poolService)
+        public GalleryGameLoopState(IPrefabPoolService poolService, IGameFactory gameFactory)
         {
-            this.poolService = poolService;
+            _poolService = poolService;
+            _gameFactory = gameFactory;
         }
         
         public async UniTask Enter(Action action = null)
@@ -20,7 +23,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
 
         public void Exit()
         {
-            poolService.CleanUp();
+            _poolService.CleanUp();
+            _gameFactory.CleanUp();
         }
     }
 }

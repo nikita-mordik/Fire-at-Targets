@@ -23,12 +23,13 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Factory
             _poolService = poolService;
         }
         
-        public async UniTask<GameObject> CreatePlayerAsync()
+        public async UniTask<GameObject> CreatePlayerAsyncAt(Transform at)
         {
             var asset = await _assetProvider.LoadAsset(AssetName.Character);
             _characterGameObject = InstantiateInjectObject(asset);
-            _characterGameObject.GetComponent<IPlayerControllerService>()
-                .Initialize();
+            IPlayerControllerService playerControllerService = _characterGameObject.GetComponent<IPlayerControllerService>();
+            playerControllerService.Initialize();
+            playerControllerService.SetPositionAndRotation(at);
             return _characterGameObject;
         }
 

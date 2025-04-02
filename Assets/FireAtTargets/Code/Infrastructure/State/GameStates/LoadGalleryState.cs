@@ -16,7 +16,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
         private readonly IPrefabPoolService _poolService;
         private readonly IGameFactory _gameFactory;
         
-        private GameObject _root;
+        private GameObject _hud;
 
         public LoadGalleryState(ISceneLoaderService sceneLoaderService, IStateMachine stateMachine,
             IPrefabPoolService poolService, IGameFactory gameFactory)
@@ -32,14 +32,15 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
             await _sceneLoaderService.LoadSceneAsync(SceneName.GalleryScene, () => OnLoad(action));
         }
 
-        public void Exit() { }
+        public void Exit()
+        {
+            _hud.transform.GetChild(0).gameObject.SetActive(true);
+        }
 
         private async void OnLoad(Action action)
         {
-            _root = GameObject.FindWithTag(Tags.SceneRoot);
-
             await InitializeHUD();
-            await InitializeCharacter();
+            await InitializeCharacterAt(GameObject.FindWithTag(Tags.StartPoint).transform);
             await InitializePool();
             
             action?.Invoke();
@@ -48,14 +49,14 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
 
         private async UniTask InitializeHUD()
         {
-            var hud = await _gameFactory.CreateHUDAsync();
-            hud.transform.SetParent(_root.transform);
+            _hud = await _gameFactory.CreateHUDAsync();
+            _sceneLoaderService.MoveGameObjectToScene(_hud);
         }
         
-        private async UniTask InitializeCharacter()
+        private async UniTask InitializeCharacterAt(Transform at)
         {
-            var player = await _gameFactory.CreatePlayerAsync();
-            player.transform.SetParent(_root.transform);
+            var player = await _gameFactory.CreatePlayerAsyncAt(at);
+            _sceneLoaderService.MoveGameObjectToScene(player);
         }
 
         private async UniTask InitializePool()
