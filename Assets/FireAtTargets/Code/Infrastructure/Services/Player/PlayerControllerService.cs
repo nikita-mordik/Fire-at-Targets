@@ -14,7 +14,6 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player
         {
             _fpsAnimator.Initialize();
             _weaponController.Initialize();
-            _weaponController.EquipWeapon();
         }
         
         public void SetPositionAndRotation(Transform spawnPoint)

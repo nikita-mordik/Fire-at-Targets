@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Weapons
+  m_EditorClassIdentifier: 
+  m_GroupName: Weapons
+  m_GUID: 47a55a76af0e87d49b144cf93d123a75
+  m_SerializeEntries:
+  - m_GUID: 5b12621653e27cc46ae362f562c1e03e
+    m_Address: AK12_Scriptable_Custom
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61e3ff4e94fd0ca4ca5ad8126255e437
+    m_Address: Mk18_Scriptable_Custom
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64d1a4bfe4b2ca149a1d78d0f4a6cd1b
+    m_Address: FAL_Scriptable_Custom
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a323568d5b8552b41a21347cff049fbe
+    m_Address: L115A3_Scriptable_Custom
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c73e8fdfd3192cb4cace54332fff33e7
+    m_Address: Mk23Mod0_Scriptable_Custom
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9ce053dfb16ba34eb7ca742e9ee62e2
+    m_Address: AK74N_Scriptable_Custom
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e09b71e4596812248bb8c3d0ff4a5b46, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 8e2578c240f91734abcea22d00c214f9, type: 2}
+    - {fileID: 11400000, guid: 7e3de2ba294a97c439dee1dfac03b00b, type: 2}

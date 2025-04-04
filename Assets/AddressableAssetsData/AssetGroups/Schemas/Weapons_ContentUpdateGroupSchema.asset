@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e5c138ecc244c6083d08b0476893b6e, type: 3}
-  m_Name: SelectedWeapon
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Weapons_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  SelectedWeapon:
-    m_AssetGUID: 61e3ff4e94fd0ca4ca5ad8126255e437
-    m_SubObjectName: 
-    m_SubObjectGUID: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  m_Group: {fileID: 11400000, guid: 624fae230e2a3e24fb2ec6493473ef06, type: 2}
+  m_StaticContent: 0
