@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 6879776319173754784}
   - component: {fileID: 2642647778603364280}
   - component: {fileID: 3371385641042180326}
+  - component: {fileID: 535009173070773587}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -373,7 +374,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -416,6 +417,21 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   fovSpeed: 3
+--- !u!114 &535009173070773587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115243547778810997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e724b5075828e134dad41fbab0ff17aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  qualityLevel: 4
+  edgeSharpness: 2
+  m_mainCamera: {fileID: 0}
 --- !u!1 &1124993594997956170
 GameObject:
   m_ObjectHideFlags: 0

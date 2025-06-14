@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 54006ee468bbb2d4798b5c17812aa565
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.2.6
+  assetPath: Assets/The Naked Dev/SGSR/Runtime/Plugins/Resources/SGSR/SGSR_BlitShader_URP.shader
+  uploadId: 756935

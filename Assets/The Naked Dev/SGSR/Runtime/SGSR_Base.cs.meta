@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: cdb8d3ab6a95e96479a8323e7ba73443
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.2.6
+  assetPath: Assets/The Naked Dev/SGSR/Runtime/SGSR_Base.cs
+  uploadId: 756935

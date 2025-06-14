@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 71984db52d9a3ce4d9a8d88b9b94332e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.2.6
+  assetPath: Assets/The Naked Dev/SGSR/Runtime/Plugins/Resources/SGSR/SGSR_BlitShader_BIRP.shader
+  uploadId: 756935
