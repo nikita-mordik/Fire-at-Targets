@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3c9ec618a03d2c743aec1e86e931fe68
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.2.6
+  assetPath: Assets/The Naked Dev/SGSR/Runtime/URP/com.thenakeddev.sgsr.Runtime.URP.asmdef
+  uploadId: 756935

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5cc62496e79a43a49812ca234008e22a
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.2.6
+  assetPath: Assets/The Naked Dev/SGSR/Runtime/Plugins/Resources/SGSR/sgsr_shader_mobile.hlsl
+  uploadId: 756935

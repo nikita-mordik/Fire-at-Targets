@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 020ecb4521c28b142b055fdde67ce8cf
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.2.6
+  assetPath: Assets/The Naked Dev/SGSR/Editor/com.thenakeddev.sgsr.Editor.asmdef
+  uploadId: 756935

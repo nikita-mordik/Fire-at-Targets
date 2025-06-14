@@ -1,0 +1,20 @@
+{
+    "name": "com.thenakeddev.sgsr.Runtime.URP",
+    "rootNamespace": "TND.SGSR",
+    "references": [
+        "com.thenakeddev.sgsr.Runtime",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_URP"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
