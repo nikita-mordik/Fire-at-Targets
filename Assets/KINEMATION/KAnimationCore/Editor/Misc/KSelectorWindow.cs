@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using KINEMATION.KAnimationCore.Editor.Rig;
 
 using System.Collections.Generic;
@@ -17,7 +17,6 @@ namespace KINEMATION.KAnimationCore.Editor.Misc
 
         private RigTreeWidget _rigTreeWidget;
         private bool _useSelection = false;
-        private List<(string, int)> _selectedItems;
         
         public static void ShowWindow(ref List<string> names, ref List<int> depths, OnTreeItemClicked onClicked, 
             OnSelectionChanged onSelectionChanged, bool useSelection, List<int> selection = null, string title = "Selection")
@@ -35,24 +34,24 @@ namespace KINEMATION.KAnimationCore.Editor.Misc
                 namesAndDepths[i] = (names[i], depths[i]);
             }
             
-            window._rigTreeWidget = new RigTreeWidget();
+            window._rigTreeWidget = new RigTreeWidget
+            {
+                rigTreeView =
+                {
+                    drawToggleBoxes = useSelection,
+                    onItemClicked = window.OnItemClicked
+                }
+            };
 
-            if (window._useSelection)
-            {
-                window._rigTreeWidget.rigTreeView.onSelectionChanged = window.OnSelectionChanged;
-                window._rigTreeWidget.rigTreeView.drawToggleBoxes = true;
-                window._selectedItems = new List<(string, int)>();
-            }
-            else
-            {
-                window._rigTreeWidget.rigTreeView.onItemClicked = window.OnItemClicked;
-            }
-            
             window._rigTreeWidget.Refresh(ref namesAndDepths);
 
             if (window._useSelection && selection != null)
             {
                 window._rigTreeWidget.rigTreeView.SetSelection(selection);
+                
+                foreach (var selectedIndex in selection) 
+                    window._rigTreeWidget.rigTreeView.selectedItems[selectedIndex - 1] = true;
+                
             }
             
             window.ShowAuxWindow();
@@ -64,25 +63,19 @@ namespace KINEMATION.KAnimationCore.Editor.Misc
             Close();
         }
 
-        private void OnSelectionChanged(List<(string, int)> selectedItems)
-        {
-            _selectedItems = selectedItems;
-        }
-
         private void OnGUI()
         {
-            if (_useSelection && GUILayout.Button("Save Selection"))
-            {
-                if(_selectedItems.Count > 0) _onSelectionChanged.Invoke(_selectedItems);
-                Close();
-            }
-            
             EditorGUILayout.BeginHorizontal(GUI.skin.FindStyle("Toolbar"));
             _searchEntry = EditorGUILayout.TextField(_searchEntry, EditorStyles.toolbarSearchField);
             EditorGUILayout.EndHorizontal();
             
             _rigTreeWidget.rigTreeView.Filter(_searchEntry);
             _rigTreeWidget.Render();
+        }
+
+        private void OnDisable()
+        {
+            if (_useSelection) _onSelectionChanged?.Invoke(_rigTreeWidget.rigTreeView.GetSelectedItemPairs());
         }
     }
 }

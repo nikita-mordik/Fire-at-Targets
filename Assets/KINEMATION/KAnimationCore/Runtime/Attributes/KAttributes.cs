@@ -60,5 +60,18 @@ namespace KINEMATION.KAnimationCore.Runtime.Attributes
         }
     }
 
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    public class CustomElementChainDrawerAttribute : PropertyAttribute
+    {
+        public bool drawLabel;
+        public bool drawTextField;
+
+        public CustomElementChainDrawerAttribute(bool drawLabel, bool drawTextField)
+        {
+            this.drawLabel = drawLabel;
+            this.drawTextField = drawTextField;
+        }
+    }
+
     public class KAttributes { }
 }

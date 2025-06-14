@@ -5,7 +5,7 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 4
+    smallestOccluder: 5
     smallestHole: 0.2
     backfaceThreshold: 100
   m_SceneGUID: c2a7ee7300527ab489faf707a0d892a8
@@ -94,8 +94,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 09fbf90a3ed9a0a43b3a71e7e1bdc4eb,
-    type: 2}
+  m_LightingDataAsset: {fileID: 0}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 6df0811af5485254abefe9840166013c,
     type: 2}
 --- !u!196 &4
@@ -3295,7 +3294,7 @@ MonoBehaviour:
   lowestSubdivLevelOverride: 0
   highestSubdivLevelOverride: 3
   overridesSubdivLevels: 1
-  mightNeedRebaking: 0
+  mightNeedRebaking: 1
   cachedTransform:
     e00: 1
     e01: 0
@@ -13214,7 +13213,7 @@ ReflectionProbe:
     m_Bits: 4294967295
   m_IntensityMultiplier: 1
   m_BlendDistance: 1
-  m_HDR: 1
+  m_HDR: 0
   m_BoxProjection: 1
   m_RenderDynamicObjects: 0
   m_UseOcclusionCulling: 1
@@ -20804,8 +20803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a83d2f7ae04ab6f4f99b0d85377be998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializedBakingSet: {fileID: 11400000, guid: 43c3e3ad7fae4954096a7b3d4c79cead,
-    type: 2}
+  serializedBakingSet: {fileID: 0}
   sceneGUID: c2a7ee7300527ab489faf707a0d892a8
   obsoleteAsset: {fileID: 0}
   obsoleteCellSharedDataAsset: {fileID: 0}

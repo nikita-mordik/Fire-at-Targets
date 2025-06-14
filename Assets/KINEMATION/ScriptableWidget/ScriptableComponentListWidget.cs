@@ -226,11 +226,19 @@ namespace KINEMATION.ScriptableWidget
 
             _componentsList.onReorderCallbackWithDetails = (ReorderableList list, int oldIndex, int newIndex) =>
             {
-                Editor oldIndexEditor = _editors[oldIndex];
-                Editor newIndexEditor = _editors[newIndex];
-
-                _editors[oldIndex] = newIndexEditor;
-                _editors[newIndex] = oldIndexEditor;
+                Editor editorToMove = _editors[oldIndex];
+                
+                _editors.RemoveAt(oldIndex);
+                if (newIndex > oldIndex)
+                {
+                    if (newIndex > _editors.Count - 1)
+                    {
+                        _editors.Add(editorToMove);
+                        return;
+                    }
+                }
+                
+                _editors.Insert(newIndex, editorToMove);
             };
 
             _componentsList.onRemoveCallback = list =>

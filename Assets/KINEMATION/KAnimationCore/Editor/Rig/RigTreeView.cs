@@ -2,7 +2,6 @@
 
 using KINEMATION.KAnimationCore.Editor.Misc;
 using System.Collections.Generic;
-
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
@@ -15,7 +14,7 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
     public class RigTreeView : TreeView
     {
         public OnTreeItemClicked onItemClicked;
-        public OnSelectionChanged onSelectionChanged;
+        public List<bool> selectedItems;
         
         public float singleRowHeight = 0f;
         public bool drawToggleBoxes;
@@ -26,6 +25,7 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
         public RigTreeView(TreeViewState state) : base(state)
         {
             _treeItems = new List<TreeViewItem>();
+            selectedItems = new List<bool>();
             Reload();
         }
 
@@ -40,6 +40,7 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
             for (int i = 0; i < count; i++)
             {
                 _treeItems.Add(new TreeViewItem(i + 1, items[i].Item2 + depthOffset, items[i].Item1));
+                selectedItems.Add(false);
             }
             
             items.CopyTo(_originalItems, 0);
@@ -70,6 +71,20 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
             Reload();
         }
 
+        public List<(string, int)> GetSelectedItemPairs()
+        {
+            List<(string, int)> output = new List<(string, int)>();
+
+            int index = 0;
+            foreach (var item in _originalItems)
+            {
+                if (selectedItems[index]) output.Add((item.Item1, index));
+                index++;
+            }
+
+            return output;
+        }
+
         protected override TreeViewItem BuildRoot()
         {
             // 0 is the root ID, -1 means the root has no parent
@@ -83,21 +98,31 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
 
         protected override void RowGUI(RowGUIArgs args)
         {
-            var rect = args.rowRect;
-
             Color darkGrey = new Color(0.2f, 0.2f, 0.2f);
             Color lightGrey = new Color(0.25f, 0.25f, 0.25f);
             Color blue = new Color(115f / 255f, 147f / 255f, 179f / 255f, 0.25f);
 
             var color = args.selected ? blue : args.row % 2 == 0 ? lightGrey : darkGrey;
-
-            EditorGUI.DrawRect(rect, color);
-
+            EditorGUI.DrawRect(args.rowRect, color);
+            
             if (drawToggleBoxes)
             {
-                GUI.enabled = false;
-                EditorGUI.Toggle(rect, args.selected);
-                GUI.enabled = true;
+                var rect = args.rowRect;
+                rect.width = rect.height;
+
+                bool prevToggle = selectedItems[args.item.id - 1];
+                bool toggle = EditorGUI.Toggle(rect, prevToggle);
+
+                if (toggle != prevToggle)
+                {
+                    // If this item is a part of a larger selection, update the status globally.
+                    if (IsSelected(args.item.id))
+                    {
+                        var selection = GetSelection();
+                        foreach (var selectedId in selection) selectedItems[selectedId - 1] = toggle;
+                    } // Otherwise, change this toggle only.
+                    else selectedItems[args.item.id - 1] = toggle;
+                }
             }
 
             singleRowHeight = rowHeight;
@@ -119,22 +144,6 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
             }
             
             base.RowGUI(args);
-        }
-        
-        protected override void SelectionChanged(IList<int> selectedIds)
-        {
-            if (!drawToggleBoxes) return;
-            
-            List<(string, int)> selectedItems = new List<(string, int)>();
-            
-            foreach (var selectedId in selectedIds)
-            {
-                string displayName = _originalItems[selectedId - 1].Item1;
-                int index = selectedId - 1;
-                selectedItems.Add((displayName, index));
-            }
-            
-            onSelectionChanged?.Invoke(selectedItems);
         }
     }
 

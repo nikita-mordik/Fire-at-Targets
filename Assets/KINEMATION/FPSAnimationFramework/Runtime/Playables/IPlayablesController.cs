@@ -15,6 +15,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
         public bool PlayPose(FPSAnimationAsset asset);
         public bool PlayAnimation(FPSAnimationAsset asset, float startTime = 0f);
         public void UpdateAnimatorController(RuntimeAnimatorController newController);
+        public void UpdateAvatarMask(AvatarMask newMask);
         public void StopAnimation(float blendOutTime);
         public bool IsPlaying();
 

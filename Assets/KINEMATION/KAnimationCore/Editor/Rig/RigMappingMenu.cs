@@ -206,6 +206,7 @@ namespace KINEMATION.KAnimationCore.Editor.Rig
             if (GUILayout.Button("Create Rig Mapping"))
             {
                 MapRigChains(_root);
+                Close();
             }
         }
     }

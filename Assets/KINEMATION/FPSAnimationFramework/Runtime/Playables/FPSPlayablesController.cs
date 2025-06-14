@@ -107,7 +107,6 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
         public void RebuildPlayables()
         {
             RebuildMasterMixer();
-            BuildOutput();
         }
 
         public virtual bool InitializeController()
@@ -156,6 +155,12 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Playables
             _playablesWeightPropertyIndex = _inputController.GetPropertyIndex(playablesWeightProperty);
             
             return true;
+        }
+
+        public virtual void UpdateAvatarMask(AvatarMask newMask)
+        {
+            if (newMask == null) newMask = upperBodyMask;
+            _masterMixer.SetLayerMaskFromAvatarMask(1, newMask);
         }
 
         public virtual void UpdateAnimatorController(RuntimeAnimatorController newController)
