@@ -222,6 +222,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.PoseSamplerLayer
             ikWeaponBone.rotation = _weaponBoneTransform.rotation;
 
             _jobData.playablesController.PlayPose(_settings.poseToSample);
+            _jobData.playablesController.UpdateAvatarMask(_settings.poseToSample.mask);
             _stabilizationWeightIndex = _jobData.inputController.GetPropertyIndex(_settings.stabilizationWeight);
         }
 

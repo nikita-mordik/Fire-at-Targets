@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Demo.Scripts.Runtime.Character;
 using Demo.Scripts.Runtime.Item;
+using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Weapon;
 using FreedLOW.FireAtTargets.Code.Weapon;
@@ -20,19 +22,22 @@ namespace FreedLOW.FireAtTargets.Code.Character
         private ISelectWeaponService _selectWeaponService;
         private IInstantiator _instantiator;
         private IWeaponEventHandlerService _weaponEventService;
+        private IAssetProvider _assetProvider;
 
         [Inject]
         private void Construct(ISelectWeaponService selectWeaponService, IInstantiator instantiator,
-            IWeaponEventHandlerService weaponEventService)
+            IWeaponEventHandlerService weaponEventService, IAssetProvider assetProvider)
         {
             _selectWeaponService = selectWeaponService;
             _instantiator = instantiator;
             _weaponEventService = weaponEventService;
+            _assetProvider = assetProvider;
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
-            SetupWeapon();
+            await SetupWeapon();
+            EquipWeapon();
         }
 
         public FPSItem GetActiveItem()
@@ -63,12 +68,13 @@ namespace FreedLOW.FireAtTargets.Code.Character
             return _instantiatedWeapons.Count > 0;
         }
 
-        private void SetupWeapon()
+        private async UniTask SetupWeapon()
         {
             _instantiatedWeapons = new List<FPSItem>();
             _weaponBone = GetComponentInChildren<KRigComponent>().GetRigTransform(_settings.weaponBone);
 
-            GameObject weaponObject = _instantiator.InstantiatePrefab(_selectWeaponService.SelectedWeapon);
+            var prefab = await _assetProvider.LoadAsset(_selectWeaponService.SelectedWeapon.AssetGUID);
+            GameObject weaponObject = _instantiator.InstantiatePrefab(prefab);
             var weaponTransform = weaponObject.transform;
             weaponTransform.parent = _weaponBone;
             weaponTransform.localPosition = Vector3.zero;

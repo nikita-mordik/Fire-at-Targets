@@ -137,20 +137,22 @@ namespace IngameDebugConsole
 		/// </summary>
 		public void OnBeforeFilterLogs()
 		{
-			if( selectedLogEntry == null )
-				return;
-
 			collapsedOrderOfSelectedLogEntry = 0;
-			if( !isCollapseOn )
-			{
-				for( int i = 0; i < indexOfSelectedLogEntry; i++ )
-				{
-					if( entriesToShow[i] == selectedLogEntry )
-						collapsedOrderOfSelectedLogEntry++;
-				}
-			}
+			scrollDistanceToSelectedLogEntry = 0f;
 
-			scrollDistanceToSelectedLogEntry = indexOfSelectedLogEntry * ItemHeight - transformComponent.anchoredPosition.y;
+			if( selectedLogEntry != null )
+			{
+				if( !isCollapseOn )
+				{
+					for( int i = 0; i < indexOfSelectedLogEntry; i++ )
+					{
+						if( entriesToShow[i] == selectedLogEntry )
+							collapsedOrderOfSelectedLogEntry++;
+					}
+				}
+
+				scrollDistanceToSelectedLogEntry = indexOfSelectedLogEntry * ItemHeight - transformComponent.anchoredPosition.y;
+			}
 		}
 
 		/// <summary>
@@ -158,7 +160,7 @@ namespace IngameDebugConsole
 		/// </summary>
 		public void OnAfterFilterLogs()
 		{
-			// Refresh the selected log entry's index
+			// Refresh selected log entry's index
 			int newIndexOfSelectedLogEntry = -1;
 			if( selectedLogEntry != null )
 			{

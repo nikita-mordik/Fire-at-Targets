@@ -1,10 +1,10 @@
-using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Weapon
 {
     public interface ISelectWeaponService
     {
-        GameObject SelectedWeapon { get; }
-        void SelectWeapon(GameObject weapon);
+        AssetReferenceGameObject SelectedWeapon { get; }
+        void SelectWeapon(AssetReferenceGameObject weapon);
     }
 }

@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e5c138ecc244c6083d08b0476893b6e, type: 3}
   m_Name: SelectedWeapon
   m_EditorClassIdentifier: 
-  SelectedWeapon: {fileID: 537098369804609118, guid: 61e3ff4e94fd0ca4ca5ad8126255e437,
-    type: 3}
+  SelectedWeapon:
+    m_AssetGUID: 61e3ff4e94fd0ca4ca5ad8126255e437
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
