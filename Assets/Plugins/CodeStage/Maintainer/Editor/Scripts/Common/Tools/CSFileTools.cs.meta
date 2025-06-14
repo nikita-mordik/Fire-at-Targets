@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 4acbe4fcb6036f24ba78b74cf41debaf
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 32199
+  packageName: Maintainer
+  packageVersion: 1.17.1
+  assetPath: Assets/Plugins/CodeStage/Maintainer/Editor/Scripts/Common/Tools/CSFileTools.cs
+  uploadId: 710853

@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 0a701c27587d42b3b498446d49886990
+timeCreated: 1541947201
+AssetOrigin:
+  serializedVersion: 1
+  productId: 32199
+  packageName: Maintainer
+  packageVersion: 1.17.1
+  assetPath: Assets/Plugins/CodeStage/Maintainer/Editor/Scripts/Modules/RecordsBased/Issues/Detectors/Implementation/DuplicateComponentDetector.cs
+  uploadId: 710853

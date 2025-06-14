@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: d1df82c98f2f4a7c9209663482cffd69
+timeCreated: 1568981988
+AssetOrigin:
+  serializedVersion: 1
+  productId: 32199
+  packageName: Maintainer
+  packageVersion: 1.17.1
+  assetPath: Assets/Plugins/CodeStage/Maintainer/Editor/Scripts/UI/Tabs/ReferencesFinder/ChildTabs/Scene/HierarchyReferencesTreePanel.cs
+  uploadId: 710853
