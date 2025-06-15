@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d17a21594effb4e9591490b009e7aa, type: 3}
-  m_Name: Menu_BundledAssetGroupSchema
+  m_Name: MenuAssets_BundledAssetGroupSchema
   m_EditorClassIdentifier: 
   m_Group: {fileID: 11400000, guid: 910153c1d2ef786428dd5da590361777, type: 2}
   m_InternalBundleIdMode: 1

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: ShootingGallery
+  m_Name: ShootingGalleryAssets
   m_EditorClassIdentifier: 
-  m_GroupName: ShootingGallery
+  m_GroupName: ShootingGalleryAssets
   m_GUID: 9ae37f707f878e049abd30e12f318262
   m_SerializeEntries:
   - m_GUID: 1130a470e041f60448a7e6cae5968b70

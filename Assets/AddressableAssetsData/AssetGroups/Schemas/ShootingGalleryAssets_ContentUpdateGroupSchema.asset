@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
-  m_Name: Menu_ContentUpdateGroupSchema
+  m_Name: ShootingGalleryAssets_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: 910153c1d2ef786428dd5da590361777, type: 2}
+  m_Group: {fileID: 11400000, guid: 502a1a6034d917b4485c0d1dd2a18b7b, type: 2}
   m_StaticContent: 0
