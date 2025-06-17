@@ -30,7 +30,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
         
         public async UniTask Enter(Action action = null)
         {
-            await _sceneLoaderService.LoadSceneAsync(AddressableKeys.ShootingGalleryAssets.ShootingGallery, () => OnLoad(action));
+            await _sceneLoaderService.LoadSceneAsync(ShootingGalleryAssets.SHOOTING_GALLERY, () => OnLoad(action));
         }
 
         public void Exit()

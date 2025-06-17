@@ -17,7 +17,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
         
         public async UniTask Enter(Action action = null)
         {
-            await sceneLoaderService.LoadSceneAsync(AddressableKeys.MenuAssets.Menu, () => OnLoad(action));
+            await sceneLoaderService.LoadSceneAsync(MenuAssets.MENU, () => OnLoad(action));
         }
 
         public void Exit()

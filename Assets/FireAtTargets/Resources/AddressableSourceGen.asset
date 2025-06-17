@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: AddressableSourceGen
   m_EditorClassIdentifier: 
   IncludedGroups:
-  - Common
+  - CommonAssets
   - Effects
   - MenuAssets
   - ShootingGalleryAssets
   - Weapons
-  IncludedLabels:
-  - ShootingGalleryPool
   OutputPath: Assets/FireAtTargets/Code/Generated/Addressables
