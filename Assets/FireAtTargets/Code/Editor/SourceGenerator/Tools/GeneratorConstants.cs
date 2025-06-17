@@ -1,4 +1,4 @@
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Tools
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Tools
 {
     public static class GeneratorConstants
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Config
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Config
 {
     [CreateAssetMenu(fileName = "AddressableSourceGen", menuName = "FireAtTargets/SourceGenerator")]
     public class AddressableGenConfig : ScriptableObject

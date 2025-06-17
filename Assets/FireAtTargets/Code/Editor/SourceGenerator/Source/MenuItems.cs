@@ -1,8 +1,8 @@
-using FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Settings;
-using FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Utils;
+using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Settings;
+using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Utils;
 using UnityEditor;
 
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Source
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source
 {
     internal static class MenuItems
     {

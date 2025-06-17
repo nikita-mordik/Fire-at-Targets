@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Core;
-using FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Settings;
+using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Core;
+using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Settings;
 using UnityEditor;
 
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Utils
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Utils
 {
     internal static class ScriptFileGenerator
     {

@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Tools
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Tools
 {
     public class IndentGenerator
     {

@@ -1,4 +1,4 @@
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Core
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Core
 {
     internal class CodeText
     {

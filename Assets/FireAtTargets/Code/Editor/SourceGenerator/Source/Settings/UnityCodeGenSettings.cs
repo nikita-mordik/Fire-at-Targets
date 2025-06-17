@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Settings
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Settings
 {
     public static class UnityCodeGenSettings
     {

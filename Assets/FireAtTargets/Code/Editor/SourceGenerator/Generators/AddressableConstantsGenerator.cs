@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using FreedLOW.FireAtTargets.Code.SourceGenerator.Config;
-using FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Core;
-using FreedLOW.FireAtTargets.Code.SourceGenerator.Tools;
+using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Config;
+using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Core;
+using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Tools;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Generators
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Generators
 {
     [Generator]
     public class AddressableConstantsGenerator : ICodeGenerator

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Tools
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Tools
 {
     public class ClassInstance
     {

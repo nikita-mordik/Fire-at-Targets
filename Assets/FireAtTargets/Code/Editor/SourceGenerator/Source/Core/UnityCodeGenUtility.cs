@@ -1,6 +1,6 @@
-using FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Utils;
+using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Utils;
 
-namespace FreedLOW.FireAtTargets.Code.SourceGenerator.Source.Core
+namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Core
 {
     public static class UnityCodeGenUtility
     {
