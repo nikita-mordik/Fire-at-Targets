@@ -6,6 +6,7 @@ using System.Reflection;
 using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Core;
 using FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Settings;
 using UnityEditor;
+using UnityEngine;
 
 namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Utils
 {
@@ -57,10 +58,24 @@ namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Utils
                 Directory.CreateDirectory(folderPath);
             }
 
+            HashSet<string> expectedFiles = new HashSet<string>(context.CodeList
+                .Select(code => Path.Combine(folderPath, code.FileName)));
+            foreach (string existingFile in Directory.GetFiles(folderPath, "*.g.cs", SearchOption.TopDirectoryOnly))
+            {
+                if (expectedFiles.Contains(existingFile))
+                {
+                    continue;
+                }
+                
+                File.Delete(existingFile);
+                Debug.Log($"🗑 Deleted outdated generated file: {existingFile}");
+                changed = true;
+            }
+
             foreach (CodeText code in context.CodeList)
             {
                 string[] hierarchy = code.FileName.Split('/');
-                string path = folderPath;
+                string path = Path.Combine(folderPath, code.FileName);
                 
                 for (int i = 0; i < hierarchy.Length; i++)
                 {
