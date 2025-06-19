@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: e7b1a420c564be040bf73b8a377fc2c2
-timeCreated: 1466375168
-licenseType: Store
+guid: 298319a3c52d37442b63e30622b8c05d
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
@@ -15,5 +14,5 @@ AssetOrigin:
   productId: 68068
   packageName: In-game Debug Console
   packageVersion: 1.8.2
-  assetPath: Assets/Plugins/IngameDebugConsole/Scripts/DebugLogEntry.cs
+  assetPath: Assets/Plugins/IngameDebugConsole/Scripts/CopyLogsOnResizeButtonClick.cs
   uploadId: 764785
