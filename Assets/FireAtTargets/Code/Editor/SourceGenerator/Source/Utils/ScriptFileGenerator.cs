@@ -58,50 +58,40 @@ namespace FreedLOW.FireAtTargets.Code.Editor.SourceGenerator.Source.Utils
                 Directory.CreateDirectory(folderPath);
             }
 
-            HashSet<string> expectedFiles = new HashSet<string>(context.CodeList
-                .Select(code => Path.Combine(folderPath, code.FileName)));
-            foreach (string existingFile in Directory.GetFiles(folderPath, "*.g.cs", SearchOption.TopDirectoryOnly))
+            HashSet<string> expectedFilePaths = new HashSet<string>(
+                context.CodeList.Select(code => Path.Combine(folderPath, code.FileName).Replace("\\", "/")));
+            foreach (string existingFile in Directory.GetFiles(folderPath, "*.g.cs", SearchOption.AllDirectories))
             {
-                if (expectedFiles.Contains(existingFile))
+                string normalizedPath = existingFile.Replace("\\", "/");
+                if (!expectedFilePaths.Contains(normalizedPath))
                 {
-                    continue;
+                    File.Delete(existingFile);
+                    Debug.Log($"🗑 Deleted outdated generated file: {normalizedPath}");
+                    changed = true;
                 }
-                
-                File.Delete(existingFile);
-                Debug.Log($"🗑 Deleted outdated generated file: {existingFile}");
-                changed = true;
             }
 
             foreach (CodeText code in context.CodeList)
             {
-                string[] hierarchy = code.FileName.Split('/');
-                string path = Path.Combine(folderPath, code.FileName);
-                
-                for (int i = 0; i < hierarchy.Length; i++)
+                string fullPath = Path.Combine(folderPath, code.FileName);
+                string directory = Path.GetDirectoryName(fullPath);
+
+                if (!Directory.Exists(directory))
                 {
-                    path += "/" + hierarchy[i];
-                    
-                    if (i == hierarchy.Length - 1)
-                    {
-                        break;
-                    }
-                    
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
+                    Directory.CreateDirectory(directory);
                 }
 
-                if (File.Exists(path))
+                if (File.Exists(fullPath))
                 {
-                    string text = File.ReadAllText(path);
-                    if (text == code.Text)
+                    string existingText = File.ReadAllText(fullPath);
+                    if (existingText == code.Text)
                     {
                         continue;
                     }
                 }
 
-                File.WriteAllText(path, code.Text);
+                File.WriteAllText(fullPath, code.Text);
+                Debug.Log($"📄 Wrote generated file: {fullPath}");
                 changed = true;
             }
 
