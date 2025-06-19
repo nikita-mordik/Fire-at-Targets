@@ -29,7 +29,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input
 
         private async UniTaskVoid LoadInputActionAsset()
         {
-            InputActionAsset = await _assetProvider.Load<InputActionAsset>(AssetName.InputAsset);
+            InputActionAsset = await _assetProvider.Load<InputActionAsset>(CommonAssets.PLAYER_CONTROL_ACTIONS);
             if (!InputActionAsset)
             {
                 Debug.LogError("Failed to load InputActionAsset!");

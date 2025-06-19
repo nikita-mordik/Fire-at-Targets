@@ -25,7 +25,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Factory
         
         public async UniTask<GameObject> CreatePlayerAsyncAt(Transform at)
         {
-            var asset = await _assetProvider.LoadAsset(AssetName.Character);
+            var asset = await _assetProvider.LoadAsset(CommonAssets.FPSGENERIC_PLAYER);
             _characterGameObject = InstantiateInjectObject(asset);
             IPlayerControllerService playerControllerService = _characterGameObject.GetComponent<IPlayerControllerService>();
             playerControllerService.Initialize();
@@ -35,7 +35,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Factory
 
         public async UniTask<GameObject> CreateHUDAsync()
         {
-            var asset = await _assetProvider.LoadAsset(AssetName.HUDLabel);
+            var asset = await _assetProvider.LoadAsset(CommonAssets.HUD);
             _hudGameObject = InstantiateInjectObject(asset);
             return _hudGameObject;
         }
