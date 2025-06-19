@@ -20,8 +20,7 @@ namespace FreedLOW.FireAtTargets.Code.Character
         
         private void InitializeInput()
         {
-            _playerInput = gameObject.AddComponent<PlayerInput>();
-            _playerInput.enabled = false;
+            _playerInput = gameObject.GetComponent<PlayerInput>();
             _playerInput.actions = _inputService.InputActionAsset;
             _playerInput.actions.Enable();
             _playerInput.enabled = true;
