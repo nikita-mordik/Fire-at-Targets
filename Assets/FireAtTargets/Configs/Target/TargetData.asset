@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c386009759ec0f47958a4ae5ef7c79e, type: 3}
+  m_Name: TargetData
+  m_EditorClassIdentifier: 
+  TargetPoints:
+  - ShootPointType: 1
+    GivenPoint: 1
+    GivenExtraPoint: 2
+  - ShootPointType: 2
+    GivenPoint: 2
+    GivenExtraPoint: 4
+  - ShootPointType: 3
+    GivenPoint: 3
+    GivenExtraPoint: 6
+  - ShootPointType: 4
+    GivenPoint: 4
+    GivenExtraPoint: 8
+  - ShootPointType: 5
+    GivenPoint: 5
+    GivenExtraPoint: 10
+  - ShootPointType: 6
+    GivenPoint: 6
+    GivenExtraPoint: 12
+  - ShootPointType: 7
+    GivenPoint: 7
+    GivenExtraPoint: 14
+  - ShootPointType: 8
+    GivenPoint: 8
+    GivenExtraPoint: 16
+  - ShootPointType: 9
+    GivenPoint: 9
+    GivenExtraPoint: 18
+  - ShootPointType: 10
+    GivenPoint: 10
+    GivenExtraPoint: 20

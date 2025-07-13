@@ -10,6 +10,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point
         event Action<int> OnPointsChanged; 
 
         void AddPoint(TargetShootPointType pointType);
+        void AddExtraPoints(TargetShootPointType pointType);
         void Reset();
     }
 }

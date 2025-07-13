@@ -4,32 +4,39 @@ using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Target
 {
-    public class MilitaryTarget : MonoBehaviour , IMilitaryTarget
+    public class MilitaryTarget : MonoBehaviour, IMilitaryTarget
     {
         [SerializeField] private Transform root;
         [SerializeField] private TargetShootPointType targetShootPointType;
         
-        private ITargetHealth targetHealth;
-
+        private ITargetHealth _targetHealth;
+        
         public TargetShootPointType TargetShootPointType => targetShootPointType;
 
-        private IPointService pointService;
+        private IPointService _pointService;
 
         [Inject]
         private void Construct(IPointService pointService)
         {
-            this.pointService = pointService;
+            _pointService = pointService;
         }
 
         private void Awake()
         {
-            targetHealth = root.GetComponent<ITargetHealth>();
+            _targetHealth = root.GetComponent<ITargetHealth>();
         }
 
         public void Damage(int damageAmount)
         {
-            targetHealth.TakeDamage(damageAmount);
-            pointService.AddPoint(targetShootPointType);
+            _targetHealth.TakeDamage(damageAmount);
+            if (_targetHealth.CurrentHealth <= 0)
+            {
+                _pointService.AddExtraPoints(targetShootPointType);
+            }
+            else
+            {
+                _pointService.AddPoint(targetShootPointType);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FreedLOW.FireAtTargets.Code.Features.GameSystem;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point;
 using UnityEngine;
 using Zenject;
@@ -18,14 +19,22 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
                     .AsSingle();
             }
             
+            BindFireAtTargetsSystem();
             BindPointService();
         }
 
         private void BindPointService()
         {
-            Container.Bind<IPointService>()
-                .To<PointService>()
-                .AsSingle();
+            Container.BindInterfacesAndSelfTo<PointService>()
+                .AsCached()
+                .NonLazy();
+        }
+        
+        private void BindFireAtTargetsSystem()
+        {
+            Container.BindInterfacesAndSelfTo<FireAtTargetsSystem>()
+                .AsCached()
+                .NonLazy();
         }
     }
 }

@@ -21,6 +21,16 @@ MonoBehaviour:
     m_SerializedLabels:
     - ShootingGalleryPool
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d1057b371cd4a9488ca3ad8fe063f67
+    m_Address: TargetData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b554f8c3da113f478c243c50f82a164
+    m_Address: ShootingGalleryLevelData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8072750d66653c8429b7805a3c1adc78
     m_Address: PoolObjectHit 6
     m_ReadOnly: 0

@@ -5,7 +5,8 @@ namespace FreedLOW.FireAtTargets.Code.StaticData
     [CreateAssetMenu(fileName = "ShootingLevelData", menuName = "FireAtTargets/ShootingLevel")]
     public class ShootingLevelStaticData : ScriptableObject
     {
-        public float RoundTime;
-        public int MaxMilitaryTargets;
+        public int CountdownTime = 3;
+        public int CountdownTimeIncrement = 1;
+        public int RoundTime;
     }
 }

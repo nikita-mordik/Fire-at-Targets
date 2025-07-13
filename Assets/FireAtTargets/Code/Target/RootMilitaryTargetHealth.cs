@@ -6,11 +6,14 @@ namespace FreedLOW.FireAtTargets.Code.Target
     public class RootMilitaryTargetHealth : MonoBehaviour, ITargetHealth
     {
         [SerializeField] private int maxHealth;
+        [SerializeField] private int minRecoveryDuration = 5;
+        [SerializeField] private int maxRecoveryDuration = 15;
 
         [Header("Components")]
         [SerializeField] private RootMilitaryTarget rootMilitaryTarget;
         
-        private bool isAlive;
+        private bool _isAlive;
+        private float _recoveryDuration;
 
         public int MaxHealth => maxHealth;
         public int CurrentHealth { get; private set; }
@@ -23,10 +26,9 @@ namespace FreedLOW.FireAtTargets.Code.Target
         public void TakeDamage(int damage)
         {
             CurrentHealth -= damage;
-
-            if (CurrentHealth <= 0 && isAlive)
+            if (CurrentHealth <= 0 && _isAlive)
             {
-                isAlive = false;
+                _isAlive = false;
                 ShootDownTarget();
             }
         }
@@ -34,16 +36,17 @@ namespace FreedLOW.FireAtTargets.Code.Target
         private void SetHealthData()
         {
             CurrentHealth = maxHealth;
-            isAlive = true;
+            _recoveryDuration = Random.Range(minRecoveryDuration, maxRecoveryDuration);
+            _isAlive = true;
         }
 
         private void ShootDownTarget() => 
-            rootMilitaryTarget.ShootDown(() => StartCoroutine(RecoveryTargetRoutine()));
+            rootMilitaryTarget.ShootDown(onComplete: () => StartCoroutine(RecoveryTargetRoutine()));
 
         private IEnumerator RecoveryTargetRoutine()
         {
-            yield return new WaitForSeconds(5f);
-            rootMilitaryTarget.RecoveryTarget(SetHealthData);
+            yield return new WaitForSeconds(_recoveryDuration);
+            rootMilitaryTarget.RecoveryTarget(onComplete: SetHealthData);
         }
     }
 }

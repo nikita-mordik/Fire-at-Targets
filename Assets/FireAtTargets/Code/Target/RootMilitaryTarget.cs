@@ -17,16 +17,16 @@ namespace FreedLOW.FireAtTargets.Code.Target
             initialRotation = transform.rotation;
         }
 
-        public void ShootDown(Action action)
+        public void ShootDown(Action onComplete)
         {
             transform.DORotate(shootDownRotation, shootDownDuration)
-                .OnComplete(() => action?.Invoke());
+                .OnComplete(() => onComplete?.Invoke());
         }
 
-        public void RecoveryTarget(Action action)
+        public void RecoveryTarget(Action onComplete)
         {
             transform.DORotateQuaternion(initialRotation, recoveryDuration)
-                .OnComplete(() => action?.Invoke());
+                .OnComplete(() => onComplete?.Invoke());
         }
     }
 }

@@ -1,3 +1,4 @@
+using FreedLOW.FireAtTargets.Code.Features.GameSystem;
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
@@ -26,6 +27,14 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             BindPoolService();
             BindUnityTimeService();
             BindWeaponServices();
+            BindGameTimerService();
+        }
+
+        private void BindGameTimerService()
+        {
+            Container.Bind<IGameTimer>()
+                .To<GameTimer>()
+                .AsSingle();
         }
 
         private void BindPoolService()
