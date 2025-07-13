@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.StaticData;
 
 namespace FreedLOW.FireAtTargets.Code.Features.GameSystem
@@ -15,15 +16,18 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem
         
         private readonly ShootingLevelStaticData _levelConfig;
         private readonly IGameTimer _gameTimer;
+        private readonly IWeaponEventHandlerService _weaponEventHandlerService;
 
         private CancellationTokenSource _cts;
         private GameResult _gameResult;
         private bool _isGameActive;
         
-        public FireAtTargetsSystem(ShootingLevelStaticData levelConfig, IGameTimer gameTimer)
+        public FireAtTargetsSystem(ShootingLevelStaticData levelConfig, IGameTimer gameTimer,
+            IWeaponEventHandlerService weaponEventHandlerService)
         {
             _levelConfig = levelConfig;
             _gameTimer = gameTimer;
+            _weaponEventHandlerService = weaponEventHandlerService;
         }
         
         public async UniTask StartGame()
@@ -39,6 +43,7 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem
             try 
             {
                 _isGameActive = true;
+                _weaponEventHandlerService.InvokeOnSetAmmo();
                 OnGameStarted?.Invoke();
                 await RunGameRound();
                 CompleteGame(GameCompletionReason.TimeUp);

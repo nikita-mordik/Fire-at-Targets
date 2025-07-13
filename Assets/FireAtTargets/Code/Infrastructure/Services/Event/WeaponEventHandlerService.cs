@@ -8,14 +8,14 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event
         public event Action<int> OnCurrentAmmoChanged;
         public event Action<int> OnReload;
         public event Action<CustomWeapon> OnWeaponEquip;
+        public event Action OnSetAmmo;
 
-        public void InvokeOnCurrentAmmoChanged(int currentAmmo) => 
-            OnCurrentAmmoChanged?.Invoke(currentAmmo);
+        public void InvokeOnCurrentAmmoChanged(int currentAmmo) => OnCurrentAmmoChanged?.Invoke(currentAmmo);
 
-        public void InvokeOnReload(int currentMaxAmmo) => 
-            OnReload?.Invoke(currentMaxAmmo);
+        public void InvokeOnReload(int currentMaxAmmo) => OnReload?.Invoke(currentMaxAmmo);
 
-        public void InvokeOnWeaponEquip(CustomWeapon weapon) => 
-            OnWeaponEquip?.Invoke(weapon);
+        public void InvokeOnWeaponEquip(CustomWeapon weapon) => OnWeaponEquip?.Invoke(weapon);
+
+        public void InvokeOnSetAmmo() => OnSetAmmo?.Invoke();
     }
 }

@@ -138,12 +138,13 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             
             _fpsAnimator.LinkAnimatorLayer(equipMotion);
             
-            InvokeWhenEquip();
+            _weaponEventHandlerService.OnSetAmmo += SetMagazineAmmo;
         }
 
         public override void OnUnEquip()
         {
             _fpsAnimator.LinkAnimatorLayer(unEquipMotion);
+            _weaponEventHandlerService.OnSetAmmo -= SetMagazineAmmo;
         }
 
         public override bool OnAimPressed()
@@ -288,6 +289,16 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
         }
         
         public bool HasMagazineAmmo() => _currentMaxAmmo > 0;
+
+        private void SetMagazineAmmo()
+        {
+            MaxAmmo = weaponData.MaxAmmo;
+            _currentMaxAmmo = MaxAmmo;
+            _startAmmo = weaponData.StartAmmo;
+            CurrentAmmo = _startAmmo;
+            
+            InvokeWhenEquip();
+        }
         
         private void SetupWeaponData()
         {
@@ -297,9 +308,9 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             _bursts = weaponData.BurstAmount;
             _burstLength = _bursts;
             rayShooting.DamageAmount = weaponData.Damage;
-            MaxAmmo = weaponData.MaxAmmo;
+            MaxAmmo = 0;
             _currentMaxAmmo = MaxAmmo;
-            _startAmmo = weaponData.StartAmmo;
+            _startAmmo = 0;
             CurrentAmmo = _startAmmo;
         }
 
