@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 9
+  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -30,7 +30,7 @@ Material:
   - _OCCLUSIONMAP
   - _PARALLAXMAP
   m_InvalidKeywords: []
-  m_LightmapFlags: 1
+  m_LightmapFlags: 7
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2000
@@ -100,6 +100,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
@@ -124,6 +125,8 @@ Material:
     - _Parallax: 0.0264
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _ScreenSpaceReflections: 1
+    - _ScreenSpaceReflectionsContributeTransparent: 1
     - _Shininess: 0.030000003
     - _Smoothness: 0.36
     - _SmoothnessTextureChannel: 0
@@ -133,6 +136,7 @@ Material:
     - _Surface: 0
     - _UVSec: 0
     - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 0.9191176, b: 0.9191176, a: 1}
