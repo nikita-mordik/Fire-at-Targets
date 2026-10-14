@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a82664c7d3571874a9bc6f78146b5084
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Prefabs/Sponza_Modular URP.prefab
+  uploadId: 1000768

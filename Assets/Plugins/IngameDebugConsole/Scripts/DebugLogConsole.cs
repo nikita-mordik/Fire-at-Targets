@@ -1,9 +1,4 @@
-﻿#if UNITY_EDITOR || UNITY_STANDALONE
-// Unity's Text component doesn't render <b> tag correctly on mobile devices
-#define USE_BOLD_COMMAND_SIGNATURES
-#endif
-
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +6,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using Object = UnityEngine.Object;
-#if UNITY_EDITOR && UNITY_2021_1_OR_NEWER
+#if UNITY_EDITOR
 using SystemInfo = UnityEngine.Device.SystemInfo; // To support Device Simulator on Unity 2021.1+
 #endif
 
@@ -163,36 +158,32 @@ namespace IngameDebugConsole
 			};
 #endif
 
-#if UNITY_EDITOR || !NETFX_CORE
-			foreach( Assembly assembly in AppDomain.CurrentDomain.GetAssemblies() )
-#else
-			foreach( Assembly assembly in new Assembly[] { typeof( DebugLogConsole ).Assembly } ) // On UWP, at least search this plugin's Assembly for console methods
-#endif
-			{
-#if( NET_4_6 || NET_STANDARD_2_0 ) && ( UNITY_EDITOR || !NETFX_CORE )
-				if( assembly.IsDynamic )
-					continue;
+            foreach (Assembly assembly in GetAllAssemblies() ?? new Assembly[] { typeof(DebugLogConsole).Assembly }) // On UWP, at least search this plugin's Assembly for console methods
+            {
+#if (NET_4_6 || NET_STANDARD_2_0) && (UNITY_EDITOR || !NETFX_CORE)
+                if (assembly.IsDynamic)
+                    continue;
 #endif
 
 
 #if UNITY_EDITOR || !NETFX_CORE
-				string assemblyName = assembly.GetName().Name;
-				bool ignoreAssembly = false;
-				for( int i = 0; i < ignoredAssemblies.Length; i++ )
-				{
-					if( caseInsensitiveComparer.IsPrefix( assemblyName, ignoredAssemblies[i], CompareOptions.IgnoreCase ) )
-					{
-						ignoreAssembly = true;
-						break;
-					}
-				}
+                string assemblyName = assembly.GetName().Name;
+                bool ignoreAssembly = false;
+                for (int i = 0; i < ignoredAssemblies.Length; i++)
+                {
+                    if (caseInsensitiveComparer.IsPrefix(assemblyName, ignoredAssemblies[i], CompareOptions.IgnoreCase))
+                    {
+                        ignoreAssembly = true;
+                        break;
+                    }
+                }
 
-				if( ignoreAssembly )
-					continue;
+                if (ignoreAssembly)
+                    continue;
 #endif
 
-				SearchAssemblyForConsoleMethods( assembly );
-			}
+                SearchAssemblyForConsoleMethods(assembly);
+            }
 		}
 
 		public static void SearchAssemblyForConsoleMethods( Assembly assembly )
@@ -226,6 +217,17 @@ namespace IngameDebugConsole
 				Debug.LogError( "Couldn't search assembly for [ConsoleMethod] attributes: " + assembly.GetName().Name + "\n" + e.ToString() );
 			}
 		}
+
+        public static IReadOnlyList<Assembly> GetAllAssemblies()
+        {
+#if UNITY_6000_4_OR_NEWER
+            return UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
+#elif UNITY_EDITOR || !NETFX_CORE
+            return AppDomain.CurrentDomain.GetAssemblies();
+#else
+            return null;
+#endif
+        }
 
 		public static List<ConsoleMethodInfo> GetAllCommands()
 		{
@@ -527,9 +529,7 @@ namespace IngameDebugConsole
 			StringBuilder methodSignature = new StringBuilder( 256 );
 			string[] parameterSignatures = new string[parameterTypes.Length];
 
-#if USE_BOLD_COMMAND_SIGNATURES
 			methodSignature.Append( "<b>" );
-#endif
 			methodSignature.Append( command );
 
 			if( parameterTypes.Length > 0 )
@@ -549,9 +549,7 @@ namespace IngameDebugConsole
 				}
 			}
 
-#if USE_BOLD_COMMAND_SIGNATURES
 			methodSignature.Append( "</b>" );
-#endif
 
 			if( !string.IsNullOrEmpty( description ) )
 				methodSignature.Append( ": " ).Append( description );

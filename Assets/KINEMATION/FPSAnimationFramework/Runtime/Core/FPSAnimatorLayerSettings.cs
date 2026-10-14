@@ -1,17 +1,14 @@
 ﻿// Designed by KINEMATION, 2024.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Attributes;
-using KINEMATION.KAnimationCore.Runtime.Attributes;
-using KINEMATION.KAnimationCore.Runtime.Rig;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
-using KINEMATION.KAnimationCore.Runtime.Input;
 
 using System;
 using System.Collections.Generic;
-
+using KINEMATION.Shared.KAnimationCore.Runtime.Attributes;
+using KINEMATION.Shared.KAnimationCore.Runtime.Input;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Playables;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 {
@@ -60,7 +57,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
     }
     
     [HelpURL("https://kinemation.gitbook.io/scriptable-animation-system/fundamentals/animator-layer")]
-    public abstract class FPSAnimatorLayerSettings : ScriptableObject, IRigUser, IRigObserver
+    public abstract class FPSAnimatorLayerSettings : ScriptableObject, IRigProvider, IRigObserver, IRigUser
     {
         [ShowStandalone] public KRig rigAsset;
         [Range(0f, 1f)] public float alpha = 1f;
@@ -76,8 +73,6 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
 
         [Obsolete("Use CreateAnimationJob instead.")]
         public virtual FPSAnimatorLayerState CreateState() { return null; }
-
-        public KRig GetRigAsset() { return rigAsset; }
         
         public virtual void OnRigUpdated()
         {
@@ -116,5 +111,14 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
             _cachedRigAsset = rigAsset;
         }
 #endif
+        public KRigElement[] GetHierarchy()
+        {
+            return rigAsset == null ? null : rigAsset.GetHierarchy();
+        }
+
+        public KRig GetRigAsset()
+        {
+            return rigAsset;
+        }
     }
 }

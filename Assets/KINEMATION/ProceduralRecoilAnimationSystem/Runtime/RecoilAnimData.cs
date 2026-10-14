@@ -1,7 +1,8 @@
-// Designed by KINEMATION, 2025.
+﻿// Copyright (c) 2026 KINEMATION.
+// All rights reserved.
 
 using System;
-using KINEMATION.KAnimationCore.Runtime.Attributes;
+using KINEMATION.Shared.KAnimationCore.Runtime.Attributes;
 using UnityEngine;
 
 namespace KINEMATION.ProceduralRecoilAnimationSystem.Runtime
@@ -26,7 +27,7 @@ namespace KINEMATION.ProceduralRecoilAnimationSystem.Runtime
         public Vector3 pivotOffset;
     }
     
-    [CreateAssetMenu(fileName = "NewRecoilAnimData", menuName = "KINEMATION/FPS Animation Pack/Recoil Data")]
+    [CreateAssetMenu(fileName = "NewRecoilAnimData", menuName = "KINEMATION/Procedural Recoil/Recoil Data")]
     public class RecoilAnimData : ScriptableObject
     {
         [Tab("Recoil Targets")]
@@ -80,12 +81,22 @@ namespace KINEMATION.ProceduralRecoilAnimationSystem.Runtime
         
         [Tab("Misc")]
         
+        [Header("Controller Recoil")]
+        public Vector2 horizontalRecoil = Vector2.zero;
+        public Vector2 verticalRecoil = Vector2.zero;
+        
+        [Min(0f)] public float horizontalSmoothing = 0f;
+        [Min(0f)] public float verticalSmoothing = 0f;
+
+        [Min(0f)] public float damping = 0f;
+        
+        [Header("Recoil Motion")]
         public Vector3 hipPivotOffset;
         public Vector3 aimPivotOffset;
         public bool smoothRoll;
         [Min(0f)] public float playRate;
-    
-        [Header("Recoil Curves")]
+        
+        [Header("Curves")]
         public RecoilCurves recoilCurves = new RecoilCurves(
             new[] { new Keyframe(0f, 0f), new Keyframe(1f, 0f) });
     }

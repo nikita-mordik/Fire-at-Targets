@@ -1,12 +1,12 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using KINEMATION.KAnimationCore.Runtime.Rig;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
-using KINEMATION.KAnimationCore.Runtime.Input;
-using KINEMATION.KAnimationCore.Runtime.Core;
 
 using System.Collections.Generic;
 using System;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Input;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Animations;

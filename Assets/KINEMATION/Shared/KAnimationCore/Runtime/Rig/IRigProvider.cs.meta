@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 8c27f9465994402da2a00b6e82c4a580
+timeCreated: 1744271712
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.9.3
+  assetPath: Assets/KINEMATION/Shared/KAnimationCore/Runtime/Rig/IRigProvider.cs
+  uploadId: 852960

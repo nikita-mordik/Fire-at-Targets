@@ -1,8 +1,8 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using KINEMATION.KAnimationCore.Runtime.Attributes;
-using KINEMATION.KAnimationCore.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Input;
+using KINEMATION.Shared.KAnimationCore.Runtime.Attributes;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Input;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Recoil

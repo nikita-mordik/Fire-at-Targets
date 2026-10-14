@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a9ddfdec879ce9945b87e79bd83bf522
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.upscaler.sgsr1/Third-Party Notices.txt
+  uploadId: 1000768

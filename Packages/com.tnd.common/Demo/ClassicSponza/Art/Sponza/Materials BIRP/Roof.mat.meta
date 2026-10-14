@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c809fc52dfb05d249a60109abd4a1f5b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Art/Sponza/Materials BIRP/Roof.mat
+  uploadId: 1000768

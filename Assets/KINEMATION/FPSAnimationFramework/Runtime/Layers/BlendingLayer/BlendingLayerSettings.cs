@@ -1,7 +1,7 @@
 ﻿// Designed by KINEMATION, 2024.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 
 using System;
 using System.Collections.Generic;

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 71d2f116a4b40034894af56acf84e38e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Runtime/Native/NativeStructs.cs
+  uploadId: 1000768

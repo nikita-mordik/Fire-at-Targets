@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 107274d401f37654eaa944948191b633
+guid: d089a474c0cf16d40978125cde76c1e3
 AssemblyDefinitionImporter:
   externalObjects: {}
   userData: 
@@ -9,6 +9,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 303181
   packageName: "Wingman - Your Inspector\u2019s Best Friend"
-  packageVersion: 1.2.1
+  packageVersion: 1.4.0
   assetPath: Assets/Wingman/Wingman.asmdef
-  uploadId: 762200
+  uploadId: 941412

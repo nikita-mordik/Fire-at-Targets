@@ -1,0 +1,12 @@
+{
+  "name": "com.tnd.upscaler.sgsr1",
+  "version": "1.4.3",
+  "displayName": "TND SGSR 1",
+  "description": "SGSR 1 implementation for TND Framework",
+  "unity": "2021.3",
+  "author": "The Naked Dev <https://www.thenakeddev.com> (https://www.thenakeddev.com)",
+  "dependencies": {
+    "com.tnd.upscaling": "1.1.5",
+    "com.tnd.common": "1.0.4"
+  }
+}

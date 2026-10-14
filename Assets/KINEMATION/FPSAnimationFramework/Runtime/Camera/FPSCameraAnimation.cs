@@ -2,7 +2,7 @@
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
-using KINEMATION.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Camera

@@ -6,3 +6,10 @@ NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129996
+  packageName: NaughtyAttributes
+  packageVersion: 2.1.6
+  assetPath: Assets/Plugins/NaughtyAttributes/Samples/DemoScene/TestAssets/DummyAnimation.anim
+  uploadId: 943610

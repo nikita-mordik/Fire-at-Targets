@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a5027ad72a66ef449a97bbe304facf07
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Art/Sponza/Materials URP/MetalAniso.mat.private.0
+  uploadId: 1000768

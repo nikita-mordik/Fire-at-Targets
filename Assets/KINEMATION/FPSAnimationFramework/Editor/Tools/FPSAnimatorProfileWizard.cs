@@ -1,8 +1,7 @@
 ﻿// Designed by KINEMATION, 2024.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
-using KINEMATION.KAnimationCore.Editor.Misc;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 
 using KINEMATION.FPSAnimationFramework.Runtime.Layers.AdditiveLayer;
 using KINEMATION.FPSAnimationFramework.Runtime.Layers.AdsLayer;
@@ -18,6 +17,7 @@ using UnityEditor;
 using UnityEngine;
 
 using System.Collections.Generic;
+using KINEMATION.Shared.KAnimationCore.Editor;
 
 namespace KINEMATION.FPSAnimationFramework.Editor.Tools
 {
@@ -54,7 +54,7 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Tools
             profile.rigAsset = rig;
             profile.settings = new List<FPSAnimatorLayerSettings>();
             
-            KEditorUtility.SaveAsset(profile, KEditorUtility.GetProjectWindowFolder(), 
+            KEditorUtility.SaveAsset(profile, KEditorUtility.GetProjectActiveFolder(), 
                 $"AnimatorProfile_{rig.name}.asset");
 
             var poseSampler = ScriptableObject.CreateInstance<PoseSamplerLayerSettings>();

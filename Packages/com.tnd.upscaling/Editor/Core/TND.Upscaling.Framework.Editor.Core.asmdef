@@ -1,0 +1,26 @@
+{
+    "name": "TND.Upscaling.Framework.Editor.Core",
+    "rootNamespace": "TND.Upscaling.Framework",
+    "references": [
+        "GUID:039a05db797535d47bc605c30639a749",
+        "GUID:fc53d371d58bc8b419af58ae12c9680a",
+        "GUID:9c7a29092a8364241bd421ed772cbe0a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.tnd.framegeneration",
+            "expression": "1.0.0",
+            "define": "TND_FRAMEGEN"
+        }
+    ],
+    "noEngineReferences": false
+}

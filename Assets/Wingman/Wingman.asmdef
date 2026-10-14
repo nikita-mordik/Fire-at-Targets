@@ -1,7 +1,9 @@
 {
     "name": "Wingman",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:dd59ccde2a8bfc34fb17f834ba257ab2"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -9,6 +11,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.sisus.component-names",
+            "expression": "",
+            "define": "COMPONENT_NAMES"
+        }
+    ],
     "noEngineReferences": false
 }

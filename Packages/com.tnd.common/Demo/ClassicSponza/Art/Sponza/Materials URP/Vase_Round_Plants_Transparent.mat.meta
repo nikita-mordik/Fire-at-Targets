@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6651c502af4b194488a6a571152e4c10
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Art/Sponza/Materials URP/Vase_Round_Plants_Transparent.mat
+  uploadId: 1000768

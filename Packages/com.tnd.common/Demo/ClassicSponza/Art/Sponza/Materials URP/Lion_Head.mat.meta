@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5871c1037a1214d4cb04a33ba6cd938e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Art/Sponza/Materials URP/Lion_Head.mat
+  uploadId: 1000768

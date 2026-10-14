@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Playables

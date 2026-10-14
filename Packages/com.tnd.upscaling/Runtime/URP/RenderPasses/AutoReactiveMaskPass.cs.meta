@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 6b268fc744de46359bd9015ab68612a9
+timeCreated: 1770206861
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.upscaling/Runtime/URP/RenderPasses/AutoReactiveMaskPass.cs
+  uploadId: 1000768

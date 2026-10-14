@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c3511b620484a984ea63c24a9596a54d
+PackageManifestImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/package.json
+  uploadId: 1000768

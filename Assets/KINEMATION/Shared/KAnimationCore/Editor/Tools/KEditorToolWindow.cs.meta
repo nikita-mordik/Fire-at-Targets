@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: c15b0e5f1a0e458b82fb3f396d6b55be
+timeCreated: 1756377409
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.9.3
+  assetPath: Assets/KINEMATION/Shared/KAnimationCore/Editor/Tools/KEditorToolWindow.cs
+  uploadId: 852960

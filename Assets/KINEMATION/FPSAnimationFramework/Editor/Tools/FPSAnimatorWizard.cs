@@ -1,18 +1,16 @@
 // Designed by KINEMATION, 2024.
 
 using System.Collections.Generic;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
 using KINEMATION.FPSAnimationFramework.Runtime.Camera;
-using KINEMATION.KAnimationCore.Runtime.Input;
+using KINEMATION.Shared.KAnimationCore.Runtime.Input;
 
-using KINEMATION.KAnimationCore.Editor.Misc;
 using KINEMATION.ProceduralRecoilAnimationSystem.Runtime;
 
-
 using System.IO;
-
+using KINEMATION.Shared.KAnimationCore.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -134,7 +132,7 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Tools
             InitializeComponent<RecoilAnimation>(character.gameObject);
             rigComponent.RefreshHierarchy();
 
-            string path = $"{KEditorUtility.GetProjectWindowFolder()}/{character.name}_FPSAnimator";
+            string path = $"{KEditorUtility.GetProjectActiveFolder()}/{character.name}_FPSAnimator";
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
             if (_rigAsset == null)

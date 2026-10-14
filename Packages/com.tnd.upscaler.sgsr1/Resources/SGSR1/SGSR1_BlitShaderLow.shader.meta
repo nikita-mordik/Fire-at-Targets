@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: e125efc195fa4dfba8fa01c8fbad76c0
+timeCreated: 1754312638
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.upscaler.sgsr1/Resources/SGSR1/SGSR1_BlitShaderLow.shader
+  uploadId: 1000768

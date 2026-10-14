@@ -1,7 +1,7 @@
 ﻿using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Layers.WeaponLayer;
-using KINEMATION.KAnimationCore.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;
@@ -65,13 +65,13 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.SwayLayer
         private Vector3 VectorSpringInterp(Vector3 current, in Vector3 target, in VectorSpring spring, 
             ref VectorSpringState state, float deltaTime)
         {
-            current.x = AnimLayerJobUtility.FloatSpringInterp(current.x, target.x, spring.speed.x, spring.damping.x,
+            current.x = KSpringMath.FloatSpringInterp(current.x, target.x, spring.speed.x, spring.damping.x,
                 spring.stiffness.x, spring.scale.x, ref state.x, deltaTime);
             
-            current.y = AnimLayerJobUtility.FloatSpringInterp(current.y, target.y, spring.speed.y, spring.damping.y,
+            current.y = KSpringMath.FloatSpringInterp(current.y, target.y, spring.speed.y, spring.damping.y,
                 spring.stiffness.y, spring.scale.y, ref state.y, deltaTime);
             
-            current.z = AnimLayerJobUtility.FloatSpringInterp(current.z, target.z, spring.speed.z, spring.damping.z,
+            current.z = KSpringMath.FloatSpringInterp(current.z, target.z, spring.speed.z, spring.damping.z,
                 spring.stiffness.z, spring.scale.z, ref state.z, deltaTime);
 
             return current;
