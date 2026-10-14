@@ -1,22 +1,23 @@
 using System;
+using System.Collections.Generic;
 using FreedLOW.FireAtTargets.Code.Features.GameSystem;
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.StaticData;
 using FreedLOW.FireAtTargets.Code.Target;
+using UnityEngine;
 using Zenject;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point
 {
+    /// <summary>
+    /// Converts target hits into points. The score itself is owned by <see cref="IFireAtTargetsSystem"/>.
+    /// </summary>
     public class PointService : IPointService, IInitializable
     {
         private readonly IFireAtTargetsSystem _fireAtTargetsSystem;
         private readonly IAssetProvider _assetProvider;
-        
-        private TargetData _targetData;
 
-        public int CurrentPoints { get; private set; }
-        
-        public event Action<int> OnPointsChanged;
+        private readonly Dictionary<TargetShootPointType, TargetPointData> _pointsByType = new();
 
         public PointService(IFireAtTargetsSystem fireAtTargetsSystem, IAssetProvider assetProvider)
         {
@@ -26,32 +27,40 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point
 
         public async void Initialize()
         {
-            _targetData = await _assetProvider.Load<TargetData>(ShootingGalleryAssets.TARGET_DATA);
+            try
+            {
+                var targetData = await _assetProvider.Load<TargetData>(ShootingGalleryAssets.TARGET_DATA);
+                foreach (var pointData in targetData.TargetPoints)
+                    _pointsByType[pointData.ShootPointType] = pointData;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception);
+            }
         }
 
         public void AddPoint(TargetShootPointType pointType)
         {
-            if (pointType == TargetShootPointType.None)
-                throw new Exception("Not valid data!");
-
-            CurrentPoints += _targetData.TargetPoints.Find(p => p.ShootPointType == pointType).GivenPoint;
-            _fireAtTargetsSystem.AddPoint(CurrentPoints);
-            OnPointsChanged?.Invoke(CurrentPoints);
+            if (TryGetPointData(pointType, out var pointData))
+                _fireAtTargetsSystem.AddPoint(pointData.GivenPoint);
         }
 
         public void AddExtraPoints(TargetShootPointType pointType)
         {
-            if (pointType == TargetShootPointType.None)
-                throw new Exception("Not valid data!");
-
-            CurrentPoints += _targetData.TargetPoints.Find(p => p.ShootPointType == pointType).GivenExtraPoint;
-            _fireAtTargetsSystem.AddPoint(CurrentPoints);
-            OnPointsChanged?.Invoke(CurrentPoints);
+            if (TryGetPointData(pointType, out var pointData))
+                _fireAtTargetsSystem.AddPoint(pointData.GivenExtraPoint);
         }
 
-        public void Reset()
+        private bool TryGetPointData(TargetShootPointType pointType, out TargetPointData pointData)
         {
-            CurrentPoints = 0;
+            if (pointType == TargetShootPointType.None)
+                throw new ArgumentException("Target shoot point type is not set!", nameof(pointType));
+
+            if (_pointsByType.TryGetValue(pointType, out pointData))
+                return true;
+
+            Debug.LogError($"[PointService] No point data for {pointType}. Is TargetData loaded and complete?");
+            return false;
         }
     }
 }

@@ -1,6 +1,5 @@
 using System.Globalization;
 using FreedLOW.FireAtTargets.Code.Extensions;
-using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Point;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -17,13 +16,11 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem.UI
         private const string PointsFormat = "Points shot: {0}";
 
         private IFireAtTargetsSystem _fireAtTargetsSystem;
-        private IPointService _pointService;
 
         [Inject]
-        private void Construct(IFireAtTargetsSystem fireAtTargetsSystem, IPointService pointService)
+        private void Construct(IFireAtTargetsSystem fireAtTargetsSystem)
         {
             _fireAtTargetsSystem = fireAtTargetsSystem;
-            _pointService = pointService;
         }
 
         private void Start()
@@ -31,7 +28,7 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem.UI
             _fireAtTargetsSystem.OnGameStarted += OnGameStarted;
             _fireAtTargetsSystem.OnGameTimerTick += OnTimerTick;
             _fireAtTargetsSystem.OnGameCompleted += OnGameCompleted;
-            _pointService.OnPointsChanged += OnTargetHit;
+            _fireAtTargetsSystem.OnPointsChanged += OnPointsChanged;
         }
 
         private void OnDestroy()
@@ -39,7 +36,7 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem.UI
             _fireAtTargetsSystem.OnGameStarted -= OnGameStarted;
             _fireAtTargetsSystem.OnGameTimerTick -= OnTimerTick;
             _fireAtTargetsSystem.OnGameCompleted -= OnGameCompleted;
-            _pointService.OnPointsChanged -= OnTargetHit;
+            _fireAtTargetsSystem.OnPointsChanged -= OnPointsChanged;
         }
 
         private void OnGameStarted()
@@ -52,9 +49,9 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem.UI
             _timerText.text = string.Format(TimerFormat, time.ToString(CultureInfo.InvariantCulture));
         }
 
-        private void OnTargetHit(int point)
+        private void OnPointsChanged(int points)
         {
-            _targetsHItText.text = string.Format(PointsFormat, point);
+            _targetsHItText.text = string.Format(PointsFormat, points);
         }
 
         private void OnGameCompleted(GameResult gameResult)

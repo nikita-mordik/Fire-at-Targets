@@ -100,6 +100,12 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             SetupWeaponData();
         }
 
+        private void OnDestroy()
+        {
+            // The event service outlives the player, so never leave a destroyed weapon subscribed.
+            UnsubscribeAmmoEvents();
+        }
+
         public override void OnEquip(GameObject parent)
         {
             if (!parent) 
@@ -137,14 +143,16 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
                 _recoilPattern.Init(recoilPatternSettings);
             
             _fpsAnimator.LinkAnimatorLayer(equipMotion);
-            
+
+            UnsubscribeAmmoEvents();
             _weaponEventHandlerService.OnSetAmmo += SetMagazineAmmo;
+            _weaponEventHandlerService.OnClearAmmo += ClearAmmo;
         }
 
         public override void OnUnEquip()
         {
             _fpsAnimator.LinkAnimatorLayer(unEquipMotion);
-            _weaponEventHandlerService.OnSetAmmo -= SetMagazineAmmo;
+            UnsubscribeAmmoEvents();
         }
 
         public override bool OnAimPressed()
@@ -200,9 +208,11 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         public override bool OnReload()
         {
-            if (_currentMaxAmmo <= 0)
+            // _startAmmo is the magazine capacity; only top up what is actually missing.
+            int missingAmmo = _startAmmo - CurrentAmmo;
+            if (_isCurrentlyReload || missingAmmo <= 0 || _currentMaxAmmo <= 0)
                 return false;
-            
+
             if (!FPSAnimationAsset.IsValid(reloadClip))
                 return false;
 
@@ -221,8 +231,9 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
                 _fpsCameraController.PlayCameraAnimation(cameraReloadAnimation);
             }
             
-            CurrentAmmo = _startAmmo;
-            _currentMaxAmmo -= CurrentAmmo;
+            int loadedAmmo = Mathf.Min(missingAmmo, _currentMaxAmmo);
+            _currentMaxAmmo -= loadedAmmo;
+            CurrentAmmo += loadedAmmo;
             _weaponEventHandlerService.InvokeOnReload(_currentMaxAmmo);
             
             Invoke(nameof(OnActionEnded), reloadClip.clip.length * 0.85f);
@@ -299,7 +310,29 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             
             InvokeWhenEquip();
         }
-        
+
+        /// <summary>
+        /// Locks the weapon outside of a round: stops firing and empties both magazine and reserve.
+        /// </summary>
+        private void ClearAmmo()
+        {
+            OnFireReleased();
+
+            _currentMaxAmmo = 0;
+            CurrentAmmo = 0;
+
+            InvokeWhenEquip();
+        }
+
+        private void UnsubscribeAmmoEvents()
+        {
+            if (_weaponEventHandlerService == null)
+                return;
+
+            _weaponEventHandlerService.OnSetAmmo -= SetMagazineAmmo;
+            _weaponEventHandlerService.OnClearAmmo -= ClearAmmo;
+        }
+
         private void SetupWeaponData()
         {
             _fireRate = weaponData.FireRate;

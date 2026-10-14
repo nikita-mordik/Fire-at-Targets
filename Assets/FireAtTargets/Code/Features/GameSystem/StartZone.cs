@@ -12,10 +12,12 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem
     public class StartZone : MonoBehaviour
     {
         private GameStartPopUp _gameStartPopUp;
-        private CancellationTokenSource _cts;
+        private CancellationTokenSource _countdownCts;
 
         private IFireAtTargetsSystem _fireAtTargetsSystem;
         private ShootingLevelStaticData _levelConfig;
+
+        private bool IsCountdownRunning => _countdownCts != null;
 
         [Inject]
         private void Construct(IFireAtTargetsSystem fireAtTargetsSystem, ShootingLevelStaticData levelConfig)
@@ -26,28 +28,23 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem
 
         private void OnDestroy()
         {
-            _cts?.Cancel();
-            _cts?.Dispose();
+            _countdownCts?.Cancel();
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<PlayerControllerService>(out var player) && !_fireAtTargetsSystem.IsGameActive)
-            {
-                // TODO: show pop-up with timer before game starting
-                Debug.LogError("player entered start zone");
-                TryStartGame().Forget();
-            }
+            if (!IsPlayer(other) || _fireAtTargetsSystem.IsGameActive || IsCountdownRunning)
+                return;
+
+            TryStartGame().Forget();
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent<PlayerControllerService>(out var player) && !_fireAtTargetsSystem.IsGameActive)
-            {
-                // TODO: disable pop-up and timer if game not started
-                Debug.LogError("player exited start zone");
-                _cts?.Cancel();
-            }
+            if (!IsPlayer(other) || _fireAtTargetsSystem.IsGameActive)
+                return;
+
+            _countdownCts?.Cancel();
         }
 
         public void Initialize(GameStartPopUp gameStartPopUp)
@@ -55,23 +52,40 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem
             _gameStartPopUp = gameStartPopUp;
         }
 
-        private async UniTask TryStartGame()
+        private async UniTaskVoid TryStartGame()
         {
-            _cts = new CancellationTokenSource();
-            
+            _countdownCts = new CancellationTokenSource();
+
             try
             {
-                await _gameStartPopUp.StartCountdownAsync(_levelConfig.CountdownTime, _cts.Token);
+                await _gameStartPopUp.StartCountdownAsync(_levelConfig.CountdownTime, _countdownCts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Player left the zone before the countdown finished.
+                return;
+            }
+            finally
+            {
+                _countdownCts.Dispose();
+                _countdownCts = null;
+            }
+
+            try
+            {
                 await _fireAtTargetsSystem.StartGame();
             }
             catch (OperationCanceledException)
             {
-                Debug.LogError("Operation canceled!");
+                // Round was stopped early (e.g. scene unload); the system already reported it as Cancelled.
             }
             catch (Exception exception)
             {
-                Debug.LogError(exception.Message);
+                Debug.LogException(exception);
             }
         }
+
+        private static bool IsPlayer(Collider other) =>
+            other.TryGetComponent<PlayerControllerService>(out _);
     }
 }

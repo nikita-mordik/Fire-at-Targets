@@ -9,10 +9,12 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event
         event Action<int> OnReload;
         event Action<CustomWeapon> OnWeaponEquip;
         event Action OnSetAmmo;
+        event Action OnClearAmmo;
         
         void InvokeOnCurrentAmmoChanged(int currentAmmo);
         void InvokeOnReload(int currentMaxAmmo);
         void InvokeOnWeaponEquip(CustomWeapon weapon);
         void InvokeOnSetAmmo();
+        void InvokeOnClearAmmo();
     }
 }

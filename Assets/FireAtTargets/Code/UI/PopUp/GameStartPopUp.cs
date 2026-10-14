@@ -15,6 +15,8 @@ namespace FreedLOW.FireAtTargets.Code.UI.PopUp
         [SerializeField] private float _animDuration = 0.5f;
         [SerializeField] private float _delayAfterAnim = 1f;
 
+        private Tween _countdownTween;
+
         public async UniTask StartCountdownAsync(int startFrom, CancellationToken token, Action onComplete = null)
         {
             try
@@ -27,12 +29,17 @@ namespace FreedLOW.FireAtTargets.Code.UI.PopUp
                     _countdownText.text = i.ToString();
                     _countdownText.transform.localScale = Vector3.zero;
 
-                    await _countdownText.transform
+                    _countdownTween = _countdownText.transform
                         .DOScale(Vector3.one, _animDuration)
                         .SetEase(Ease.OutBack)
-                        .AsyncWaitForCompletion();
+                        .SetLink(gameObject);
 
-                    await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterAnim), 
+                    // Cancel immediately on exit instead of waiting for the tween to finish.
+                    await _countdownTween.AsyncWaitForCompletion().AsUniTask()
+                        .AttachExternalCancellation(token);
+                    _countdownTween = null;
+
+                    await UniTask.Delay(TimeSpan.FromSeconds(_delayAfterAnim),
                         false, PlayerLoopTiming.Update, token);
                 }
 
@@ -41,14 +48,18 @@ namespace FreedLOW.FireAtTargets.Code.UI.PopUp
             }
             catch (OperationCanceledException)
             {
+                _countdownTween?.Kill();
                 _popUpCanvasGroup.State(false);
-                DOTween.Kill(this);
                 throw;
             }
             catch (Exception ex)
             {
                 _popUpCanvasGroup.State(false);
                 Debug.LogError($"Error after countdown: {ex}");
+            }
+            finally
+            {
+                _countdownTween = null;
             }
         }
     }

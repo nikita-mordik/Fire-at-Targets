@@ -28,8 +28,12 @@ namespace FreedLOW.FireAtTargets.Code.Target
 
         public void Damage(int damageAmount)
         {
+            // A downed (or still recovering) target must not keep giving points.
+            if (!_targetHealth.IsAlive)
+                return;
+
             _targetHealth.TakeDamage(damageAmount);
-            if (_targetHealth.CurrentHealth <= 0)
+            if (!_targetHealth.IsAlive)
             {
                 _pointService.AddExtraPoints(targetShootPointType);
             }

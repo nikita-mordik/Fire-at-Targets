@@ -8,7 +8,7 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem
     {
         float ElapsedTime { get; }
         UniTask WaitTick(CancellationToken token);
-        UniTask StartTimerTick(float totalTime, float delay, CancellationToken token, Action<float> onTimerTick = null);
+        UniTask StartTimerTick(float totalTime, float tickInterval, CancellationToken token, Action<float> onTimerTick = null);
         void Reset();
     }
 }

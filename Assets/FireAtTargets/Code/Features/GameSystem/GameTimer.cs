@@ -16,19 +16,23 @@ namespace FreedLOW.FireAtTargets.Code.Features.GameSystem
             await UniTask.Delay(TimeSpan.FromSeconds(UpdateInterval), false, PlayerLoopTiming.Update, token);
         }
 
-        public async UniTask StartTimerTick(float totalTime, float delay, CancellationToken token, Action<float> onTimerTick = null)
+        public async UniTask StartTimerTick(float totalTime, float tickInterval, CancellationToken token, Action<float> onTimerTick = null)
         {
+            if (tickInterval <= 0)
+                throw new ArgumentOutOfRangeException(nameof(tickInterval), tickInterval, "Tick interval must be positive.");
+
             var remainingTime = totalTime;
             onTimerTick?.Invoke(remainingTime);
-            
+
             while (remainingTime > 0)
             {
-                token.ThrowIfCancellationRequested();
+                // Wait first, then report: the displayed value always matches the real time left.
+                var step = Math.Min(tickInterval, remainingTime);
+                await UniTask.Delay(TimeSpan.FromSeconds(step), false, PlayerLoopTiming.Update, token);
 
-                remainingTime--;
-                ElapsedTime += delay;
+                remainingTime -= step;
+                ElapsedTime += step;
                 onTimerTick?.Invoke(remainingTime);
-                await UniTask.Delay(TimeSpan.FromSeconds(delay), false, PlayerLoopTiming.Update, token);
             }
         }
 
