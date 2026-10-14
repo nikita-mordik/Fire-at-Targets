@@ -44,10 +44,10 @@ namespace Impact.Interactions
             if (interactionData.TagMask.HasValue)
                 tagMaskValue = interactionData.TagMask.Value.Value;
 
-            key = cantorPairing(interaction.GetInstanceID(),
+            key = cantorPairing(interaction.GetImpactId(),
                 cantorPairing(tagMaskValue,
                 cantorPairing(interactionData.InteractionType,
-                cantorPairing(interactionData.ThisObject.GetInstanceID(), interactionData.OtherObject.GetInstanceID()))));
+                cantorPairing(interactionData.ThisObject.GetImpactId(), interactionData.OtherObject.GetImpactId()))));
 
             bool containsKey = ImpactManagerInstance.HasActiveContinuousInteractionWithKey(key);
 

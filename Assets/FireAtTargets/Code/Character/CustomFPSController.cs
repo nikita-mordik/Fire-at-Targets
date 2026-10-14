@@ -1,7 +1,7 @@
 using Demo.Scripts.Runtime.Character;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
-using KINEMATION.KAnimationCore.Runtime.Input;
+using KINEMATION.Shared.KAnimationCore.Runtime.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

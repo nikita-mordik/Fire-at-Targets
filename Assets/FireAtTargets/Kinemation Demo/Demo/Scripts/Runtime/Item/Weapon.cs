@@ -5,7 +5,7 @@ using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
 using KINEMATION.ProceduralRecoilAnimationSystem.Runtime;
-using KINEMATION.KAnimationCore.Runtime.Input;
+using KINEMATION.Shared.KAnimationCore.Runtime.Input;
 
 using Demo.Scripts.Runtime.AttachmentSystem;
 
