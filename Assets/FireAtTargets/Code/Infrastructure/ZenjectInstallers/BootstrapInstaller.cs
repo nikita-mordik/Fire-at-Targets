@@ -1,3 +1,4 @@
+using System.IO;
 using FreedLOW.FireAtTargets.Code.Features.GameSystem;
 using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
@@ -5,10 +6,12 @@ using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Input;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Player;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
+using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Save;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.SceneLoader;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Weapon;
 using FreedLOW.FireAtTargets.Code.Infrastructure.State;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Time;
+using FreedLOW.FireAtTargets.Code.Save;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +19,8 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
 {
     public class BootstrapInstaller : MonoInstaller
     {
+        private const string SaveFileName = "save.json";
+
         public override void InstallBindings()
         {
             BindSceneLoaderService();
@@ -28,6 +33,24 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             BindUnityTimeService();
             BindWeaponServices();
             BindGameTimerService();
+            BindSaveService();
+        }
+
+        private void BindSaveService()
+        {
+            Container.Bind<ISaveStorage>()
+                .FromInstance(new FileSaveStorage(Path.Combine(Application.persistentDataPath, SaveFileName)))
+                .AsSingle();
+
+            Container.Bind<ISaveService>()
+                .To<SaveService>()
+                .AsSingle();
+
+            Container.Bind<SaveLifecycleObserver>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(SaveLifecycleObserver))
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindGameTimerService()

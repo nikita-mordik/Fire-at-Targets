@@ -21,6 +21,14 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.ZenjectInstallers
             
             BindFireAtTargetsSystem();
             BindPointService();
+            BindBestScoreRecorder();
+        }
+
+        private void BindBestScoreRecorder()
+        {
+            Container.BindInterfacesTo<BestScoreRecorder>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindPointService()

@@ -1,0 +1,14 @@
+{
+    "name": "FireAtTargets.Save",
+    "rootNamespace": "FreedLOW.FireAtTargets.Code.Save",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
