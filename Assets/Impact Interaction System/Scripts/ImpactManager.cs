@@ -128,7 +128,7 @@ namespace Impact
             {
                 if (_physicMaterialMap[i].PhysicMaterial != null)
                 {
-                    int id = _physicMaterialMap[i].PhysicMaterial.GetInstanceID();
+                    int id = _physicMaterialMap[i].PhysicMaterial.GetImpactId();
 
                     if (!materialMapDictionary.ContainsKey(id))
                         materialMapDictionary.Add(id, _physicMaterialMap[i].ImpactMaterial);
@@ -140,7 +140,7 @@ namespace Impact
             {
                 if (_physicsMaterial2DMap[i].PhysicsMaterial2D != null)
                 {
-                    int id = _physicsMaterial2DMap[i].PhysicsMaterial2D.GetInstanceID();
+                    int id = _physicsMaterial2DMap[i].PhysicsMaterial2D.GetImpactId();
 
                     if (!materialMapDictionary.ContainsKey(id))
                         materialMapDictionary.Add(id, _physicsMaterial2DMap[i].ImpactMaterial);
@@ -194,7 +194,7 @@ namespace Impact
                 return false;
             }
 
-            return materialMapDictionary.TryGetValue(collider.sharedMaterial.GetInstanceID(), out impactMaterial);
+            return materialMapDictionary.TryGetValue(collider.sharedMaterial.GetImpactId(), out impactMaterial);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Impact
                 return false;
             }
 
-            return materialMapDictionary.TryGetValue(collider2d.sharedMaterial.GetInstanceID(), out impactMaterial);
+            return materialMapDictionary.TryGetValue(collider2d.sharedMaterial.GetImpactId(), out impactMaterial);
         }
 
         /// <summary>

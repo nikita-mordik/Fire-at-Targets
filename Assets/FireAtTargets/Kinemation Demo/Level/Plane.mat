@@ -123,8 +123,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_d16d229f160549f291e128636eef4c34: {r: 1, g: 0.84163624, b: 0, a: 1}
-    - Color_ea3507e529ce4169b300757354d518e5: {r: 0.2830189, g: 0.2830189, b: 0.2830189,
-        a: 1}
+    - Color_ea3507e529ce4169b300757354d518e5: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
     - _BaseColor: {r: 0.18867919, g: 0.18867919, b: 0.18867919, a: 1}
     - _Color: {r: 0.18867916, g: 0.18867916, b: 0.18867916, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -143,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 9
+  version: 10
 --- !u!114 &4800551172417559771
 MonoBehaviour:
   m_ObjectHideFlags: 11

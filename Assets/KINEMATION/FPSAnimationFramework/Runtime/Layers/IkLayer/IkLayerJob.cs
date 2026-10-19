@@ -1,6 +1,6 @@
 ﻿using KINEMATION.FPSAnimationFramework.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 
 using UnityEngine;
 using UnityEngine.Animations;

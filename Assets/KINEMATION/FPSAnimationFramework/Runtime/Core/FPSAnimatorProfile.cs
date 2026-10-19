@@ -1,9 +1,8 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using KINEMATION.KAnimationCore.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Rig;
-
 using System.Collections.Generic;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Core

@@ -6,7 +6,7 @@ using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Event;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.Weapon;
 using FreedLOW.FireAtTargets.Code.Weapon;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 using Zenject;
 

@@ -158,14 +158,14 @@ namespace Impact.Triggers
 
             if (collider3D != null && collider3D.sharedMaterial != null)
             {
-                return collider3D.sharedMaterial.GetInstanceID();
+                return collider3D.sharedMaterial.GetImpactId();
             }
 
             Collider2D collider2D = colliderComponent as Collider2D;
 
             if (collider2D != null && collider2D.sharedMaterial != null)
             {
-                return collider2D.sharedMaterial.GetInstanceID();
+                return collider2D.sharedMaterial.GetImpactId();
             }
 
             return 0;

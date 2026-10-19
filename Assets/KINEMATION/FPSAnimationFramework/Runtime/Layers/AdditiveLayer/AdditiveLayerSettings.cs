@@ -2,8 +2,8 @@
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Layers.WeaponLayer;
-using KINEMATION.KAnimationCore.Runtime.Attributes;
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Attributes;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 
 namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AdditiveLayer

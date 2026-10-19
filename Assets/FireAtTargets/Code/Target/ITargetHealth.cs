@@ -4,6 +4,7 @@ namespace FreedLOW.FireAtTargets.Code.Target
     {
         int MaxHealth { get; }
         int CurrentHealth { get; }
+        bool IsAlive { get; }
 
         void TakeDamage(int damage);
     }

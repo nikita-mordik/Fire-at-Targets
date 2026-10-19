@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: bdad9af0d0f248378d9dc58e2c401b2c
+timeCreated: 1757309137
+AssetOrigin:
+  serializedVersion: 1
+  productId: 238641
+  packageName: FPS Animation Framework
+  packageVersion: 4.9.3
+  assetPath: Assets/KINEMATION/Shared/KAnimationCore/Editor/Tools/AvatarMaskTool.cs
+  uploadId: 852960

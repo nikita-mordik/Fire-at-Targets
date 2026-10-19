@@ -13,7 +13,6 @@ namespace IngameDebugConsole
 {
 	public class DebugLogItem : MonoBehaviour, IPointerClickHandler
 	{
-#pragma warning disable 0649
 		// Cached components
 		[SerializeField]
 		private RectTransform transformComponent;
@@ -40,7 +39,6 @@ namespace IngameDebugConsole
 
 		[SerializeField]
 		private Button copyLogButton;
-#pragma warning restore 0649
 
 		// Debug entry to show with this log item
 		private DebugLogEntry logEntry;
@@ -114,7 +112,7 @@ namespace IngameDebugConsole
 			transformComponent.sizeDelta = size;
 
 			SetText( logEntry, logEntryTimestamp, isExpanded );
-			logTypeImage.sprite = DebugLogManager.logSpriteRepresentations[(int) logEntry.logType];
+			logTypeImage.sprite = listView.manager.logSpriteRepresentations[(int) logEntry.logType];
 		}
 
 		// Show the collapsed count of the debug entry

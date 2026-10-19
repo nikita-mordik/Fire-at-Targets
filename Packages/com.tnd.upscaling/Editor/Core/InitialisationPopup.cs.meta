@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 40ddba67b20e0e441b1cb2e8209025b0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.upscaling/Editor/Core/InitialisationPopup.cs
+  uploadId: 1000768

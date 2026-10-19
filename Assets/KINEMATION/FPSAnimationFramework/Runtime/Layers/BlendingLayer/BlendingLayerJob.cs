@@ -1,5 +1,5 @@
 ﻿using KINEMATION.FPSAnimationFramework.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
 
 using Unity.Collections;
 using UnityEngine;

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e44661a18e98a3b4a8f29297b9b638d4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: '{"GUIDArray":["6cddb7048849ca847845ed3c02cbe2ee","4670df0f98f6c4f26be29b7da0da8e4b","",""]}'
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Art/Sponza/Materials URP/Fabric_Curtain_Blue.mat
+  uploadId: 1000768

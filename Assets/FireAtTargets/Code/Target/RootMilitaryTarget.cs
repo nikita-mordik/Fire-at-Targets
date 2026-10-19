@@ -9,7 +9,7 @@ namespace FreedLOW.FireAtTargets.Code.Target
         [SerializeField] private float shootDownDuration;
         [SerializeField] private float recoveryDuration;
         [SerializeField] private Vector3 shootDownRotation = Vector3.zero;
-        
+
         private Quaternion initialRotation;
 
         private void Awake()
@@ -17,16 +17,24 @@ namespace FreedLOW.FireAtTargets.Code.Target
             initialRotation = transform.rotation;
         }
 
-        public void ShootDown(Action action)
+        private void OnDestroy()
         {
-            transform.DORotate(shootDownRotation, shootDownDuration)
-                .OnComplete(() => action?.Invoke());
+            transform.DOKill();
         }
 
-        public void RecoveryTarget(Action action)
+        public void ShootDown(Action onComplete)
         {
+            // Kill without completing, so an interrupted animation never fires its old callback.
+            transform.DOKill();
+            transform.DORotate(shootDownRotation, shootDownDuration)
+                .OnComplete(() => onComplete?.Invoke());
+        }
+
+        public void RecoveryTarget(Action onComplete)
+        {
+            transform.DOKill();
             transform.DORotateQuaternion(initialRotation, recoveryDuration)
-                .OnComplete(() => action?.Invoke());
+                .OnComplete(() => onComplete?.Invoke());
         }
     }
 }

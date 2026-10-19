@@ -72,9 +72,9 @@ namespace Impact
             OtherPhysicsMaterialID = 0;
 
             if (contact3D.thisCollider.sharedMaterial != null)
-                ThisPhysicsMaterialID = contact3D.thisCollider.sharedMaterial.GetInstanceID();
+                ThisPhysicsMaterialID = contact3D.thisCollider.sharedMaterial.GetImpactId();
             if (contact3D.otherCollider.sharedMaterial != null)
-                OtherPhysicsMaterialID = contact3D.otherCollider.sharedMaterial.GetInstanceID();
+                OtherPhysicsMaterialID = contact3D.otherCollider.sharedMaterial.GetImpactId();
         }
 
         /// <summary>
@@ -95,9 +95,9 @@ namespace Impact
             OtherPhysicsMaterialID = 0;
 
             if (contact2D.otherCollider.sharedMaterial != null)
-                ThisPhysicsMaterialID = contact2D.otherCollider.sharedMaterial.GetInstanceID();
+                ThisPhysicsMaterialID = contact2D.otherCollider.sharedMaterial.GetImpactId();
             if (contact2D.collider.sharedMaterial != null)
-                OtherPhysicsMaterialID = contact2D.collider.sharedMaterial.GetInstanceID();
+                OtherPhysicsMaterialID = contact2D.collider.sharedMaterial.GetImpactId();
         }
     }
 }

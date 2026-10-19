@@ -1,5 +1,5 @@
 ﻿using KINEMATION.FPSAnimationFramework.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
 
 using Unity.Collections;
 using UnityEngine;
@@ -53,7 +53,7 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Layers.AttachHandLayer
             
             _handPose = new KTransform(_weaponBone).GetRelativeTransform(new KTransform(_handBone), false);
             
-            var chain = _settings.GetRigAsset().GetPopulatedChain(_settings.elementChainName, _jobData.rigComponent);
+            var chain = _settings.rigAsset.GetPopulatedChain(_settings.elementChainName, _jobData.rigComponent);
 
             if (_leftHandChain.IsCreated) _leftHandChain.Dispose();
             

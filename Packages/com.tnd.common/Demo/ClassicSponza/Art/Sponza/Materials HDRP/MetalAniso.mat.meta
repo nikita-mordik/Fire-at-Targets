@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d4ba7d8e5e30b2d479db09ae715e2759
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Art/Sponza/Materials HDRP/MetalAniso.mat
+  uploadId: 1000768

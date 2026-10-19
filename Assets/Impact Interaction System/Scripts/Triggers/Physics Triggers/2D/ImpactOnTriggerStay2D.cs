@@ -17,7 +17,7 @@ namespace Impact.Triggers
 
             int otherPhysicsMaterialID = 0;
             if (collider.sharedMaterial != null)
-                otherPhysicsMaterialID = collider.sharedMaterial.GetInstanceID();
+                otherPhysicsMaterialID = collider.sharedMaterial.GetImpactId();
 
             Vector3 contactPoint = contactPointMode == ImpactOnTriggerContactMode.ThisObject ? transform.position : collider.transform.position;
 

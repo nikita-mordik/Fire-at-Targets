@@ -1,7 +1,7 @@
 ﻿// Designed by KINEMATION, 2024.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
-using KINEMATION.ScriptableWidget;
+using KINEMATION.Shared.ScriptableWidget.Editor;
 using UnityEditor;
 
 namespace KINEMATION.FPSAnimationFramework.Editor.Core
@@ -36,8 +36,8 @@ namespace KINEMATION.FPSAnimationFramework.Editor.Core
             _listWidget.Init(serializedObject, typeof(FPSAnimatorLayerSettings), "settings");
 
             // Update the Rig Asset for all layers.
-            _listWidget.onComponentAdded = () => _animatorProfile.OnRigUpdated();
-            _listWidget.onComponentPasted = () => _animatorProfile.OnRigUpdated();
+            _listWidget.onComponentAdded = (int i) => _animatorProfile.OnRigUpdated();
+            _listWidget.onComponentPasted = (int i) => _animatorProfile.OnRigUpdated();
             MarkLayersStandalone();
         }
 

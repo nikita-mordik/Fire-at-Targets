@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92cb22971b2625f4ca5ac99d6e1eb213, type: 3}
   m_Name: ShootingGalleryLevelData
   m_EditorClassIdentifier: 
-  RoundTime: 60
-  MaxMilitaryTargets: 15
+  CountdownTime: 3
+  RoundTime: 90

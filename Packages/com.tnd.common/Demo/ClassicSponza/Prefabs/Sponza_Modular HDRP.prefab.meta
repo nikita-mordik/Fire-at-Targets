@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 44ec7095847c26041bca44a682410752
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Prefabs/Sponza_Modular HDRP.prefab
+  uploadId: 1000768

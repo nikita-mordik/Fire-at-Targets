@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 9
+  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -21,8 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Floor
-  m_Shader: {fileID: -6465566751694194690, guid: 2fa0a611962b7fb47bf58d2d810d91cf,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 2fa0a611962b7fb47bf58d2d810d91cf, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -115,10 +114,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - Color_d16d229f160549f291e128636eef4c34: {r: 0.5566038, g: 0.5566038, b: 0.5566038,
-        a: 1}
-    - Color_ea3507e529ce4169b300757354d518e5: {r: 0.3490566, g: 0.3490566, b: 0.3490566,
-        a: 1}
+    - Color_d16d229f160549f291e128636eef4c34: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+    - Color_ea3507e529ce4169b300757354d518e5: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
     - _Base_Color: {r: 0.64705884, g: 0.64705884, b: 0.64705884, a: 1}
     - _Color: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

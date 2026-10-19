@@ -14,8 +14,17 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement
         public async UniTask InitializeAsync() => 
             await Addressables.InitializeAsync().ToUniTask();
 
-        public async UniTask<GameObject> LoadAsset(string path) => 
-            await Addressables.LoadAssetAsync<GameObject>(path).ToUniTask();
+        public async UniTask<GameObject> LoadAsset(string path)
+        {
+            if (!_assetRequests.TryGetValue(path, out var handle))
+            {
+                handle = Addressables.LoadAssetAsync<GameObject>(path);
+                _assetRequests.Add(path, handle);
+            }
+
+            await handle.ToUniTask();
+            return handle.Result as GameObject;
+        }
         
         public async UniTask<TAsset> Load<TAsset>(AssetReference assetReference) where TAsset : class => 
             await Load<TAsset>(assetReference.AssetGUID);

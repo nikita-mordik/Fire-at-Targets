@@ -1,7 +1,7 @@
 ﻿// Designed by KINEMATION, 2024.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
-using KINEMATION.KAnimationCore.Editor.Misc;
+using KINEMATION.Shared.KAnimationCore.Editor.Widgets;
 using UnityEditor;
 using UnityEngine;
 

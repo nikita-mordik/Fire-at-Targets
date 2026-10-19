@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: de0e8c7cebfd8224f9d5782e931c696d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Demo/ClassicSponza/Art/Sponza/Materials BIRP/Vase_Round_Plants_Cutout.mat
+  uploadId: 1000768

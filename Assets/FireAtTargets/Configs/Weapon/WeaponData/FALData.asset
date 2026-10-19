@@ -17,5 +17,5 @@ MonoBehaviour:
   FireRate: 250
   SupportsBurst: 0
   BurstAmount: 0
-  MaxAmmo: 90
+  MaxAmmo: 135
   StartAmmo: 15

@@ -1,6 +1,6 @@
 ﻿// Designed by KINEMATION, 2024.
 
-using KINEMATION.KAnimationCore.Runtime.Rig;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 
 using FuzzySharp;
 

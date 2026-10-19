@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KINEMATION.KAnimationCore.Runtime.Attributes;
+using KINEMATION.Shared.KAnimationCore.Runtime.Attributes;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Playables;

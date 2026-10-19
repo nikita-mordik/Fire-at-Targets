@@ -3,22 +3,32 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace WingmanInspector {
 
     public static class WingmanClipboardUtility {
 
         private static readonly HashSet<Type> singleInstanceComponents = new HashSet<Type> {
-            typeof(Transform), typeof(RectTransform), typeof(Rigidbody), typeof(Rigidbody2D),
-            typeof(Collider), typeof(Collider2D), typeof(CharacterController), typeof(Animator),
-            typeof(Animation), typeof(Camera), typeof(AudioSource), typeof(AudioListener),
+            // Core module types (direct reference is safe)
+            typeof(Transform), typeof(RectTransform), typeof(Collider), typeof(Camera), typeof(AudioSource), typeof(AudioListener),
             typeof(Light), typeof(MeshFilter), typeof(MeshRenderer), typeof(SkinnedMeshRenderer),
-            typeof(SpriteRenderer), typeof(Canvas), typeof(CanvasRenderer), typeof(NavMeshAgent), 
-            typeof(NavMeshObstacle)
-        };
+            // Non-core module types (resolved via reflection to avoid hard assembly references)
+            Type.GetType("UnityEngine.RectTransform, UnityEngine.UIModule"),
+            Type.GetType("UnityEngine.Canvas, UnityEngine.UIModule"),
+            Type.GetType("UnityEngine.CanvasRenderer, UnityEngine.UIModule"),
+            Type.GetType("UnityEngine.Rigidbody, UnityEngine.PhysicsModule"),
+            Type.GetType("UnityEngine.CharacterController, UnityEngine.PhysicsModule"),
+            Type.GetType("UnityEngine.Rigidbody2D, UnityEngine.Physics2DModule"),
+            Type.GetType("UnityEngine.Collider2D, UnityEngine.Physics2DModule"),
+            Type.GetType("UnityEngine.Animator, UnityEngine.AnimationModule"),
+            Type.GetType("UnityEngine.Animation, UnityEngine.AnimationModule"),
+            Type.GetType("UnityEngine.SpriteRenderer, UnityEngine.SpriteRenderer"),
+            Type.GetType("UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule"),
+            Type.GetType("UnityEngine.AI.NavMeshObstacle, UnityEngine.AIModule"),
+        }.Where(t => t != null).ToHashSet();
 
         public static void PasteComponentsFromEmpty(this GameObject gameObject, List<Component> comps) {
             foreach (Component refComp in comps) {

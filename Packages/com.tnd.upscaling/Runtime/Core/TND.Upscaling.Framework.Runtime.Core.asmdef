@@ -1,0 +1,28 @@
+{
+    "name": "TND.Upscaling.Framework.Runtime.Core",
+    "rootNamespace": "TND.Upscaling.Framework",
+    "references": [
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:fc53d371d58bc8b419af58ae12c9680a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.core",
+            "expression": "1.0.0",
+            "define": "TND_SRP_CORE"
+        },
+        {
+            "name": "com.tnd.framegeneration",
+            "expression": "1.0.0",
+            "define": "TND_FRAMEGEN"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: fc734ee8a9e31914c90a172837beddbf
+timeCreated: 1748775111
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.upscaling/Runtime/BIRP/Scripts/UpscalerController_BIRP.cs
+  uploadId: 1000768

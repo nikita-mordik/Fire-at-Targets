@@ -2,10 +2,11 @@ using System;
 using Cysharp.Threading.Tasks;
 using FreedLOW.FireAtTargets.Code.Common;
 using FreedLOW.FireAtTargets.Code.Extensions;
-using FreedLOW.FireAtTargets.Code.Infrastructure.AssetManagement;
+using FreedLOW.FireAtTargets.Code.Features.GameSystem;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Factory;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.PrefabPoolingService;
 using FreedLOW.FireAtTargets.Code.Infrastructure.Services.SceneLoader;
+using FreedLOW.FireAtTargets.Code.UI.PopUp;
 using UnityEngine;
 
 namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
@@ -44,6 +45,7 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
             await InitializeHUD();
             await InitializeCharacterAt(GameObject.FindWithTag(Tags.StartPoint).transform);
             await InitializePool();
+            InitializeStartZones();
             
             action?.Invoke();
             await _stateMachine.Enter<GalleryGameLoopState>();
@@ -63,7 +65,19 @@ namespace FreedLOW.FireAtTargets.Code.Infrastructure.State.GameStates
 
         private async UniTask InitializePool()
         {
-            await _poolService.InitializePoolAsync(AssetLabel.ShootingGalleryPool);
+            await _poolService.InitializePoolAsync(AddressableLabels.SHOOTING_GALLERY_POOL);
+        }
+
+        private void InitializeStartZones()
+        {
+            // TODO: change it to get data from config, etc.
+            GameStartPopUp gameStartPopUp = _hud.GetComponentInChildren<GameStartPopUp>();
+            GameObject[] gameZoneObjects = GameObject.FindGameObjectsWithTag(Tags.GameZone);
+            for (int i = 0; i < gameZoneObjects.Length; i++)
+            {
+                gameZoneObjects[i].GetComponent<StartZone>()
+                    .Initialize(gameStartPopUp);
+            }
         }
     }
 }

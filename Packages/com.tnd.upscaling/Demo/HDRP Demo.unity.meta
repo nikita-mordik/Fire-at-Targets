@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cb47d373859cd1047b874525aa61ef5d
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.upscaling/Demo/HDRP Demo.unity
+  uploadId: 1000768

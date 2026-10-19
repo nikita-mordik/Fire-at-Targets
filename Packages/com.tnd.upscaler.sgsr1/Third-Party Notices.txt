@@ -1,0 +1,10 @@
+Packages\TND SGSR 1\Resources\SGSR1\LICENSE.TXT
+https://github.com/quic/snapdragon-gsr
+
+Snapdragon™ Game Studios developed Snapdragon™ Game Super Resolution (Snapdragon™ GSR or SGSR), 
+which integrates upscaling and sharpening in one single GPU shader pass.
+ 
+Our solution provides an efficient solution for games to draw 2D UI at device resolution for better visual quality, 
+while rendering the 3D scene at a lower resolution for performance and power savings.
+
+The technique has visual quality on par with other spatial upscaling techniques while being highly optimized for Adreno™ GPU hardware.

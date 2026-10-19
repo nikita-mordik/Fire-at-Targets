@@ -1,10 +1,9 @@
 ﻿// Designed by KINEMATION, 2024.
 
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
-using KINEMATION.KAnimationCore.Runtime.Core;
-using KINEMATION.KAnimationCore.Runtime.Input;
-using KINEMATION.KAnimationCore.Runtime.Rig;
-
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Input;
+using KINEMATION.Shared.KAnimationCore.Runtime.Rig;
 using UnityEngine;
 using UnityEngine.Animations;
 using Quaternion = UnityEngine.Quaternion;
@@ -241,26 +240,6 @@ namespace KINEMATION.FPSAnimationFramework.Runtime.Core
         {
             to.SetPosition(stream, from.GetPosition(stream));
             to.SetRotation(stream, from.GetRotation(stream));
-        }
-        
-        public static float FloatSpringInterp(float current, float target, float speed, float criticalDamping,
-            float stiffness, float scale, ref FloatSpringState state, float deltaTime)
-        {
-            float interpSpeed = Mathf.Min(deltaTime * speed, 1f);
-
-            if (!Mathf.Approximately(interpSpeed, 0f))
-            {
-                float damping = 2 * Mathf.Sqrt(stiffness) * criticalDamping;
-                float error = target * scale - current;
-                float errorDeriv = error - state.Error;
-                state.Velocity += error * stiffness * interpSpeed + errorDeriv * damping;
-                state.Error = error;
-
-                float value = current + state.Velocity * interpSpeed;
-                return value;
-            }
-
-            return current;
         }
     }
 }

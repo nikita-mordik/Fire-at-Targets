@@ -10,7 +10,7 @@ using KINEMATION.FPSAnimationFramework.Runtime.Camera;
 using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Playables;
 using KINEMATION.FPSAnimationFramework.Runtime.Recoil;
-using KINEMATION.KAnimationCore.Runtime.Input;
+using KINEMATION.Shared.KAnimationCore.Runtime.Input;
 using KINEMATION.ProceduralRecoilAnimationSystem.Runtime;
 using UnityEngine;
 using Zenject;
@@ -100,6 +100,12 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             SetupWeaponData();
         }
 
+        private void OnDestroy()
+        {
+            // The event service outlives the player, so never leave a destroyed weapon subscribed.
+            UnsubscribeAmmoEvents();
+        }
+
         public override void OnEquip(GameObject parent)
         {
             if (!parent) 
@@ -137,13 +143,16 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
                 _recoilPattern.Init(recoilPatternSettings);
             
             _fpsAnimator.LinkAnimatorLayer(equipMotion);
-            
-            InvokeWhenEquip();
+
+            UnsubscribeAmmoEvents();
+            _weaponEventHandlerService.OnSetAmmo += SetMagazineAmmo;
+            _weaponEventHandlerService.OnClearAmmo += ClearAmmo;
         }
 
         public override void OnUnEquip()
         {
             _fpsAnimator.LinkAnimatorLayer(unEquipMotion);
+            UnsubscribeAmmoEvents();
         }
 
         public override bool OnAimPressed()
@@ -199,9 +208,11 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
 
         public override bool OnReload()
         {
-            if (_currentMaxAmmo <= 0)
+            // _startAmmo is the magazine capacity; only top up what is actually missing.
+            int missingAmmo = _startAmmo - CurrentAmmo;
+            if (_isCurrentlyReload || missingAmmo <= 0 || _currentMaxAmmo <= 0)
                 return false;
-            
+
             if (!FPSAnimationAsset.IsValid(reloadClip))
                 return false;
 
@@ -220,8 +231,9 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
                 _fpsCameraController.PlayCameraAnimation(cameraReloadAnimation);
             }
             
-            CurrentAmmo = _startAmmo;
-            _currentMaxAmmo -= CurrentAmmo;
+            int loadedAmmo = Mathf.Min(missingAmmo, _currentMaxAmmo);
+            _currentMaxAmmo -= loadedAmmo;
+            CurrentAmmo += loadedAmmo;
             _weaponEventHandlerService.InvokeOnReload(_currentMaxAmmo);
             
             Invoke(nameof(OnActionEnded), reloadClip.clip.length * 0.85f);
@@ -288,7 +300,39 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
         }
         
         public bool HasMagazineAmmo() => _currentMaxAmmo > 0;
-        
+
+        private void SetMagazineAmmo()
+        {
+            MaxAmmo = weaponData.MaxAmmo;
+            _currentMaxAmmo = MaxAmmo;
+            _startAmmo = weaponData.StartAmmo;
+            CurrentAmmo = _startAmmo;
+            
+            InvokeWhenEquip();
+        }
+
+        /// <summary>
+        /// Locks the weapon outside of a round: stops firing and empties both magazine and reserve.
+        /// </summary>
+        private void ClearAmmo()
+        {
+            OnFireReleased();
+
+            _currentMaxAmmo = 0;
+            CurrentAmmo = 0;
+
+            InvokeWhenEquip();
+        }
+
+        private void UnsubscribeAmmoEvents()
+        {
+            if (_weaponEventHandlerService == null)
+                return;
+
+            _weaponEventHandlerService.OnSetAmmo -= SetMagazineAmmo;
+            _weaponEventHandlerService.OnClearAmmo -= ClearAmmo;
+        }
+
         private void SetupWeaponData()
         {
             _fireRate = weaponData.FireRate;
@@ -297,9 +341,9 @@ namespace FreedLOW.FireAtTargets.Code.Weapon
             _bursts = weaponData.BurstAmount;
             _burstLength = _bursts;
             rayShooting.DamageAmount = weaponData.Damage;
-            MaxAmmo = weaponData.MaxAmmo;
+            MaxAmmo = 0;
             _currentMaxAmmo = MaxAmmo;
-            _startAmmo = weaponData.StartAmmo;
+            _startAmmo = 0;
             CurrentAmmo = _startAmmo;
         }
 

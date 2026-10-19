@@ -1,6 +1,8 @@
-﻿// Designed by KINEMATION, 2025.
+﻿// Copyright (c) 2026 KINEMATION.
+// All rights reserved.
 
-using KINEMATION.KAnimationCore.Editor.Misc;
+using KINEMATION.Shared.KAnimationCore.Editor.Tools;
+using KINEMATION.Shared.KAnimationCore.Editor.Widgets;
 using KINEMATION.ProceduralRecoilAnimationSystem.Runtime;
 using UnityEditor;
 
@@ -19,7 +21,7 @@ namespace KINEMATION.ProceduralRecoilAnimationSystem.Editor
 
         public override void OnInspectorGUI()
         {
-            _tabInspectorWidget.Render();
+            _tabInspectorWidget.OnGUI();
         }
     }
 }

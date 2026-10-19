@@ -1,6 +1,6 @@
 ﻿using KINEMATION.FPSAnimationFramework.Runtime.Core;
 using KINEMATION.FPSAnimationFramework.Runtime.Layers.WeaponLayer;
-using KINEMATION.KAnimationCore.Runtime.Core;
+using KINEMATION.Shared.KAnimationCore.Runtime.Core;
 
 using UnityEngine;
 using UnityEngine.Animations;

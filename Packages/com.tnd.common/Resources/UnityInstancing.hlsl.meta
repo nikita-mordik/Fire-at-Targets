@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 12b61725069c1064b99075faea8f31cd
+ShaderIncludeImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 283343
+  packageName: SGSR 1 Mobile - Upscaling for Unity
+  packageVersion: 1.4.4
+  assetPath: Packages/com.tnd.common/Resources/UnityInstancing.hlsl
+  uploadId: 1000768

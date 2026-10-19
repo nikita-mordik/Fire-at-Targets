@@ -47,7 +47,7 @@ namespace Impact.Triggers
             int physicsMaterialId = 0;
 
             if (ImpactManagerInstance.UseMaterialMapping && hit.collider.sharedMaterial != null)
-                physicsMaterialId = hit.collider.sharedMaterial.GetInstanceID();
+                physicsMaterialId = hit.collider.sharedMaterial.GetImpactId();
 
             Trigger(interactionData, otherObject, physicsMaterialId, useMaterialComposition);
         }
@@ -90,7 +90,7 @@ namespace Impact.Triggers
             int physicsMaterialId = 0;
 
             if (ImpactManagerInstance.UseMaterialMapping && hit.collider.sharedMaterial != null)
-                physicsMaterialId = hit.collider.sharedMaterial.GetInstanceID();
+                physicsMaterialId = hit.collider.sharedMaterial.GetImpactId();
 
             Trigger(interactionData, otherObject, physicsMaterialId, useMaterialComposition);
         }
@@ -171,7 +171,7 @@ namespace Impact.Triggers
             int physicsMaterialId = 0;
 
             if (ImpactManagerInstance.UseMaterialMapping && hit.collider.sharedMaterial != null)
-                physicsMaterialId = hit.collider.sharedMaterial.GetInstanceID();
+                physicsMaterialId = hit.collider.sharedMaterial.GetImpactId();
 
             Trigger(interactionData, impactObject, otherObject, physicsMaterialId, useMaterialComposition);
         }
@@ -213,7 +213,7 @@ namespace Impact.Triggers
             int physicsMaterialId = 0;
 
             if (ImpactManagerInstance.UseMaterialMapping && hit.collider.sharedMaterial != null)
-                physicsMaterialId = hit.collider.sharedMaterial.GetInstanceID();
+                physicsMaterialId = hit.collider.sharedMaterial.GetImpactId();
 
             Trigger(interactionData, impactObject, otherObject, physicsMaterialId, useMaterialComposition);
         }
